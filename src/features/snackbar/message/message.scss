@@ -1,0 +1,33 @@
+.message {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  color: var(--mat-on-surface);
+
+  mat-icon {
+    color: inherit;
+  }
+
+  &.success {
+    background-color: var(--mat-color-success);
+  }
+
+  &.info {
+    background-color: var(--mat-color-primary);
+  }
+
+  &.warning {
+    background-color: var(--mat-color-warning);
+    color: var(--mat-on-warning-container);
+  }
+
+  &.error {
+    background-color: var(--mat-color-error);
+  }
+
+  &.default {
+    background-color: var(--mat-color-surface-variant);
+  }
+}

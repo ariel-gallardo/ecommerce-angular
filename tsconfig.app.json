@@ -11,6 +11,7 @@
       "@guards/*":["./src/guards/*"],
       "@features/*":["./src/features/*"],
       "@models/*":["./src/models/*"],
+      "@effects/*":["./src/effects/*"],
     }
   },
   "include": [

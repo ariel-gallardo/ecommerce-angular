@@ -8,12 +8,14 @@ import routes from './routes';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { UsersShell } from './users-shell/users-shell';
 
 @NgModule({
   declarations: [
     Login,
     Register,
-    Profile
+    Profile,
+    UsersShell
   ],
   imports: [
     CommonModule,

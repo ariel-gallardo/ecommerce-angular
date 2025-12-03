@@ -1,7 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
-import { UsersFacade } from '@api/Impecable/redux/users/users.facade';
+import { UsersFacade } from '@api/security/redux/users/users.facade';
+import { PermissionFacade } from '@api/security/redux/permission/permission.facade';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +9,12 @@ import { UsersFacade } from '@api/Impecable/redux/users/users.facade';
   styleUrl: './app.css'
 })
 export class App implements OnInit {
-  protected readonly title = signal('impecable');
-  constructor(private usersFacade: UsersFacade) {
+  protected readonly title = signal('title');
+  constructor(private usersFacade: UsersFacade, private permissionFacade: PermissionFacade) {
     
   }
   ngOnInit(): void {
-    this.usersFacade.Init()
+    this.usersFacade.Init();
+    this.permissionFacade.Init();
   }
 }

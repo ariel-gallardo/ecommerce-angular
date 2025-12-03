@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Shell } from '@features/base/shell/shell';
 
 const routes: Routes = [
-  {path: 'users', loadChildren: () => import('@features/users/users-module').then(m => m.UsersModule)},
+  {
+    path: '',
+    component: Shell,
+    children: [
+      {path: 'users', loadChildren: () => import('@features/users/users-module').then(m => m.UsersModule)}
+    ]
+  }
 ];
 
 @NgModule({

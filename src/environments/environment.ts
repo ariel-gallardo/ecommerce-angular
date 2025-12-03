@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiImpecable: 'https://localhost:7283'
+  api: 'https://localhost:6001'
 };
