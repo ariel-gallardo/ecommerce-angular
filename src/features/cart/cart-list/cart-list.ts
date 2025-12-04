@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'cart-list',
   standalone: false,
   templateUrl: './cart-list.html',
-  styleUrl: './cart-list.css',
+  styleUrl: './cart-list.scss',
 })
 export class CartList {
 

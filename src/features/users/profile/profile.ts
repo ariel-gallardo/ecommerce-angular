@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'user-profile',
   standalone: false,
   templateUrl: './profile.html',
-  styleUrl: './profile.css',
+  styleUrl: './profile.scss',
 })
 export class Profile {
 

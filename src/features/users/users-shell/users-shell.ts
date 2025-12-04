@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-users-shell',
   standalone: false,
   templateUrl: './users-shell.html',
-  styleUrl: './users-shell.css',
+  styleUrl: './users-shell.scss',
 })
 export class UsersShell {
 

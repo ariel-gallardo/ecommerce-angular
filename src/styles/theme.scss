@@ -1,0 +1,22 @@
+@use 'tailwindcss';
+@use "@angular/material" as mat;
+
+
+$theme: mat.define-theme((
+  color: (
+    primary: mat.$violet-palette
+  ),
+  typography: (
+    brand-family: "Roboto",
+    plain-family: "Roboto"
+  )
+));
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    @include mat.all-component-themes($theme);
+    @include mat.system-classes();
+  }
+}

@@ -6,7 +6,7 @@ import { PermissionFacade } from '@api/security/redux/permission/permission.faca
   selector: 'app-root',
   templateUrl: './app.html',
   standalone: false,
-  styleUrl: './app.css'
+  styleUrl: './app.scss'
 })
 export class App implements OnInit {
   protected readonly title = signal('title');

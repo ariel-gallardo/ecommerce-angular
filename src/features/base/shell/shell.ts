@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-shell',
   standalone: false,
   templateUrl: './shell.html',
-  styleUrl: './shell.css',
+  styleUrl: './shell.scss',
 })
 export class Shell {
 
