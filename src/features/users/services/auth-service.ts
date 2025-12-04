@@ -7,67 +7,89 @@ import { JwtUser } from '@models/jwt-user';
 })
 export class AuthService {
 
-  private get DecodedToken(): JwtUser | null {
-    const token = localStorage.getItem('access_token');
-    if (!token) return null;
+  private get DecodedToken(): Promise<JwtUser | null> {
+    return new Promise((res,rej) => {
+      this.Token.then(c => {
+            try {
+              res(jwtDecode<JwtUser>(c!.value as string));
+            } catch (err) {
+              console.error('Invalid JWT token', err);
+              res(null);
+            }
+          })
+    });
+  }
 
-    try {
-      return jwtDecode<JwtUser>(token);
-    } catch (err) {
-      console.error('Invalid JWT token', err);
-      return null;
-    }
+  public get Token(){
+    return cookieStore.get('token');
   }
 
   public setToken(token: string){
-    localStorage.setItem('access_token',token);
+    cookieStore.set('token',token);
   }
 
-  public get Role(): string | null {
-    return this.DecodedToken?.role ?? null;
+  public removeToken(){
+    cookieStore.delete('token');
   }
 
-  public get NameIdentifier(): string | null {
-    return this.DecodedToken?.nameIdentifier ?? null;
+  public get Role(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.role ?? null);
   }
 
-  public get Name(): string | null {
-    return this.DecodedToken?.name ?? null;
+  public get NameIdentifier(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.nameIdentifier ?? null);
   }
 
-  public get Email(): string | null {
-    return this.DecodedToken?.email ?? null;
+  public get Name(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.name ?? null);
   }
 
-  public get GivenName(): string | null {
-    return this.DecodedToken?.givenName ?? null;
+  public get Email(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.email ?? null);
   }
 
-  public get Surname(): string | null {
-    return this.DecodedToken?.surname ?? null;
+  public get GivenName(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.givenName ?? null);
   }
 
-  public get Street(): string | null {
-    return this.DecodedToken?.street ?? null;
+  public get Surname(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.surname ?? null);
   }
 
-  public get Number(): string | null {
-    return this.DecodedToken?.number ?? null;
+  public get Street(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.street ?? null);
   }
 
-  public get Neighborhood(): string | null {
-    return this.DecodedToken?.neighborhood ?? null;
+  public get Number(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.number ?? null);
   }
 
-  public get Description(): string | null {
-    return this.DecodedToken?.description ?? null;
+  public get Neighborhood(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.neighborhood ?? null);
   }
 
-  public get Latitude(): string | null {
-    return this.DecodedToken?.latitude ?? null;
+  public get Description(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.description ?? null);
   }
 
-  public get Longitude(): string | null {
-    return this.DecodedToken?.longitude ?? null;
+  public get Latitude(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.latitude ?? null);
   }
+
+  public get Longitude(): Promise<string | null> {
+    return this.DecodedToken.then(t => t?.role ?? null);
+  }
+
+  public get Expiration(): Promise<Date | null> {
+    return this.DecodedToken.then(t => t?.exp ? new Date(t.exp! * 1000) : null);
+  }
+
+  public get IsExpired(): Promise<boolean> {
+    return this.DecodedToken.then(t => {
+      if (!t?.exp) return true;
+      const now = Date.now() / 1000;
+      return now > t.exp;
+    });
+  }
+
 }

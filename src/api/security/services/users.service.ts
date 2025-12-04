@@ -134,8 +134,7 @@ export class IdsGetRequest {
 export class LoginPostRequest {
     userLogin?: UserLogin | undefined | null;
     constructor(init: Partial<LoginPostRequest> = {}){
-            
-             this.userLogin = new UserLogin(); 
+        this.userLogin = new UserLogin(); 
         const keys = (Object.keys(init) as (keyof LoginPostRequest)[])
         .filter(k => this[k] !== init[k]);
         if(keys.length > 0){

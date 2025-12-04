@@ -6,6 +6,7 @@ import { UserLogin } from '@api/security/models/user-login.model';
 import { UsersFacade } from '@api/security/redux/users/users.facade';
 import { CanAccessHeadRequest } from '@api/security/services/permission.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'user-login',
@@ -19,15 +20,18 @@ export class Login implements OnInit, OnDestroy {
   private request?: CanAccessHeadRequest;
   form: FormGroup<NullableFormControl<UserLogin>>;
   
-  constructor(private usersFacade: UsersFacade, private fb: FormBuilder, private readonly router: Router) {
+  constructor(private usersFacade: UsersFacade
+    ,private fb: FormBuilder, private readonly router: Router
+    ,private readonly authService: AuthService) {
     this.form = fb.group<UserLogin>(new UserLogin());
     this.subs = this.form.valueChanges.subscribe(state => this.usersFacade.LoginPostRequestUpdate({
       userLogin: state
     }));
     this.subs.add(this.usersFacade.LoginPost$.subscribe(token => {
       if (typeof token !== 'object') {
-        cookieStore.set('token', token);
+        this.authService.setToken(token);
         if(this.request && this.request.xUrl) this.router.navigate([this.request.xUrl])
+        else this.router.navigate(['/']);
       }
     }))
   }
