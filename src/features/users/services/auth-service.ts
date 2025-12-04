@@ -11,7 +11,9 @@ export class AuthService {
     return new Promise((res,rej) => {
       this.Token.then(c => {
             try {
-              res(jwtDecode<JwtUser>(c!.value as string));
+              if(c?.value)
+              res(jwtDecode<JwtUser>(c?.value as string));
+              else res(null)
             } catch (err) {
               console.error('Invalid JWT token', err);
               res(null);

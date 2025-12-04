@@ -13,6 +13,7 @@
       "@models/*":["./src/models/*"],
       "@effects/*":["./src/effects/*"],
       "@interceptors/*":["./src/interceptors/*"],
+      "@directives/*":["./src/directives/*"],
     }
   },
   "include": [

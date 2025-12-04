@@ -1,1 +1,11 @@
-<p>navbar works!</p>
+<mat-toolbar class="flex justify-between">
+  <h1 routerLink="/">Ecommerce</h1>
+  <span>
+    <button matIconButton>
+      <mat-icon>shopping_bag</mat-icon>
+    </button>
+    <button matIconButton [routerLink]="['/users/profile']">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
