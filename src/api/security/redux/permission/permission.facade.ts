@@ -24,7 +24,6 @@ import { RangeDeleteRequest } from '@api/security/services/permission.service';
 import { RangePostRequest } from '@api/security/services/permission.service'; 
 import { RangePutRequest } from '@api/security/services/permission.service'; 
 import { selectCanAccessHeadRequest } from './permission.selector';
-import { selectCanAccessHeadData } from './permission.selector';
 import { selectCanAccessHeadHasError } from './permission.selector';
 import { selectCanAccessHeadErrors } from './permission.selector';
 import { selectCanAccessHeadLoaded } from './permission.selector';
@@ -89,7 +88,6 @@ export class PermissionFacade {
   }
 
   public get CanAccessHeadIsLoaded$(): Observable<boolean> { return this.store.select(selectCanAccessHeadLoaded).pipe(filter(x => x != null)); }
-  public get CanAccessHead$(): Observable<HttpHeaders> { return this.store.select(selectCanAccessHeadData); }
   public get CanAccessHeadHasError$(): Observable<boolean> { return this.store.select(selectCanAccessHeadHasError); }
   public get CanAccessHeadErrors$(): Observable<ValidationError[][]> { return this.store.select(selectCanAccessHeadErrors); }
   public get CanAccessHeadRequest$(): Observable<CanAccessHeadRequest> { return this.store.select(selectCanAccessHeadRequest).pipe(filter(x => x !== null)); }

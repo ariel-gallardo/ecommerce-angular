@@ -1,25 +1,24 @@
-<div class="flex justify-center items-center min-h-screen ">
-  <mat-card class=" shadow-xl flex flex-col w-[90%] xl:max-w-[380px] p-8 rounded-lg relative">
-
-    <mat-card-header>
-      <mat-card-title class="text-3xl font-semibold mb-6">Login</mat-card-title>
+<form class="flex justify-center items-center min-h-screen" [formGroup]="form" (submit)="submit()">
+  <mat-card class=" shadow-xl flex flex-col w-[90%] xl:max-w-[480px] p-8 rounded-lg relative">
+    <mat-card-header class="my-5">
+      <mat-card-title class="text-3xl font-semibold">Empecemos, ingresa a tu cuenta</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <mat-form-field appearance="fill" class="w-full mb-4">
         <mat-label>Correo Electrónico</mat-label>
-        <input matInput placeholder="correo@email.com" />
+        <input matInput placeholder="correo@email.com" formControlName="email" />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="w-full mb-4">
         <mat-label>Contraseña</mat-label>
-        <input matInput type="password" placeholder="******" />
+        <input matInput type="password" placeholder="******" formControlName="password" />
       </mat-form-field>
 
-      <button matButton="filled" class="w-full mt-2 py-2">Ingresar</button>
+      <button matButton="filled" class="w-full mt-2 py-2" type="submit">Ingresar</button>
 
       <a class="block text-center mt-5 text-sm">
         ¿Olvidaste tu contraseña?
       </a>
     </mat-card-content>
   </mat-card>
-</div>
+</form>

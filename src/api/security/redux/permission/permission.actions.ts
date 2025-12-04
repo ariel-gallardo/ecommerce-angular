@@ -29,7 +29,7 @@ export class PermissionActions {
   static CanAccessHeadExecute = createAction(
     '[Permission] CanAccessHead Execute'
   );
-  static CanAccessHeadSetData = createAction('[Permission] CanAccessHead SetData'); 
+   static CanAccessHeadSetData = createAction('[Permission] CanAccessHead SetData'); 
   static CanAccessHeadRequestUpdate = createAction('[Permission] CanAccessHead RequestUpdate', props<{ request: Partial<CanAccessHeadRequest> }>());
   static CanAccessHeadRequestUpdateOne = createAction('[Permission] CanAccessHead RequestUpdateOne', props<{ request: Partial<CanAccessHeadRequest> }>());
   static CanAccessHeadRequestUpdateOneSuccess = createAction('[Permission] CanAccessHead RequestUpdateOneSuccess', props<{key:string,value:any}>());

@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UsersShell } from './users-shell/users-shell';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,8 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
   ]
 })

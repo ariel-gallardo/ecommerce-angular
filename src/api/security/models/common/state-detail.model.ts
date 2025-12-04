@@ -1,6 +1,4 @@
 import {ValidationError} from '../validation-error.model';
-import { FormGroup } from '@angular/forms';
-import {NullableFormControl} from './nullable-form-control.model';
 
 export interface StateDetail<IData,IRequest> extends StateDetailBase<IRequest>
 {

@@ -38,6 +38,8 @@ import { ValidationErrors } from '@angular/forms';
 import { ValidationError } from '@api/security/models/validation-error.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import {SnackbarService} from '@features/snackbar/snackbar-service'; 
+import { BaseResponse } from '@api/security/models/base-response.model';
+import { Router } from '@angular/router';
 
 @Injectable(
     
@@ -47,6 +49,7 @@ export class PersonasEffects {
     private api = inject(PersonasService);
     private store = inject(Store);
     private snackbarService = inject(SnackbarService);
+    private router = inject(Router);
 
     Init$ = createEffect(() =>
     this.actions$.pipe(
@@ -159,6 +162,8 @@ export class PersonasEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(PersonasActions.DeleteSetError({ errors: newErrors }));
                 }
+                
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -267,9 +272,8 @@ export class PersonasEffects {
                     
                     return of(PersonasActions.FiltersFirstGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.FiltersFirstGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.FiltersFirstGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -399,9 +403,8 @@ export class PersonasEffects {
                     
                     return of(PersonasActions.FiltersGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.FiltersGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.FiltersGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -510,9 +513,8 @@ export class PersonasEffects {
                     
                     return of(PersonasActions.GetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.GetDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.GetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -642,9 +644,8 @@ export class PersonasEffects {
                     
                     return of(PersonasActions.IdsGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.IdsGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.IdsGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -753,9 +754,8 @@ export class PersonasEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(PersonasActions.PostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.PostDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.PostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -864,9 +864,8 @@ export class PersonasEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(PersonasActions.PutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.PutDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.PutDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -968,6 +967,8 @@ export class PersonasEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(PersonasActions.RangeDeleteSetError({ errors: newErrors }));
                 }
+                
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1097,9 +1098,8 @@ export class PersonasEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(PersonasActions.RangePostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.RangePostDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.RangePostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1229,9 +1229,8 @@ export class PersonasEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(PersonasActions.RangePutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(PersonasActions.RangePutDataInit());
-                }
+                else if (newErr.status === 404) {return of(PersonasActions.RangePutDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );

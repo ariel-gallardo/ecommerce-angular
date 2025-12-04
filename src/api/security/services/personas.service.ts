@@ -493,6 +493,7 @@ export class PersonasService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -555,6 +556,7 @@ export class PersonasService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -617,6 +619,7 @@ export class PersonasService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -679,6 +682,7 @@ export class PersonasService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -741,6 +745,7 @@ export class PersonasService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'

@@ -7,6 +7,8 @@ import { ReduxCoreModule as SecurityReduxCoreModule } from '@api/security/redux/
 import { BaseModule } from '@features/base/base-module';
 import { AuthEffects } from '@effects/AuthEffects';
 import { EffectsModule } from '@ngrx/effects';
+import { AuthInterceptor } from '@interceptors/auth-interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,9 @@ import { EffectsModule } from '@ngrx/effects';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideHttpClient(
+      withInterceptors([AuthInterceptor])
+    )
   ],
   bootstrap: [App]
 })

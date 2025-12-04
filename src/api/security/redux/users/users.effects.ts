@@ -44,6 +44,8 @@ import { ValidationErrors } from '@angular/forms';
 import { ValidationError } from '@api/security/models/validation-error.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import {SnackbarService} from '@features/snackbar/snackbar-service'; 
+import { Router } from '@angular/router';
+import { BaseResponse } from '@api/security/models/base-response.model';
 
 @Injectable(
     
@@ -53,8 +55,8 @@ export class UsersEffects {
     private api = inject(UsersService);
     private store = inject(Store);
     private snackbarService = inject(SnackbarService);
+    private router = inject(Router);
     
-
     Init$ = createEffect(() =>
     this.actions$.pipe(
         ofType(UsersActions.Init),
@@ -107,13 +109,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new DeleteRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.DeleteRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -158,7 +160,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.Delete(request as DeleteRequest, 'response').pipe(
                 map(() => UsersActions.DeleteSuccess()),
                 catchError((err) => {
@@ -168,6 +170,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.DeleteSetError({ errors: newErrors }));
                 }
+                
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -208,13 +212,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new FiltersFirstGetRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.FiltersFirstGetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -259,7 +263,7 @@ export class UsersEffects {
             if (firstInit ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.FiltersFirstGet(request as FiltersFirstGetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -276,9 +280,8 @@ export class UsersEffects {
                     
                     return of(UsersActions.FiltersFirstGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.FiltersFirstGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.FiltersFirstGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -333,13 +336,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new FiltersGetRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.FiltersGetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -384,7 +387,7 @@ export class UsersEffects {
             if (firstInit ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.FiltersGet(request as FiltersGetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -408,9 +411,8 @@ export class UsersEffects {
                     
                     return of(UsersActions.FiltersGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.FiltersGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.FiltersGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -451,13 +453,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new GetRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.GetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -502,7 +504,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.Get(request as GetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -519,9 +521,8 @@ export class UsersEffects {
                     
                     return of(UsersActions.GetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.GetDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.GetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -576,13 +577,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new IdsGetRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.IdsGetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -627,7 +628,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.IdsGet(request as IdsGetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -651,9 +652,8 @@ export class UsersEffects {
                     
                     return of(UsersActions.IdsGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.IdsGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.IdsGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -694,13 +694,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new LoginPostRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.LoginPostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -745,10 +745,9 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.LoginPost(request as LoginPostRequest, 'response').pipe(
                 map(response =>{
-                      this.snackbarService.show(response.body!.message, response.body!.statusCode);
                     return UsersActions.LoginPostSetData({
                         data:                         
                         response.body!.data
@@ -762,9 +761,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.LoginPostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.LoginPostDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.LoginPostDataInit());}
+                else if (newErr.status === 401 && newErr.error){ const res = newErr.error as BaseResponse; this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -805,13 +803,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new PostRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.PostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -856,7 +854,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.Post(request as PostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -873,9 +871,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.PostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.PostDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.PostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -916,13 +913,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new PutRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.PutRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -967,7 +964,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.Put(request as PutRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -984,9 +981,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.PutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.PutDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.PutDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1027,13 +1023,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new RangeDeleteRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.RangeDeleteRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1078,7 +1074,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.RangeDelete(request as RangeDeleteRequest, 'response').pipe(
                 map(() => UsersActions.RangeDeleteSuccess()),
                 catchError((err) => {
@@ -1088,6 +1084,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.RangeDeleteSetError({ errors: newErrors }));
                 }
+                
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1142,13 +1140,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new RangePostRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.RangePostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1193,7 +1191,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.RangePost(request as RangePostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -1217,9 +1215,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.RangePostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.RangePostDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.RangePostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1274,13 +1271,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new RangePutRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.RangePutRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1325,7 +1322,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.RangePut(request as RangePutRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -1349,9 +1346,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.RangePutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.RangePutDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.RangePutDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1392,13 +1388,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        // @ts-ignore
+        
         map(([request]) => {
-            // @ts-ignore
+            
             const nRequest = new RegisterPostRequest();
-            // @ts-ignore
+            
             Object.assign(nRequest,request);
-            // @ts-ignore
+            
             return UsersActions.RegisterPostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1443,7 +1439,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            // @ts-ignore
+            
             return this.api.RegisterPost(request as RegisterPostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -1460,9 +1456,8 @@ export class UsersEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(UsersActions.RegisterPostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(UsersActions.RegisterPostDataInit());
-                }
+                else if (newErr.status === 404) {return of(UsersActions.RegisterPostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
