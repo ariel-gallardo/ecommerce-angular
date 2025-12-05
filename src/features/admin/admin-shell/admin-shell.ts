@@ -1,35 +1,38 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuService } from '@features/base/services/menu.service';
 
+
 @Component({
-  selector: 'user-profile',
+  selector: 'app-admin-shell',
   standalone: false,
-  templateUrl: './profile.html',
-  styleUrl: './profile.scss',
+  templateUrl: './admin-shell.html',
+  styleUrl: './admin-shell.scss',
 })
-export class Profile implements OnInit, OnDestroy {
+export class AdminShell implements OnInit, OnDestroy {
+
   constructor(private menuService: MenuService) {
- 
+    
   }
-  ngOnDestroy(): void {
-    this.menuService.close();
-  }
+  
   ngOnInit(): void {
     this.menuService.init([
-      {
-        icon: 'account_circle',
-        label: 'Perfil',
-        route: '/users/profile',
-        show: true
-      },
       {
         icon: 'admin_panel_settings',
         label: 'Administración',
         route: '/users/admin',
         show: true
+      },
+      {
+        icon: 'receipt_long',
+        label: 'Logs',
+        route: '/users/admin/logs',
+        show: true
       }
     ]);
   }
 
-  
+  ngOnDestroy(): void {
+    this.menuService.close();
+  }
+
 }

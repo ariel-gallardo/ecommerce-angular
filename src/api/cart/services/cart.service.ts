@@ -38,6 +38,7 @@ export class FiltersFirstGetRequest {
     productId?: string | undefined | null;
     productIds?: string[] | undefined | null;
     orderBy?: string | undefined | null;
+    userId?: number | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
              this.id = null;
             
@@ -46,6 +47,8 @@ export class FiltersFirstGetRequest {
              this.productIds = [];
             
              this.orderBy = null;
+             
+             this.userId = null;
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -537,6 +540,7 @@ export class CartService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -599,6 +603,7 @@ export class CartService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -661,6 +666,7 @@ export class CartService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -723,6 +729,7 @@ export class CartService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -785,6 +792,7 @@ export class CartService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'

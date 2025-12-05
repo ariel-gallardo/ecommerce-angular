@@ -5,10 +5,12 @@ import { App } from './app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReduxCoreModule as SecurityReduxCoreModule } from '@api/security/redux/core.module';
 import { BaseModule } from '@features/base/base-module';
-import { AuthEffects } from '@effects/AuthEffects';
+import { AuthEffects } from '@effects/auth.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthInterceptor } from '@interceptors/auth-interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { CartReduxModule } from '@api/cart';
+import { CartEffects } from '@effects/cart.effects';
 
 @NgModule({
   declarations: [
@@ -17,11 +19,12 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
   imports: [
     BrowserModule,
     FormsModule,
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CartEffects]),
     BaseModule,
     ReactiveFormsModule,
     AppRoutingModule,
     SecurityReduxCoreModule,
+    CartReduxModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

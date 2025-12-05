@@ -38,12 +38,10 @@ import { ValidationErrors } from '@angular/forms';
 import { ValidationError } from '@api/security/models/validation-error.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import {SnackbarService} from '@features/snackbar/snackbar-service'; 
-import { BaseResponse } from '@api/security/models/base-response.model';
 import { Router } from '@angular/router';
+import { BaseResponse } from '@api/security/models/base-response.model';
 
-@Injectable(
-    
-)
+@Injectable()
 export class PersonasEffects {
     private actions$ = inject(Actions);
     private api = inject(PersonasService);
@@ -142,6 +140,7 @@ export class PersonasEffects {
         )
         );
         DeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.DeleteExecute),
             withLatestFrom(
@@ -154,7 +153,7 @@ export class PersonasEffects {
             }
             // @ts-ignore
             return this.api.Delete(request as DeleteRequest, 'response').pipe(
-                map(() => PersonasActions.DeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -245,6 +244,7 @@ export class PersonasEffects {
         )
         );
         FiltersFirstGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.FiltersFirstGetExecute),
             withLatestFrom(
@@ -369,6 +369,7 @@ export class PersonasEffects {
         )
         );
         FiltersGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.FiltersGetExecute),
             withLatestFrom(
@@ -486,6 +487,7 @@ export class PersonasEffects {
         )
         );
         GetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.GetExecute),
             withLatestFrom(
@@ -610,6 +612,7 @@ export class PersonasEffects {
         )
         );
         IdsGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.IdsGetExecute),
             withLatestFrom(
@@ -727,6 +730,7 @@ export class PersonasEffects {
         )
         );
         PostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.PostExecute),
             withLatestFrom(
@@ -837,6 +841,7 @@ export class PersonasEffects {
         )
         );
         PutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.PutExecute),
             withLatestFrom(
@@ -947,6 +952,7 @@ export class PersonasEffects {
         )
         );
         RangeDeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.RangeDeleteExecute),
             withLatestFrom(
@@ -959,7 +965,7 @@ export class PersonasEffects {
             }
             // @ts-ignore
             return this.api.RangeDelete(request as RangeDeleteRequest, 'response').pipe(
-                map(() => PersonasActions.RangeDeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -1064,6 +1070,7 @@ export class PersonasEffects {
         )
         );
         RangePostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.RangePostExecute),
             withLatestFrom(
@@ -1195,6 +1202,7 @@ export class PersonasEffects {
         )
         );
         RangePutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PersonasActions.RangePutExecute),
             withLatestFrom(

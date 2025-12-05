@@ -1,6 +1,5 @@
 import { Role } from "./role.model";
 
-
 export class UserRegister { 
     password?:   string   | undefined | null;
     rePassword?:   string   | undefined | null;

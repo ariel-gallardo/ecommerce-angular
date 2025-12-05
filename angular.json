@@ -58,7 +58,7 @@
 							}
 						],
 						"styles": [
-							"src/styles.scss",
+							"src/styles.css",
 							"src/styles/theme.scss"
 						]
 					},
@@ -116,7 +116,7 @@
 							}
 						],
 						"styles": [
-							"src/styles.scss",
+							"src/styles.css",
 							"src/styles/theme.scss"
 						]
 					}

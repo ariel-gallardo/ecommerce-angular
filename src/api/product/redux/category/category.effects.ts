@@ -38,15 +38,16 @@ import { ValidationErrors } from '@angular/forms';
 import { ValidationError } from '@api/product/models/validation-error.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import {SnackbarService} from '@features/snackbar/snackbar-service'; 
+import { Router } from '@angular/router';
+import { BaseResponse } from '@api/product/models/base-response.model';
 
-@Injectable(
-    
-)
+@Injectable()
 export class CategoryEffects {
     private actions$ = inject(Actions);
     private api = inject(CategoryService);
     private store = inject(Store);
     private snackbarService = inject(SnackbarService);
+    private router = inject(Router);
 
     Init$ = createEffect(() =>
     this.actions$.pipe(
@@ -139,6 +140,7 @@ export class CategoryEffects {
         )
         );
         DeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.DeleteExecute),
             withLatestFrom(
@@ -151,7 +153,7 @@ export class CategoryEffects {
             }
             // @ts-ignore
             return this.api.Delete(request as DeleteRequest, 'response').pipe(
-                map(() => CategoryActions.DeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -159,6 +161,8 @@ export class CategoryEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(CategoryActions.DeleteSetError({ errors: newErrors }));
                 }
+                
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -240,6 +244,7 @@ export class CategoryEffects {
         )
         );
         FiltersFirstGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.FiltersFirstGetExecute),
             withLatestFrom(
@@ -267,9 +272,8 @@ export class CategoryEffects {
                     
                     return of(CategoryActions.FiltersFirstGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.FiltersFirstGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.FiltersFirstGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -365,6 +369,7 @@ export class CategoryEffects {
         )
         );
         FiltersGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.FiltersGetExecute),
             withLatestFrom(
@@ -399,9 +404,8 @@ export class CategoryEffects {
                     
                     return of(CategoryActions.FiltersGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.FiltersGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.FiltersGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -483,6 +487,7 @@ export class CategoryEffects {
         )
         );
         GetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.GetExecute),
             withLatestFrom(
@@ -510,9 +515,8 @@ export class CategoryEffects {
                     
                     return of(CategoryActions.GetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.GetDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.GetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -608,6 +612,7 @@ export class CategoryEffects {
         )
         );
         IdsGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.IdsGetExecute),
             withLatestFrom(
@@ -642,9 +647,8 @@ export class CategoryEffects {
                     
                     return of(CategoryActions.IdsGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.IdsGetDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.IdsGetDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -726,6 +730,7 @@ export class CategoryEffects {
         )
         );
         PostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.PostExecute),
             withLatestFrom(
@@ -753,9 +758,8 @@ export class CategoryEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(CategoryActions.PostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.PostDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.PostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -837,6 +841,7 @@ export class CategoryEffects {
         )
         );
         PutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.PutExecute),
             withLatestFrom(
@@ -864,9 +869,8 @@ export class CategoryEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(CategoryActions.PutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.PutDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.PutDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -948,6 +952,7 @@ export class CategoryEffects {
         )
         );
         RangeDeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.RangeDeleteExecute),
             withLatestFrom(
@@ -960,7 +965,7 @@ export class CategoryEffects {
             }
             // @ts-ignore
             return this.api.RangeDelete(request as RangeDeleteRequest, 'response').pipe(
-                map(() => CategoryActions.RangeDeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -968,6 +973,8 @@ export class CategoryEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(CategoryActions.RangeDeleteSetError({ errors: newErrors }));
                 }
+                
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1063,6 +1070,7 @@ export class CategoryEffects {
         )
         );
         RangePostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.RangePostExecute),
             withLatestFrom(
@@ -1097,9 +1105,8 @@ export class CategoryEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(CategoryActions.RangePostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.RangePostDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.RangePostDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -1195,6 +1202,7 @@ export class CategoryEffects {
         )
         );
         RangePutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(CategoryActions.RangePutExecute),
             withLatestFrom(
@@ -1229,9 +1237,8 @@ export class CategoryEffects {
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
                     return of(CategoryActions.RangePutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {
-                    return of(CategoryActions.RangePutDataInit());
-                }
+                else if (newErr.status === 404) {return of(CategoryActions.RangePutDataInit());}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );

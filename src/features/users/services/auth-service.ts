@@ -7,18 +7,32 @@ import { JwtUser } from '@models/jwt-user';
 })
 export class AuthService {
 
+  private normalizeClaims(raw: any): any {
+    const normalized: any = {};
+    Object.keys(raw).forEach(key => {
+      const short = key.includes("/")
+        ? key.substring(key.lastIndexOf("/") + 1)
+        : key;
+
+      normalized[short] = raw[key];
+    });
+    return normalized;
+  }
+
+
   private get DecodedToken(): Promise<JwtUser | null> {
-    return new Promise((res,rej) => {
-      this.Token.then(c => {
-            try {
-              if(c?.value)
-              res(jwtDecode<JwtUser>(c?.value as string));
-              else res(null)
-            } catch (err) {
-              console.error('Invalid JWT token', err);
-              res(null);
-            }
-          })
+    return this.Token.then(c => {
+      try {
+        if (!c?.value) return null;
+
+        const raw = jwtDecode<any>(c.value);
+        const normalized = this.normalizeClaims(raw);
+
+        return normalized as JwtUser;
+      } catch (err) {
+        console.error('Invalid JWT token', err);
+        return null;
+      }
     });
   }
 
@@ -39,7 +53,7 @@ export class AuthService {
   }
 
   public get NameIdentifier(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.nameIdentifier ?? null);
+    return this.DecodedToken.then(t => t?.nameidentifier ?? null);
   }
 
   public get Name(): Promise<string | null> {
@@ -47,11 +61,11 @@ export class AuthService {
   }
 
   public get Email(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.email ?? null);
+    return this.DecodedToken.then(t => t?.emailaddress ?? null);
   }
 
   public get GivenName(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.givenName ?? null);
+    return this.DecodedToken.then(t => t?.givenname ?? null);
   }
 
   public get Surname(): Promise<string | null> {

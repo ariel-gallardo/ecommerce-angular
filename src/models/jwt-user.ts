@@ -1,10 +1,10 @@
 import {JwtPayload} from 'jwt-decode';
 export interface JwtUser extends JwtPayload{
   role: string;              
-  nameIdentifier: string;    
+  nameidentifier: string;    
   name: string;              
-  email: string;             
-  givenName: string;         
+  emailaddress: string;             
+  givenname: string;         
   surname: string;           
   street: string;            
   number: string;            

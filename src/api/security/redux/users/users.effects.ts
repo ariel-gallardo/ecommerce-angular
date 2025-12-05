@@ -47,16 +47,14 @@ import {SnackbarService} from '@features/snackbar/snackbar-service';
 import { Router } from '@angular/router';
 import { BaseResponse } from '@api/security/models/base-response.model';
 
-@Injectable(
-    
-)
+@Injectable()
 export class UsersEffects {
     private actions$ = inject(Actions);
     private api = inject(UsersService);
     private store = inject(Store);
     private snackbarService = inject(SnackbarService);
     private router = inject(Router);
-    
+
     Init$ = createEffect(() =>
     this.actions$.pipe(
         ofType(UsersActions.Init),
@@ -109,13 +107,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new DeleteRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.DeleteRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -150,6 +148,7 @@ export class UsersEffects {
         )
         );
         DeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.DeleteExecute),
             withLatestFrom(
@@ -160,9 +159,9 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.Delete(request as DeleteRequest, 'response').pipe(
-                map(() => UsersActions.DeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -212,13 +211,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new FiltersFirstGetRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.FiltersFirstGetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -253,6 +252,7 @@ export class UsersEffects {
         )
         );
         FiltersFirstGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.FiltersFirstGetExecute),
             withLatestFrom(
@@ -263,7 +263,7 @@ export class UsersEffects {
             if (firstInit ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.FiltersFirstGet(request as FiltersFirstGetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -336,13 +336,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new FiltersGetRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.FiltersGetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -377,6 +377,7 @@ export class UsersEffects {
         )
         );
         FiltersGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.FiltersGetExecute),
             withLatestFrom(
@@ -387,7 +388,7 @@ export class UsersEffects {
             if (firstInit ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.FiltersGet(request as FiltersGetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -453,13 +454,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new GetRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.GetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -494,6 +495,7 @@ export class UsersEffects {
         )
         );
         GetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.GetExecute),
             withLatestFrom(
@@ -504,7 +506,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.Get(request as GetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -577,13 +579,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new IdsGetRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.IdsGetRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -618,6 +620,7 @@ export class UsersEffects {
         )
         );
         IdsGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.IdsGetExecute),
             withLatestFrom(
@@ -628,7 +631,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.IdsGet(request as IdsGetRequest, 'response').pipe(
                 map(response =>{
                     
@@ -694,13 +697,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new LoginPostRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.LoginPostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -735,6 +738,7 @@ export class UsersEffects {
         )
         );
         LoginPostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.LoginPostExecute),
             withLatestFrom(
@@ -745,9 +749,10 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.LoginPost(request as LoginPostRequest, 'response').pipe(
                 map(response =>{
+                      this.snackbarService.show(response.body!.message, response.body!.statusCode);
                     return UsersActions.LoginPostSetData({
                         data:                         
                         response.body!.data
@@ -803,13 +808,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new PostRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.PostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -844,6 +849,7 @@ export class UsersEffects {
         )
         );
         PostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.PostExecute),
             withLatestFrom(
@@ -854,7 +860,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.Post(request as PostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -913,13 +919,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new PutRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.PutRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -954,6 +960,7 @@ export class UsersEffects {
         )
         );
         PutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.PutExecute),
             withLatestFrom(
@@ -964,7 +971,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.Put(request as PutRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -1023,13 +1030,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new RangeDeleteRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.RangeDeleteRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1064,6 +1071,7 @@ export class UsersEffects {
         )
         );
         RangeDeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.RangeDeleteExecute),
             withLatestFrom(
@@ -1074,9 +1082,9 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.RangeDelete(request as RangeDeleteRequest, 'response').pipe(
-                map(() => UsersActions.RangeDeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -1140,13 +1148,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new RangePostRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.RangePostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1181,6 +1189,7 @@ export class UsersEffects {
         )
         );
         RangePostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.RangePostExecute),
             withLatestFrom(
@@ -1191,7 +1200,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.RangePost(request as RangePostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -1271,13 +1280,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new RangePutRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.RangePutRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1312,6 +1321,7 @@ export class UsersEffects {
         )
         );
         RangePutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.RangePutExecute),
             withLatestFrom(
@@ -1322,7 +1332,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.RangePut(request as RangePutRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
@@ -1388,13 +1398,13 @@ export class UsersEffects {
         return [updated, true] as const;
         }),
         filter(([_, status]) => status),
-        
+        // @ts-ignore
         map(([request]) => {
-            
+            // @ts-ignore
             const nRequest = new RegisterPostRequest();
-            
+            // @ts-ignore
             Object.assign(nRequest,request);
-            
+            // @ts-ignore
             return UsersActions.RegisterPostRequestUpdateSuccess({ request: nRequest });
         })
     )
@@ -1429,6 +1439,7 @@ export class UsersEffects {
         )
         );
         RegisterPostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(UsersActions.RegisterPostExecute),
             withLatestFrom(
@@ -1439,7 +1450,7 @@ export class UsersEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.RegisterPost(request as RegisterPostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);

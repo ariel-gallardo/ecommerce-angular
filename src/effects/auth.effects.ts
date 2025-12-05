@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { PermissionActions } from "@api/security";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, EMPTY, map, tap } from "rxjs";
+import { map } from "rxjs";
 
 @Injectable()
 export class AuthEffects {
@@ -9,5 +9,10 @@ export class AuthEffects {
     $authEffect = createEffect(() => this.actions$.pipe(
         ofType(PermissionActions.CanAccessHeadRequestUpdateSuccess),
         map(() => PermissionActions.CanAccessHeadExecute())
+    ));
+
+    $authEffectSuccess = createEffect(() => this.actions$.pipe(
+        ofType(PermissionActions.CanAccessHeadSetData),
+        map(() => PermissionActions.CanAccessHeadSuccess())
     ));
 }

@@ -1,17 +1,17 @@
 @use 'tailwindcss';
 @use "@angular/material" as mat;
 
-
 $theme: mat.define-theme((
   color: (
-    primary: mat.$chartreuse-palette
+    primary: mat.$blue-palette
   ),
   typography: (
-    brand-family: "Roboto",
-    plain-family: "Roboto"
+    brand-family: "Poppins",
+    plain-family: "Inter",
+    bold-weight: 700,
+    medium-weight: 500,
   )
 ));
-
 
 @media (prefers-color-scheme: light) {
   :root {

@@ -84,7 +84,7 @@ export class PersonasFacade {
 
   public get DeleteIsLoaded$(): Observable<boolean> { return this.store.select(selectDeleteLoaded).pipe(filter(x => x != null)); }
   
-  public get DeleteHasError$(): Observable<boolean> { return this.store.select(selectDeleteHasError); }
+  public get DeleteHasError$(): Observable<boolean> { return this.store.select(selectDeleteHasError).pipe(filter(x => x !== null)); }
   public get DeleteErrors$(): Observable<ValidationError[][]> { return this.store.select(selectDeleteErrors); }
   public get DeleteRequest$(): Observable<DeleteRequest> { return this.store.select(selectDeleteRequest).pipe(filter(x => x !== null)); }
   public Delete(){
@@ -100,8 +100,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.DeleteInit());
   }
   public get FiltersFirstGetIsLoaded$(): Observable<boolean> { return this.store.select(selectFiltersFirstGetLoaded).pipe(filter(x => x != null)); }
-  public get FiltersFirstGet$(): Observable<Persona> { return this.store.select(selectFiltersFirstGetData); }
-  public get FiltersFirstGetHasError$(): Observable<boolean> { return this.store.select(selectFiltersFirstGetHasError); }
+  public get FiltersFirstGet$(): Observable<Persona> { return this.store.select(selectFiltersFirstGetData).pipe(filter(x => x !== null)); }
+  public get FiltersFirstGetHasError$(): Observable<boolean> { return this.store.select(selectFiltersFirstGetHasError).pipe(filter(x => x !== null)); }
   public get FiltersFirstGetErrors$(): Observable<ValidationError[][]> { return this.store.select(selectFiltersFirstGetErrors); }
   public get FiltersFirstGetRequest$(): Observable<FiltersFirstGetRequest> { return this.store.select(selectFiltersFirstGetRequest).pipe(filter(x => x !== null)); }
   public FiltersFirstGet(){
@@ -117,8 +117,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.FiltersFirstGetInit());
   }
   public get FiltersGetIsLoaded$(): Observable<boolean> { return this.store.select(selectFiltersGetLoaded).pipe(filter(x => x != null)); }
-  public get FiltersGet$(): Observable<Pagination<Persona>> { return this.store.select(selectFiltersGetData); }
-  public get FiltersGetHasError$(): Observable<boolean> { return this.store.select(selectFiltersGetHasError); }
+  public get FiltersGet$(): Observable<Pagination<Persona>> { return this.store.select(selectFiltersGetData).pipe(filter(x => x !== null)); }
+  public get FiltersGetHasError$(): Observable<boolean> { return this.store.select(selectFiltersGetHasError).pipe(filter(x => x !== null)); }
   public get FiltersGetErrors$(): Observable<ValidationError[][]> { return this.store.select(selectFiltersGetErrors); }
   public get FiltersGetRequest$(): Observable<FiltersGetRequest> { return this.store.select(selectFiltersGetRequest).pipe(filter(x => x !== null)); }
   public FiltersGet(){
@@ -138,8 +138,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.FiltersGetInit());
   }
   public get GetIsLoaded$(): Observable<boolean> { return this.store.select(selectGetLoaded).pipe(filter(x => x != null)); }
-  public get Get$(): Observable<Persona> { return this.store.select(selectGetData); }
-  public get GetHasError$(): Observable<boolean> { return this.store.select(selectGetHasError); }
+  public get Get$(): Observable<Persona> { return this.store.select(selectGetData).pipe(filter(x => x !== null)); }
+  public get GetHasError$(): Observable<boolean> { return this.store.select(selectGetHasError).pipe(filter(x => x !== null)); }
   public get GetErrors$(): Observable<ValidationError[][]> { return this.store.select(selectGetErrors); }
   public get GetRequest$(): Observable<GetRequest> { return this.store.select(selectGetRequest).pipe(filter(x => x !== null)); }
   public Get(){
@@ -155,8 +155,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.GetInit());
   }
   public get IdsGetIsLoaded$(): Observable<boolean> { return this.store.select(selectIdsGetLoaded).pipe(filter(x => x != null)); }
-  public get IdsGet$(): Observable<Pagination<Persona>> { return this.store.select(selectIdsGetData); }
-  public get IdsGetHasError$(): Observable<boolean> { return this.store.select(selectIdsGetHasError); }
+  public get IdsGet$(): Observable<Pagination<Persona>> { return this.store.select(selectIdsGetData).pipe(filter(x => x !== null)); }
+  public get IdsGetHasError$(): Observable<boolean> { return this.store.select(selectIdsGetHasError).pipe(filter(x => x !== null)); }
   public get IdsGetErrors$(): Observable<ValidationError[][]> { return this.store.select(selectIdsGetErrors); }
   public get IdsGetRequest$(): Observable<IdsGetRequest> { return this.store.select(selectIdsGetRequest).pipe(filter(x => x !== null)); }
   public IdsGet(){
@@ -176,8 +176,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.IdsGetInit());
   }
   public get PostIsLoaded$(): Observable<boolean> { return this.store.select(selectPostLoaded).pipe(filter(x => x != null)); }
-  public get Post$(): Observable<Persona> { return this.store.select(selectPostData); }
-  public get PostHasError$(): Observable<boolean> { return this.store.select(selectPostHasError); }
+  public get Post$(): Observable<Persona> { return this.store.select(selectPostData).pipe(filter(x => x !== null)); }
+  public get PostHasError$(): Observable<boolean> { return this.store.select(selectPostHasError).pipe(filter(x => x !== null)); }
   public get PostErrors$(): Observable<ValidationError[][]> { return this.store.select(selectPostErrors); }
   public get PostRequest$(): Observable<PostRequest> { return this.store.select(selectPostRequest).pipe(filter(x => x !== null)); }
   public Post(){
@@ -193,8 +193,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.PostInit());
   }
   public get PutIsLoaded$(): Observable<boolean> { return this.store.select(selectPutLoaded).pipe(filter(x => x != null)); }
-  public get Put$(): Observable<Persona> { return this.store.select(selectPutData); }
-  public get PutHasError$(): Observable<boolean> { return this.store.select(selectPutHasError); }
+  public get Put$(): Observable<Persona> { return this.store.select(selectPutData).pipe(filter(x => x !== null)); }
+  public get PutHasError$(): Observable<boolean> { return this.store.select(selectPutHasError).pipe(filter(x => x !== null)); }
   public get PutErrors$(): Observable<ValidationError[][]> { return this.store.select(selectPutErrors); }
   public get PutRequest$(): Observable<PutRequest> { return this.store.select(selectPutRequest).pipe(filter(x => x !== null)); }
   public Put(){
@@ -211,7 +211,7 @@ export class PersonasFacade {
   }
   public get RangeDeleteIsLoaded$(): Observable<boolean> { return this.store.select(selectRangeDeleteLoaded).pipe(filter(x => x != null)); }
   
-  public get RangeDeleteHasError$(): Observable<boolean> { return this.store.select(selectRangeDeleteHasError); }
+  public get RangeDeleteHasError$(): Observable<boolean> { return this.store.select(selectRangeDeleteHasError).pipe(filter(x => x !== null)); }
   public get RangeDeleteErrors$(): Observable<ValidationError[][]> { return this.store.select(selectRangeDeleteErrors); }
   public get RangeDeleteRequest$(): Observable<RangeDeleteRequest> { return this.store.select(selectRangeDeleteRequest).pipe(filter(x => x !== null)); }
   public RangeDelete(){
@@ -227,8 +227,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.RangeDeleteInit());
   }
   public get RangePostIsLoaded$(): Observable<boolean> { return this.store.select(selectRangePostLoaded).pipe(filter(x => x != null)); }
-  public get RangePost$(): Observable<Pagination<Persona>> { return this.store.select(selectRangePostData); }
-  public get RangePostHasError$(): Observable<boolean> { return this.store.select(selectRangePostHasError); }
+  public get RangePost$(): Observable<Pagination<Persona>> { return this.store.select(selectRangePostData).pipe(filter(x => x !== null)); }
+  public get RangePostHasError$(): Observable<boolean> { return this.store.select(selectRangePostHasError).pipe(filter(x => x !== null)); }
   public get RangePostErrors$(): Observable<ValidationError[][]> { return this.store.select(selectRangePostErrors); }
   public get RangePostRequest$(): Observable<RangePostRequest> { return this.store.select(selectRangePostRequest).pipe(filter(x => x !== null)); }
   public RangePost(){
@@ -248,8 +248,8 @@ export class PersonasFacade {
     this.store.dispatch(Actions.RangePostInit());
   }
   public get RangePutIsLoaded$(): Observable<boolean> { return this.store.select(selectRangePutLoaded).pipe(filter(x => x != null)); }
-  public get RangePut$(): Observable<Pagination<Persona>> { return this.store.select(selectRangePutData); }
-  public get RangePutHasError$(): Observable<boolean> { return this.store.select(selectRangePutHasError); }
+  public get RangePut$(): Observable<Pagination<Persona>> { return this.store.select(selectRangePutData).pipe(filter(x => x !== null)); }
+  public get RangePutHasError$(): Observable<boolean> { return this.store.select(selectRangePutHasError).pipe(filter(x => x !== null)); }
   public get RangePutErrors$(): Observable<ValidationError[][]> { return this.store.select(selectRangePutErrors); }
   public get RangePutRequest$(): Observable<RangePutRequest> { return this.store.select(selectRangePutRequest).pipe(filter(x => x !== null)); }
   public RangePut(){

@@ -541,6 +541,7 @@ export class ProductService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -603,6 +604,7 @@ export class ProductService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -665,6 +667,7 @@ export class ProductService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -727,6 +730,7 @@ export class ProductService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'
@@ -789,6 +793,7 @@ export class ProductService extends BaseService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json-patch+json',
             'application/json',
             'text/json',
             'application/*+json'

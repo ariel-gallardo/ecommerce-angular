@@ -7,6 +7,7 @@ export const selectCanAccessHeadLoaded = createSelector(selectState,s => s.CanAc
 export const selectCanAccessHeadFirstInit = createSelector(selectState,s => s.CanAccessHead.firstInit);
 export const selectCanAccessHeadHasError = createSelector(selectState,s => s.CanAccessHead.hasError);
 export const selectCanAccessHeadErrors = createSelector(selectState,s => s.CanAccessHead.errors);
+export const selectCanAccessHeadData = createSelector(selectState,s => s.CanAccessHead.data);
 export const selectDeleteRequest = createSelector(selectState,s => s.Delete.request);
 export const selectDeleteLoaded = createSelector(selectState,s => s.Delete.isLoaded);
 export const selectDeleteFirstInit = createSelector(selectState,s => s.Delete.firstInit);

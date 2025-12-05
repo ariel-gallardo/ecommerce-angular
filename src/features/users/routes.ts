@@ -10,8 +10,8 @@ const routes : Route[] = [
         {path: 'profile', component: Profile},
         {path: 'register', component: Register},
         {path: 'login', component: Login},
+        {path: 'admin', loadChildren: () => import('@features/admin/admin-module').then(x => x.AdminModule), canActivate: [AuthGuard]}
     ], component: UsersShell, canActivateChild: [AuthGuard]}
-
 ];
 
 export default routes;

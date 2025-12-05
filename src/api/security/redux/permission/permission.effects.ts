@@ -41,12 +41,10 @@ import { ValidationErrors } from '@angular/forms';
 import { ValidationError } from '@api/security/models/validation-error.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import {SnackbarService} from '@features/snackbar/snackbar-service'; 
-import { BaseResponse } from '@api/security/models/base-response.model';
 import { Router } from '@angular/router';
+import { BaseResponse } from '@api/security/models/base-response.model';
 
-@Injectable(
-    
-)
+@Injectable()
 export class PermissionEffects {
     private actions$ = inject(Actions);
     private api = inject(PermissionService);
@@ -146,6 +144,7 @@ export class PermissionEffects {
         )
         );
         CanAccessHeadExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.CanAccessHeadExecute),
             withLatestFrom(
@@ -156,11 +155,14 @@ export class PermissionEffects {
             if (firstInit  || request == null ) {
                 return EMPTY; 
             }
-            
+            // @ts-ignore
             return this.api.CanAccessHead(request as CanAccessHeadRequest, 'response').pipe(
                 map(response =>{
-                    return PermissionActions.CanAccessHeadSuccess()
+                    return PermissionActions.CanAccessHeadSetData({
+                        data: response.headers
+                    })
                 }),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -169,7 +171,7 @@ export class PermissionEffects {
                     return of(PermissionActions.CanAccessHeadSetError({ errors: newErrors }));
                 }
                 else if (newErr.status === 404) {return of(PermissionActions.CanAccessHeadDataInit());}
-                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login'],{ state: {request}});}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
+                if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
             );
@@ -251,6 +253,7 @@ export class PermissionEffects {
         )
         );
         DeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.DeleteExecute),
             withLatestFrom(
@@ -263,7 +266,7 @@ export class PermissionEffects {
             }
             // @ts-ignore
             return this.api.Delete(request as DeleteRequest, 'response').pipe(
-                map(() => PermissionActions.DeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -354,6 +357,7 @@ export class PermissionEffects {
         )
         );
         FiltersFirstGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.FiltersFirstGetExecute),
             withLatestFrom(
@@ -478,6 +482,7 @@ export class PermissionEffects {
         )
         );
         FiltersGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.FiltersGetExecute),
             withLatestFrom(
@@ -595,6 +600,7 @@ export class PermissionEffects {
         )
         );
         GetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.GetExecute),
             withLatestFrom(
@@ -719,6 +725,7 @@ export class PermissionEffects {
         )
         );
         IdsGetExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.IdsGetExecute),
             withLatestFrom(
@@ -836,6 +843,7 @@ export class PermissionEffects {
         )
         );
         PostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.PostExecute),
             withLatestFrom(
@@ -946,6 +954,7 @@ export class PermissionEffects {
         )
         );
         PutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.PutExecute),
             withLatestFrom(
@@ -1056,6 +1065,7 @@ export class PermissionEffects {
         )
         );
         RangeDeleteExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.RangeDeleteExecute),
             withLatestFrom(
@@ -1068,7 +1078,7 @@ export class PermissionEffects {
             }
             // @ts-ignore
             return this.api.RangeDelete(request as RangeDeleteRequest, 'response').pipe(
-                map(() => PermissionActions.RangeDeleteSuccess()),
+                
                 catchError((err) => {
                 const newErr = err as HttpErrorResponse;
                 if (newErr.status === 400 && newErr.error) {
@@ -1173,6 +1183,7 @@ export class PermissionEffects {
         )
         );
         RangePostExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.RangePostExecute),
             withLatestFrom(
@@ -1304,6 +1315,7 @@ export class PermissionEffects {
         )
         );
         RangePutExecute$ = createEffect(() =>
+        // @ts-ignore
         this.actions$.pipe(
             ofType(PermissionActions.RangePutExecute),
             withLatestFrom(

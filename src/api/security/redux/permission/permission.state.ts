@@ -20,7 +20,7 @@ import { HttpHeaders } from '@angular/common/http';
 
 export default interface State
 {
-        CanAccessHead: StateDetailBase<CanAccessHeadRequest>
+        CanAccessHead: StateDetail<HttpHeaders,CanAccessHeadRequest>
         Delete: StateDetailBase<DeleteRequest>
         FiltersFirstGet: StateDetail<Permission,FiltersFirstGetRequest>
         FiltersGet: StateDetail<Pagination<Permission>,FiltersGetRequest>

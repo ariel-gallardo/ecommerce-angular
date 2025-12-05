@@ -6,6 +6,6 @@ import { Component } from '@angular/core';
   templateUrl: './users-shell.html',
   styleUrl: './users-shell.scss',
 })
-export class UsersShell {
+export class UsersShell{
 
 }
