@@ -1,22 +1,22 @@
-@use 'tailwindcss';
-@use "@angular/material" as mat;
+@use '@angular/material' as mat;
 
 $theme: mat.define-theme((
   color: (
-    primary: mat.$blue-palette
+    theme-type: dark,
+    primary: mat.$cyan-palette,
+    tertiary: mat.$orange-palette,
   ),
   typography: (
-    brand-family: "Poppins",
-    plain-family: "Inter",
-    bold-weight: 700,
-    medium-weight: 500,
-  )
+    brand-family: 'Comic Sans',
+    bold-weight: 900
+  ),
+  density: (
+    scale: 0
+  ),
 ));
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
+
+
+:root{
     @include mat.all-component-themes($theme);
-    @include mat.system-classes();
-  }
 }

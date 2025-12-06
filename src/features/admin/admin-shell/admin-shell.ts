@@ -27,6 +27,12 @@ export class AdminShell implements OnInit, OnDestroy {
         label: 'Logs',
         route: '/users/admin/logs',
         show: true
+      },
+       {
+        icon: 'security',
+        label: 'Permisos',
+        route: '/users/admin/permissions',
+        show: true
       }
     ]);
   }
