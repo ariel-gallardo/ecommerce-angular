@@ -2,17 +2,14 @@
   <app-navbar></app-navbar>
   <main class="overflow-y-auto overflow-x-hidden">
     <mat-drawer-container class="h-full">
-      <mat-drawer mode="over" #drawer>
-      <ng-container *ngFor="let item of Items()">
-        <button *ngIf="item.show"
-                mat-button
-                class="w-full"
-                [routerLink]="item.route"
-                (click)="toggle()"> 
-          <mat-icon>{{ item.icon }}</mat-icon>
-          <h3 class="text-2xl">{{ item.label }}</h3>
-        </button>
-      </ng-container>
+      <mat-drawer mode="side" #drawer>
+        <ng-container *ngFor="let item of Items(); let i = index">
+          <mat-divider *ngIf="i === 1"></mat-divider>
+          <button *ngIf="item.show" mat-button class="w-full" [routerLink]="item.route">
+            <mat-icon>{{ item.icon }}</mat-icon>
+            <h3 class="text-2xl">{{ item.label }}</h3>
+          </button>
+        </ng-container>
       </mat-drawer>
       <mat-drawer-content><router-outlet></router-outlet></mat-drawer-content>
     </mat-drawer-container>

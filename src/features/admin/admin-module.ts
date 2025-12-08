@@ -12,7 +12,9 @@ import { PermissionsList } from './permissions/permissions-list/permissions-list
 import {MatTableModule} from '@angular/material/table';
 import { CommonPipesModule } from '@pipes/common-pipes.module';
 import { PermissionsEdit } from './permissions/permissions-edit/permissions-edit';
- 
+ import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AdminShell,
@@ -28,6 +30,8 @@ import { PermissionsEdit } from './permissions/permissions-edit/permissions-edit
     MatButtonModule,
     MatIconModule,
     MatTableModule,
+    MatInputModule,
+    MatSelectModule,
     RouterModule.forChild(routes)
   ]
 })

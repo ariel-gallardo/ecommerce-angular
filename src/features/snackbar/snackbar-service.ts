@@ -11,7 +11,7 @@ export class SnackbarService {
     this.snackBar.openFromComponent(Message, {
       data: { message, status },
       duration: 3000,
-      horizontalPosition: 'right',
+      horizontalPosition: 'center',
       verticalPosition: 'top',
       panelClass: ['!p-0', '!bg-transparent', '!shadow-none']
     });

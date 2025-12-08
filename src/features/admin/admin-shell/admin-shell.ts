@@ -11,9 +11,9 @@ import { MenuService } from '@features/base/services/menu.service';
 export class AdminShell implements OnInit, OnDestroy {
 
   constructor(private menuService: MenuService) {
-    
+
   }
-  
+
   ngOnInit(): void {
     this.menuService.init([
       {
@@ -28,12 +28,18 @@ export class AdminShell implements OnInit, OnDestroy {
         route: '/users/admin/logs',
         show: true
       },
-       {
+      {
         icon: 'security',
         label: 'Permisos',
         route: '/users/admin/permissions',
         show: true
-      }
+      },
+      {
+        icon: 'account_circle',
+        label: 'Perfil',
+        route: '/users/profile',
+        show: true
+      },
     ]);
   }
 

@@ -9,7 +9,6 @@ export class MenuService {
   private menuStateSubject = new BehaviorSubject<boolean>(false);
   private hasMenuStateSubject = new BehaviorSubject<boolean>(false);
 
-
   constructor() {
     this.menuItemModel = signal([]);
   }
@@ -24,6 +23,7 @@ export class MenuService {
   init(menuItemModel: MenuItemModel[]){
     this.menuItemModel.set(menuItemModel);
     this.hasMenuStateSubject.next(true);
+    this.toggleMenu();
   }
 
   toggleMenu() {

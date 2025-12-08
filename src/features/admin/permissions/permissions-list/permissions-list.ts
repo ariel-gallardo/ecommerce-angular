@@ -16,6 +16,7 @@ export class PermissionsList implements OnInit, OnDestroy {
   public Colors = Colors;
   constructor(private readonly permissionnFacade: PermissionFacade){
     this.permissionnFacade.FiltersGetInit();
+    this.permissionnFacade.DeleteInit();
     this.permissions = signal({
       currentPage: 0,
       items: [],
@@ -25,8 +26,8 @@ export class PermissionsList implements OnInit, OnDestroy {
     });
   }
 
-  eliminar(id:any){
-    console.log(id)
+  eliminar(entityId: string){
+    this.permissionnFacade.DeleteRequestUpdate({entityId});
   }
  
   public get Permissions(){
@@ -42,6 +43,7 @@ export class PermissionsList implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.permissionnFacade.FiltersGetInit();
+    this.permissionnFacade.DeleteInit();
   }
   
   columns: string[] = [

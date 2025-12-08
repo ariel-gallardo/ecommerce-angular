@@ -34,9 +34,9 @@ export class CanAccessHeadRequest {
     }   
 }
 export class DeleteRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = 0;
+             this.entityId = null;
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
