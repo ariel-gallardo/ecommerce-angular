@@ -1,5 +1,6 @@
 import { Role } from "./role.model";
 
+
 export class UserRegister { 
     password?:   string   | undefined | null;
     rePassword?:   string   | undefined | null;
@@ -9,11 +10,11 @@ export class UserRegister {
     rol?:   Role   | undefined | null;
     id?:   number   | undefined | null;
 constructor(init: Partial<UserRegister> = {}){
-    this.password = null;
-    this.rePassword = null;
-    this.username = null;
-    this.email = null;
-    this.personaId = null;
+    this.password = '';
+    this.rePassword = '';
+    this.username = '';
+    this.email = '';
+    this.personaId = '';
     this.rol = null;
     this.id = 0;
     const keys = (Object.keys(init) as (keyof UserRegister)[])

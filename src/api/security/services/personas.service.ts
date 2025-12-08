@@ -19,9 +19,9 @@ import { ServiceConfiguration } from '../configuration';
 import { BaseService } from './api.base.service';
 
 export class DeleteRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = 0;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -36,7 +36,7 @@ export class DeleteRequest {
 export class FiltersFirstGetRequest {
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
-             this.orderBy = null;
+             this.orderBy = '';
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -53,11 +53,11 @@ export class FiltersGetRequest {
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<FiltersGetRequest> = {}){
-             this.orderBy = null;
+             this.orderBy = '';
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof FiltersGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -70,9 +70,9 @@ export class FiltersGetRequest {
     }   
 }
 export class GetRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<GetRequest> = {}){
-             this.entityId = 0;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof GetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -85,15 +85,15 @@ export class GetRequest {
     }   
 }
 export class IdsGetRequest {
-    entityIds?: number[] | undefined | null;
+    entityIds?: string[] | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<IdsGetRequest> = {}){
              this.entityIds = [];
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof IdsGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -136,7 +136,7 @@ export class PutRequest {
     }   
 }
 export class RangeDeleteRequest {
-    requestBody?: number[] | undefined | null;
+    requestBody?: string[] | undefined | null;
     constructor(init: Partial<RangeDeleteRequest> = {}){
              this.requestBody = [];
             

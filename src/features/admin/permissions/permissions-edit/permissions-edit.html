@@ -1,20 +1,36 @@
-<form>
+<h3 class="text-3xl my-2">Editar Permiso</h3>
+<form class="flex flex-col gap-2" [formGroup]="form" (submit)="guardar()" [ValidateErrors]="Errors$">
+    <form-error [form]="form" name="controller"></form-error>
     <mat-form-field>
         <mat-label>Controller</mat-label>
-        <input matInput placeholder="Controller Name">
+        <input matInput placeholder="Controller Name" formControlName="controller">
     </mat-form-field>
+    <form-error [form]="form" name="action"></form-error>
     <mat-form-field>
         <mat-label>Action</mat-label>
-        <input matInput placeholder="Action Name">
+        <input matInput placeholder="Action Name" formControlName="action">
     </mat-form-field>
+    <form-error [form]="form" name="url"></form-error>
     <mat-form-field>
         <mat-label>Url</mat-label>
-        <input matInput placeholder="Url">
+        <input matInput placeholder="Url" formControlName="url">
     </mat-form-field>
+    <form-error [form]="form" name="policy"></form-error>
     <mat-form-field>
-        <mat-label>Action</mat-label>
-        <select matNativeControl>
-            <option value="Access.Public">Publico</option>
-        </select>
+        <mat-label>Acceso</mat-label>
+        <mat-select matNativeControl formControlName="policy">
+            <mat-select-trigger>
+                <mat-icon style="vertical-align: middle; margin-right: 6px;">
+                    {{ (form.get('policy')?.value! | PolicyLabel).icon }}
+                </mat-icon>
+                {{ (form.get('policy')?.value! | PolicyLabel).label }}
+            </mat-select-trigger>
+            <mat-option *ngFor="let p of PolicyOptions" [value]="p">
+                <mat-icon>{{ (p | PolicyLabel).icon }}</mat-icon>
+                {{ (p | PolicyLabel).label }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
+    <button matButton="filled" type="submit">Guardar</button>
+    <button matButton="filled" type="button" (click)="cancelar()">Cancelar</button>
 </form>

@@ -19,9 +19,9 @@ import { ServiceConfiguration } from '../configuration';
 import { BaseService } from './api.base.service';
 
 export class DeleteRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = 0;
+             this.entityId = null;
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -36,19 +36,19 @@ export class DeleteRequest {
 export class FiltersFirstGetRequest {
     id?: string | undefined | null;
     productId?: string | undefined | null;
+    userId?: number | undefined | null;
     productIds?: string[] | undefined | null;
     orderBy?: string | undefined | null;
-    userId?: number | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
              this.id = null;
             
              this.productId = null;
             
+             this.userId = 0;
+            
              this.productIds = [];
             
              this.orderBy = null;
-             
-             this.userId = null;
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -63,6 +63,7 @@ export class FiltersFirstGetRequest {
 export class FiltersGetRequest {
     id?: string | undefined | null;
     productId?: string | undefined | null;
+    userId?: number | undefined | null;
     productIds?: string[] | undefined | null;
     orderBy?: string | undefined | null;
     page?: number | undefined | null;
@@ -71,6 +72,8 @@ export class FiltersGetRequest {
              this.id = null;
             
              this.productId = null;
+            
+             this.userId = 0;
             
              this.productIds = [];
             
@@ -91,9 +94,9 @@ export class FiltersGetRequest {
     }   
 }
 export class GetRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<GetRequest> = {}){
-             this.entityId = 0;
+             this.entityId = null;
             
         const keys = (Object.keys(init) as (keyof GetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -106,7 +109,7 @@ export class GetRequest {
     }   
 }
 export class IdsGetRequest {
-    entityIds?: number[] | undefined | null;
+    entityIds?: string[] | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<IdsGetRequest> = {}){
@@ -157,7 +160,7 @@ export class PutRequest {
     }   
 }
 export class RangeDeleteRequest {
-    requestBody?: number[] | undefined | null;
+    requestBody?: string[] | undefined | null;
     constructor(init: Partial<RangeDeleteRequest> = {}){
              this.requestBody = [];
             
@@ -274,6 +277,7 @@ export class CartService extends BaseService {
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
         const id = requestParameters?.id;
         const productId = requestParameters?.productId;
+        const userId = requestParameters?.userId;
         const productIds = requestParameters?.productIds;
         const orderBy = requestParameters?.orderBy;
 
@@ -282,6 +286,8 @@ export class CartService extends BaseService {
           <any>id, 'Id');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>productId, 'ProductId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>userId, 'UserId');
         if (productIds) {
             productIds.forEach((element) => {
                 localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -339,6 +345,7 @@ export class CartService extends BaseService {
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
         const id = requestParameters?.id;
         const productId = requestParameters?.productId;
+        const userId = requestParameters?.userId;
         const productIds = requestParameters?.productIds;
         const orderBy = requestParameters?.orderBy;
         const page = requestParameters?.page;
@@ -349,6 +356,8 @@ export class CartService extends BaseService {
           <any>id, 'Id');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>productId, 'ProductId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>userId, 'UserId');
         if (productIds) {
             productIds.forEach((element) => {
                 localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,

@@ -6,6 +6,12 @@ import { map } from "rxjs";
 @Injectable()
 export class PermissionEffects {
     private actions$ = inject(Actions);
+
+    $searchOneEffect = createEffect(() => this.actions$.pipe(
+        ofType(PermissionActions.GetRequestUpdateSuccess),
+        map(() => PermissionActions.GetExecute())
+    ));
+
     $searchEffect = createEffect(() => this.actions$.pipe(
         ofType(PermissionActions.FiltersGetRequestUpdateSuccess),
         map(() => PermissionActions.FiltersGetExecute())

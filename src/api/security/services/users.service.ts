@@ -42,15 +42,15 @@ export class FiltersFirstGetRequest {
     personaId?: string | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
-             this.username = null;
+             this.username = '';
             
-             this.email = null;
+             this.email = '';
             
-             this.role = null;
+             this.role = '';
             
-             this.personaId = null;
+             this.personaId = '';
             
-             this.orderBy = null;
+             this.orderBy = '';
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -71,19 +71,19 @@ export class FiltersGetRequest {
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<FiltersGetRequest> = {}){
-             this.username = null;
+             this.username = '';
             
-             this.email = null;
+             this.email = '';
             
-             this.role = null;
+             this.role = '';
             
-             this.personaId = null;
+             this.personaId = '';
             
-             this.orderBy = null;
+             this.orderBy = '';
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof FiltersGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -117,9 +117,9 @@ export class IdsGetRequest {
     constructor(init: Partial<IdsGetRequest> = {}){
              this.entityIds = [];
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof IdsGetRequest)[])
         .filter(k => this[k] !== init[k]);

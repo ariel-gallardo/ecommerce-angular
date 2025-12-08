@@ -8,9 +8,9 @@ export class User {
     rol?:   Role   | undefined | null;
     id?:   number   | undefined | null;
 constructor(init: Partial<User> = {}){
-    this.username = null;
-    this.email = null;
-    this.personaId = null;
+    this.username = '';
+    this.email = '';
+    this.personaId = '';
     this.rol = null;
     this.id = 0;
     const keys = (Object.keys(init) as (keyof User)[])

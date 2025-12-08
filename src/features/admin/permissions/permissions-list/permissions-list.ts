@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Pagination } from '@api/security/models/common/pagination.model';
 import { Permission } from '@api/security/models/permission.model';
 import { PermissionFacade } from '@api/security/redux/permission/permission.facade';
 import { Colors } from '@models/colors';
+import { PermissionsEdit } from '../permissions-edit/permissions-edit';
 
 @Component({
-  selector: 'app-permissions-list',
+  selector: 'permissions-list',
   standalone: false,
   templateUrl: './permissions-list.html',
   styleUrl: './permissions-list.scss',
@@ -14,7 +16,8 @@ export class PermissionsList implements OnInit, OnDestroy {
   
   private permissions: WritableSignal<Pagination<Permission>>;
   public Colors = Colors;
-  constructor(private readonly permissionnFacade: PermissionFacade){
+  constructor(private readonly permissionnFacade: PermissionFacade, 
+    private readonly dialog: MatDialog){
     this.permissionnFacade.FiltersGetInit();
     this.permissionnFacade.DeleteInit();
     this.permissions = signal({
@@ -24,6 +27,16 @@ export class PermissionsList implements OnInit, OnDestroy {
       totalCount: 0,
       totalPages: 0
     });
+  }
+
+  editar(entityId: string){
+    this.dialog.open(PermissionsEdit,{
+      width: '50vw',
+      height: '75vh',
+      data:{
+        id: entityId,
+      }
+    })
   }
 
   eliminar(entityId: string){

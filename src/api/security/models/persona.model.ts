@@ -5,9 +5,9 @@ export class Persona {
     lastname?:   string   | undefined | null;
     id?:   string   | undefined | null;
 constructor(init: Partial<Persona> = {}){
-    this.name = null;
-    this.lastname = null;
-    this.id = null;
+    this.name = '';
+    this.lastname = '';
+    this.id = '';
     const keys = (Object.keys(init) as (keyof Persona)[])
     .filter(k => this[k] !== init[k]);
     if(keys.length > 0){

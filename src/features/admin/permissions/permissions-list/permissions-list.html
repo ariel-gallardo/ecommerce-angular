@@ -28,7 +28,7 @@
     <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let row">
-            <button matButton [style.color]="Colors.Update" [routerLink]="[`/users/admin/permissions/edit`,row.id]">
+            <button matButton [style.color]="Colors.Update" (click)="editar(row.id)">
                 <mat-icon>edit</mat-icon>
                 Edit
             </button>

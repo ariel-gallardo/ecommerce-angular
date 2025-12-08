@@ -19,9 +19,9 @@ import { ServiceConfiguration } from '../configuration';
 import { BaseService } from './api.base.service';
 
 export class DeleteRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = 0;
+             this.entityId = null;
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -94,9 +94,9 @@ export class FiltersGetRequest {
     }   
 }
 export class GetRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<GetRequest> = {}){
-             this.entityId = 0;
+             this.entityId = null;
             
         const keys = (Object.keys(init) as (keyof GetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -109,7 +109,7 @@ export class GetRequest {
     }   
 }
 export class IdsGetRequest {
-    entityIds?: number[] | undefined | null;
+    entityIds?: string[] | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<IdsGetRequest> = {}){
@@ -160,7 +160,7 @@ export class PutRequest {
     }   
 }
 export class RangeDeleteRequest {
-    requestBody?: number[] | undefined | null;
+    requestBody?: string[] | undefined | null;
     constructor(init: Partial<RangeDeleteRequest> = {}){
              this.requestBody = [];
             

@@ -5,9 +5,9 @@ export class UserLogin {
     username?:   string   | undefined | null;
     password?:   string   | undefined | null;
 constructor(init: Partial<UserLogin> = {}){
-    this.email = null;
-    this.username = null;
-    this.password = null;
+    this.email = '';
+    this.username = '';
+    this.password = '';
     const keys = (Object.keys(init) as (keyof UserLogin)[])
     .filter(k => this[k] !== init[k]);
     if(keys.length > 0){

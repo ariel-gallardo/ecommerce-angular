@@ -7,11 +7,11 @@ export class Permission {
     policy?:   string   | undefined | null;
     id?:   string   | undefined | null;
 constructor(init: Partial<Permission> = {}){
-    this.url = null;
-    this.controller = null;
-    this.action = null;
-    this.policy = null;
-    this.id = null;
+    this.url = '';
+    this.controller = '';
+    this.action = '';
+    this.policy = '';
+    this.id = '';
     const keys = (Object.keys(init) as (keyof Permission)[])
     .filter(k => this[k] !== init[k]);
     if(keys.length > 0){

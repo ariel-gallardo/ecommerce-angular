@@ -158,8 +158,10 @@ export class PermissionEffects {
             // @ts-ignore
             return this.api.CanAccessHead(request as CanAccessHeadRequest, 'response').pipe(
                 map(response =>{
+                    
                     return PermissionActions.CanAccessHeadSetData({
-                        data: response.headers
+                        data:                         response.headers
+                        
                     })
                 }),
                 

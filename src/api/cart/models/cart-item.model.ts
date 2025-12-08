@@ -8,7 +8,7 @@ export class CartItem {
     id?:   string   | undefined | null;
 constructor(init: Partial<CartItem> = {}){
     this.productId = null;
-    this.quantity = new Quantity();
+    this.quantity = {};
     this.cartId = null;
     this.id = null;
     const keys = (Object.keys(init) as (keyof CartItem)[])

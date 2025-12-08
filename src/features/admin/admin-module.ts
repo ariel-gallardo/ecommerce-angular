@@ -14,6 +14,12 @@ import { CommonPipesModule } from '@pipes/common-pipes.module';
 import { PermissionsEdit } from './permissions/permissions-edit/permissions-edit';
  import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import { EffectsModule } from '@ngrx/effects';
+import { PermissionEffects } from './permissions/effects/permissions.effects';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonDirectivesModule } from '@directives/common-directives.module';
+import { SharedModule } from '@features/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -28,11 +34,17 @@ import {MatSelectModule} from '@angular/material/select';
     CommonPipesModule,
     MatSidenavModule,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatTableModule,
     MatInputModule,
     MatSelectModule,
-    RouterModule.forChild(routes)
+    FormsModule,
+    ReactiveFormsModule,
+    CommonDirectivesModule,
+    SharedModule,
+    RouterModule.forChild(routes),
+    EffectsModule.forFeature([PermissionEffects])
   ]
 })
 export class AdminModule { }
