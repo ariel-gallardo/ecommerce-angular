@@ -7,6 +7,8 @@ import { Persona } from '@api/security/models/persona.model';
 import { MenuService } from '@features/base/services/menu.service';
 import { CoordinateSelect } from '@features/shared/coordinate-select/coordinate-select';
 import { AuthService } from '../services/auth-service';
+import { UsersFacade } from '@api/security/redux/users/users.facade';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'user-profile',
@@ -19,11 +21,13 @@ export class Profile implements OnInit, OnDestroy {
 
   public form: FormGroup;
   private editing: boolean = false;
+  private subs: Subscription;
 
   constructor(private readonly menuService: MenuService, 
     private readonly fb: FormBuilder, 
     private readonly dialog: MatDialog,
-    private readonly authService: AuthService) {
+    private readonly authService: AuthService,
+    private readonly usersFacade: UsersFacade) {
     this.form = fb.group({
       ...new Persona(), address: fb.group({
         ...new Address(),
@@ -31,6 +35,7 @@ export class Profile implements OnInit, OnDestroy {
       })
     });
     this.form.disable();
+    this.subs = this.form.valueChanges.subscribe(persona => this.usersFacade.PutRequestUpdate(persona));
     this.patchUser();
   }
 
@@ -68,7 +73,7 @@ export class Profile implements OnInit, OnDestroy {
   }
 
   public save() {
-    
+    this.usersFacade.Put();
   }
 
   public openCoordinateSelector() {
@@ -94,6 +99,7 @@ export class Profile implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
+    this.subs.unsubscribe();
     this.menuService.close();
   }
   ngOnInit(): void {
