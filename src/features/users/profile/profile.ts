@@ -1,5 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Address } from '@api/security/models/address.model';
+import { Coordinates } from '@api/security/models/coordinates.model';
+import { Persona } from '@api/security/models/persona.model';
 import { MenuService } from '@features/base/services/menu.service';
+import { CoordinateSelect } from '@features/shared/coordinate-select/coordinate-select';
+import { AuthService } from '../services/auth-service';
 
 @Component({
   selector: 'user-profile',
@@ -8,9 +15,84 @@ import { MenuService } from '@features/base/services/menu.service';
   styleUrl: './profile.scss',
 })
 export class Profile implements OnInit, OnDestroy {
-  constructor(private menuService: MenuService) {
- 
+
+
+  public form: FormGroup;
+  private editing: boolean = false;
+
+  constructor(private readonly menuService: MenuService, 
+    private readonly fb: FormBuilder, 
+    private readonly dialog: MatDialog,
+    private readonly authService: AuthService) {
+    this.form = fb.group({
+      ...new Persona(), address: fb.group({
+        ...new Address(),
+        coordinates: fb.group<Coordinates>(new Coordinates())
+      })
+    });
+    this.form.disable();
+    this.patchUser();
   }
+
+  private patchUser(){
+    this.form.patchValue(new Persona({
+      id: this.authService.NameIdentifier,
+      name: this.authService.Name,
+      address: new Address({
+        street: this.authService.Street,
+        number: this.authService.Number,
+        neighborhood: this.authService.Neighborhood,
+        description: this.authService.Description,
+        coordinates: new Coordinates({
+          latitude: this.authService.Latitude,
+          longitude: this.authService.Longitude
+        })
+      })
+    }))
+  }
+
+  public get isEditing() {
+    return this.editing;
+  }
+
+  public toggleEdit() {
+    this.editing = !this.editing;
+    if(!this.editing)
+    {
+      this.form.disable();
+      this.patchUser();
+    }
+    else
+      this.form.enable();
+    
+  }
+
+  public save() {
+    
+  }
+
+  public openCoordinateSelector() {
+    const dialogRef = this.dialog.open(CoordinateSelect, {
+      height: '50vh',
+      width: '50vw',
+    });
+
+
+    dialogRef.afterOpened().subscribe(() => {
+      const instance = dialogRef.componentInstance;
+      setTimeout(() => {
+        instance.map?.invalidateSize();
+      }, 50);
+    });
+
+    dialogRef.afterClosed().subscribe((coordinates) => {
+      this.form.patchValue({address: {
+        coordinates
+      }});
+    });
+  }
+
+
   ngOnDestroy(): void {
     this.menuService.close();
   }
@@ -31,5 +113,5 @@ export class Profile implements OnInit, OnDestroy {
     ]);
   }
 
-  
+
 }

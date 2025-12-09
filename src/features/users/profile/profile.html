@@ -1,1 +1,75 @@
-<p>profile works!</p>
+<mat-card class="profile-card">
+  <div class="flex justify-between items-center">
+    <h2>Perfil de usuario</h2>
+    <button mat-button (click)="toggleEdit()">
+      <mat-icon>{{ isEditing ? 'close' : 'edit' }}</mat-icon>
+    </button>
+  </div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="form" (submit)="save()">
+    <div>
+      <h3>Datos personales</h3>
+      <div class="flex gap-1 justify-between">
+        <mat-form-field class="w-full">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>Apellido</mat-label>
+          <input matInput formControlName="lastname">
+        </mat-form-field>
+        <mat-form-field class="w-full">
+          <mat-label>ID</mat-label>
+          <input matInput formControlName="id">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formGroupName="address">
+      <h3>Ubicación</h3>
+      <div>
+        <div class="flex justify-between gap-1">
+          <mat-form-field class="w-full">
+            <mat-label>Calle</mat-label>
+            <input matInput formControlName="street">
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Número</mat-label>
+            <input matInput type="number" formControlName="number">
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Barrio</mat-label>
+            <input matInput formControlName="neighborhood">
+          </mat-form-field>
+        </div>
+        <mat-form-field class="w-[50%]">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput rows="3" formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+      <div formGroupName="coordinates">
+        <div class="flex gap-1">
+          <mat-form-field>
+            <mat-label>Latitud</mat-label>
+            <input matInput type="number" formControlName="latitude">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Longitud</mat-label>
+            <input matInput type="number" formControlName="longitude">
+          </mat-form-field>
+          <button *ngIf="isEditing" matFab class="flex" (click)="openCoordinateSelector()">
+            <mat-icon>map_search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions" *ngIf="isEditing">
+      <button mat-flat-button color="primary" type="submit">Guardar</button>
+      <button mat-stroked-button type="button" (click)="toggleEdit()">Cancelar</button>
+    </div>
+  </form>
+</mat-card>

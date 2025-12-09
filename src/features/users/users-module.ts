@@ -12,6 +12,7 @@ import { UsersShell } from './users-shell/users-shell';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     MatCardModule,
     MatIconModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,

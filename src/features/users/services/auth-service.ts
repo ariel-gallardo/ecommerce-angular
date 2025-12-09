@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { JwtUser } from '@models/jwt-user';
 
@@ -6,6 +6,8 @@ import { JwtUser } from '@models/jwt-user';
   providedIn: 'root',
 })
 export class AuthService {
+
+  private user: WritableSignal<JwtUser | null> = signal(null);
 
   private normalizeClaims(raw: any): any {
     const normalized: any = {};
@@ -20,92 +22,88 @@ export class AuthService {
   }
 
 
-  private get DecodedToken(): Promise<JwtUser | null> {
-    return this.Token.then(c => {
-      try {
-        if (!c?.value) return null;
-
-        const raw = jwtDecode<any>(c.value);
-        const normalized = this.normalizeClaims(raw);
-
-        return normalized as JwtUser;
-      } catch (err) {
-        console.error('Invalid JWT token', err);
-        return null;
-      }
-    });
+  private async DecodeToken() {
+    const token = await this.Token;
+    try {
+      if (!token?.value) return;
+      const raw = jwtDecode<any>(token.value);
+      const normalized = this.normalizeClaims(raw);
+      this.user.set(normalized as JwtUser);
+    } catch (err) {
+      console.error('Invalid JWT token', err);
+      this.user.set(null);
+    }
   }
 
-  public get Token(){
+  public get Token() {
     return cookieStore.get('token');
   }
 
-  public setToken(token: string){
-    cookieStore.set('token',token);
+  public setToken(token: string) {
+    cookieStore.set('token', token);
+    this.DecodeToken();
   }
 
-  public removeToken(){
+  public removeToken() {
     cookieStore.delete('token');
   }
 
-  public get Role(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.role ?? null);
+  public get Role(): string | null {
+    return this.user()?.role ?? null;
   }
 
-  public get NameIdentifier(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.nameidentifier ?? null);
+  public get NameIdentifier(): string | null {
+    return this.user()?.nameidentifier ?? null;
   }
 
-  public get Name(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.name ?? null);
+  public get Name(): string | null {
+    return this.user()?.name ?? null;
   }
 
-  public get Email(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.emailaddress ?? null);
+  public get Email(): string | null {
+    return this.user()?.emailaddress ?? null;
   }
 
-  public get GivenName(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.givenname ?? null);
+  public get GivenName(): string | null {
+    return this.user()?.givenname ?? null;
   }
 
-  public get Surname(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.surname ?? null);
+  public get Surname(): string | null {
+    return this.user()?.surname ?? null;
   }
 
-  public get Street(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.street ?? null);
+  public get Street(): string | null {
+    return this.user()?.street ?? null;
   }
 
-  public get Number(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.number ?? null);
+  public get Number(): number | null {
+    return this.user() && this.user()?.number ? Number(this.user()!.number) : null;
   }
 
-  public get Neighborhood(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.neighborhood ?? null);
+  public get Neighborhood(): string | null {
+    return this.user()?.neighborhood ?? null;
   }
 
-  public get Description(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.description ?? null);
+  public get Description(): string | null {
+    return this.user()?.description ?? null;
   }
 
-  public get Latitude(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.latitude ?? null);
+  public get Latitude(): number | null {
+    return this.user() && this.user()?.latitude ? Number(this.user()!.latitude) : null;
   }
 
-  public get Longitude(): Promise<string | null> {
-    return this.DecodedToken.then(t => t?.role ?? null);
+  public get Longitude(): number | null {
+    return this.user() && this.user()?.longitude ? Number(this.user()!.longitude) : null;
   }
 
-  public get Expiration(): Promise<Date | null> {
-    return this.DecodedToken.then(t => t?.exp ? new Date(t.exp! * 1000) : null);
+  public get Expiration(): Date | null {
+    return this.user()?.exp ? new Date(this.user()!.exp! * 1000) : null;
   }
 
-  public get IsExpired(): Promise<boolean> {
-    return this.DecodedToken.then(t => {
-      if (!t?.exp) return true;
-      const now = Date.now() / 1000;
-      return now > t.exp;
-    });
+  public get IsExpired(): boolean {
+    if (!this.user()) return true;
+    const now = Date.now() / 1000;
+    return now > this.user()!.exp!;
   }
 
 }

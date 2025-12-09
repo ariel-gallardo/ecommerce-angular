@@ -10,7 +10,6 @@ export class AuthEffects {
         ofType(PermissionActions.CanAccessHeadRequestUpdateSuccess),
         map(() => PermissionActions.CanAccessHeadExecute())
     ));
-
     $authEffectSuccess = createEffect(() => this.actions$.pipe(
         ofType(PermissionActions.CanAccessHeadSetData),
         map(() => PermissionActions.CanAccessHeadSuccess())

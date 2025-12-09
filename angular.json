@@ -55,11 +55,17 @@
 							{
 								"glob": "**/*",
 								"input": "public"
+							},
+							{
+								"glob": "**/*",
+								"input": "node_modules/leaflet/dist/images",
+								"output": "/media"
 							}
 						],
 						"styles": [
 							"src/styles.css",
-							"src/styles/theme.scss"
+							"src/styles/theme.scss",
+							"node_modules/leaflet/dist/leaflet.css"
 						]
 					},
 					"configurations": {
@@ -113,11 +119,17 @@
 							{
 								"glob": "**/*",
 								"input": "public"
+							},
+							{
+								"glob": "**/*",
+								"input": "node_modules/leaflet/dist/images",
+								"output": "/media"
 							}
 						],
 						"styles": [
 							"src/styles.css",
-							"src/styles/theme.scss"
+							"src/styles/theme.scss",
+							"node_modules/leaflet/dist/leaflet.css"
 						]
 					}
 				}
