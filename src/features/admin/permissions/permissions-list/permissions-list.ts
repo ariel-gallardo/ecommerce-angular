@@ -15,7 +15,7 @@ import { PermissionsAdd } from '../permissions-add/permissions-add';
   styleUrl: './permissions-list.scss',
 })
 export class PermissionsList implements OnInit, OnDestroy {
-
+ 
   private permissions: WritableSignal<Pagination<Permission>>;
   public Colors = Colors;
   constructor(private readonly permissionnFacade: PermissionFacade,
