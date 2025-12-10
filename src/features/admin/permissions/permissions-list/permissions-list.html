@@ -1,48 +1,50 @@
-<table mat-table [dataSource]="Permissions">
-    <ng-container matColumnDef="access">
-        <mat-header-cell *matHeaderCellDef> Acceso </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-            <div class="flex items-center gap-2" [style.color]="(row | PolicyAccess).color">
-                <mat-icon>
-                    {{ (row | PolicyAccess).icon }}
-                </mat-icon>
-                <span>
-                    {{ (row | PolicyAccess).label }}
-                </span>
-            </div>
-        </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="policy">
-        <mat-header-cell *matHeaderCellDef> Póliza </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-            <div class="flex items-center gap-2" [style.color]="(row.policy | PolicyLabel).color">
-                <mat-icon>
-                    {{ (row.policy | PolicyLabel).icon }}
-                </mat-icon>
-                <span>
-                    {{ (row.policy | PolicyLabel).label }}
-                </span>
-            </div>
-        </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-            <button matButton [style.color]="Colors.Update" (click)="editar(row.id)">
-                <mat-icon>edit</mat-icon>
-                Edit
-            </button>
-            <button matButton [style.color]="Colors.Delete" (click)="eliminar(row.id)">
-                <mat-icon>delete</mat-icon>
-                Delete
-            </button>
-        </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columns;"></mat-row>
-</table>
-<div class="flex justify-center">
-    <mat-paginator [length]="Pagination.totalCount" [pageIndex]="Pagination.page - 1"
-      [pageSize]="Pagination.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)">
-    </mat-paginator>
+<div class="flex flex-col justify-between h-full">
+    <table mat-table [dataSource]="Permissions">
+        <ng-container matColumnDef="access">
+            <mat-header-cell *matHeaderCellDef> Acceso </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="flex items-center gap-2" [style.color]="(row | PolicyAccess).color">
+                    <mat-icon>
+                        {{ (row | PolicyAccess).icon }}
+                    </mat-icon>
+                    <span>
+                        {{ (row | PolicyAccess).label }}
+                    </span>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="policy">
+            <mat-header-cell *matHeaderCellDef> Póliza </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="flex items-center gap-2" [style.color]="(row.policy | PolicyLabel).color">
+                    <mat-icon>
+                        {{ (row.policy | PolicyLabel).icon }}
+                    </mat-icon>
+                    <span>
+                        {{ (row.policy | PolicyLabel).label }}
+                    </span>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button matButton [style.color]="Colors.Update" (click)="editar(row.id)">
+                    <mat-icon>edit</mat-icon>
+                    Edit
+                </button>
+                <button matButton [style.color]="Colors.Delete" (click)="eliminar(row.id)">
+                    <mat-icon>delete</mat-icon>
+                    Delete
+                </button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </table>
+    <div class="flex justify-center">
+        <mat-paginator [length]="Pagination.totalCount" [pageIndex]="Pagination.page - 1"
+            [pageSize]="Pagination.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)">
+        </mat-paginator>
+    </div>
 </div>
