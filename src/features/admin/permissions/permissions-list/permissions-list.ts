@@ -52,7 +52,7 @@ export class PermissionsList implements OnInit, OnDestroy {
   crear() {
     this.dialog.open(PermissionsAdd, {
       width: '50vw',
-      height: '75vh'
+      height: '75vh',
     })
   }
 
@@ -60,8 +60,9 @@ export class PermissionsList implements OnInit, OnDestroy {
     this.dialog.open(PermissionsEdit, {
       width: '50vw',
       height: '75vh',
+      backdropClass: 'bg-red-500',
       data: {
-        id: entityId,
+        id: entityId
       }
     })
   }

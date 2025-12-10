@@ -8,6 +8,7 @@ import { JwtUser } from '@models/jwt-user';
 export class AuthService {
 
   private user: WritableSignal<JwtUser | null> = signal(null);
+  private hasToken: boolean = false;
 
   private normalizeClaims(raw: any): any {
     const normalized: any = {};
@@ -22,19 +23,24 @@ export class AuthService {
   }
 
 
-  private async DecodeToken() {
+  public async DecodeToken() {
     const token = await this.Token;
     try {
       if (!token?.value) return;
       const raw = jwtDecode<any>(token.value);
       const normalized = this.normalizeClaims(raw);
       this.user.set(normalized as JwtUser);
+      this.hasToken = true;
     } catch (err) {
       console.error('Invalid JWT token', err);
       this.user.set(null);
     }
   }
 
+  public get HasToken(){
+    return this.hasToken;
+  }
+  
   public get Token() {
     return cookieStore.get('token');
   }
