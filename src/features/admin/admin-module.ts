@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonDirectivesModule } from '@directives/common-directives.module';
 import { SharedModule } from '@features/shared/shared.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SharedModule } from '@features/shared/shared.module';
     CommonModule,
     CommonPipesModule,
     MatSidenavModule,
+    MatPaginatorModule,
     MatButtonModule,
     MatDialogModule,
     MatIconModule,

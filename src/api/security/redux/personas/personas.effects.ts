@@ -289,7 +289,7 @@ export class PersonasEffects {
             ofType(PersonasActions.FiltersGetChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -391,7 +391,7 @@ export class PersonasEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))
@@ -532,7 +532,7 @@ export class PersonasEffects {
             ofType(PersonasActions.IdsGetChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -634,7 +634,7 @@ export class PersonasEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))
@@ -990,7 +990,7 @@ export class PersonasEffects {
             ofType(PersonasActions.RangePostChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -1092,7 +1092,7 @@ export class PersonasEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))
@@ -1122,7 +1122,7 @@ export class PersonasEffects {
             ofType(PersonasActions.RangePutChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -1224,7 +1224,7 @@ export class PersonasEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))

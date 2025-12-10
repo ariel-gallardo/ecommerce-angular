@@ -404,7 +404,7 @@ export class PermissionEffects {
             ofType(PermissionActions.FiltersGetChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -506,7 +506,7 @@ export class PermissionEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))
@@ -647,7 +647,7 @@ export class PermissionEffects {
             ofType(PermissionActions.IdsGetChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -749,7 +749,7 @@ export class PermissionEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))
@@ -1105,7 +1105,7 @@ export class PermissionEffects {
             ofType(PermissionActions.RangePostChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -1207,7 +1207,7 @@ export class PermissionEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))
@@ -1237,7 +1237,7 @@ export class PermissionEffects {
             ofType(PermissionActions.RangePutChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
-                currentPage: event.pageIndex + 1
+                page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
@@ -1339,7 +1339,7 @@ export class PermissionEffects {
                         {
                             //@ts-ignore
                             items: response.body!.data,
-                            currentPage: Number(response.headers.get('X-Current-Page')),
+                            page: Number(response.headers.get('X-Current-Page')),
                             totalPages: Number(response.headers.get('X-Total-Pages')),
                             pageSize: Number(response.headers.get('X-Page-Size')),
                             totalCount: Number(response.headers.get('X-Total-Count'))

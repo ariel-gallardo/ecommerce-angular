@@ -5,6 +5,7 @@ import { Permission } from '@api/security/models/permission.model';
 import { PermissionFacade } from '@api/security/redux/permission/permission.facade';
 import { Colors } from '@models/colors';
 import { PermissionsEdit } from '../permissions-edit/permissions-edit';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'permissions-list',
@@ -21,7 +22,7 @@ export class PermissionsList implements OnInit, OnDestroy {
     this.permissionnFacade.FiltersGetInit();
     this.permissionnFacade.DeleteInit();
     this.permissions = signal({
-      currentPage: 0,
+      page: 0,
       items: [],
       pageSize: 0,
       totalCount: 0,
@@ -29,7 +30,26 @@ export class PermissionsList implements OnInit, OnDestroy {
     });
   }
 
-  editar(entityId: string){
+  ngOnInit(): void {
+    this.permissionnFacade.FiltersGet$.subscribe(permissions => {
+      console.log(permissions)
+      this.permissions = signal(permissions);
+    });
+    this.permissionnFacade.FiltersGet();
+  }
+
+  ngOnDestroy(): void {
+    this.permissionnFacade.FiltersGetInit();
+    this.permissionnFacade.DeleteInit();
+  }
+  
+  columns: string[] = [
+    'access',
+    'policy',
+    'acciones'
+  ];
+
+    editar(entityId: string){
     this.dialog.open(PermissionsEdit,{
       width: '50vw',
       height: '75vh',
@@ -46,24 +66,17 @@ export class PermissionsList implements OnInit, OnDestroy {
   public get Permissions(){
     return this.permissions().items;
   }
-
-  ngOnInit(): void {
-    this.permissionnFacade.FiltersGet$.subscribe(permissions => {
-      this.permissions = signal(permissions);
-    });
-    this.permissionnFacade.FiltersGet();
+  public get Pagination(){
+    return {
+      page: this.permissions().page,  
+      pageSize: this.permissions().pageSize,  
+      totalCount: this.permissions().totalCount,  
+      totalPages: this.permissions().totalPages,  
+    };
   }
-
-  ngOnDestroy(): void {
-    this.permissionnFacade.FiltersGetInit();
-    this.permissionnFacade.DeleteInit();
+  onPageChange(e: PageEvent) {
+    this.permissionnFacade.FiltersGetChangePage(e);
   }
-  
-  columns: string[] = [
-    'access',
-    'policy',
-    'acciones'
-  ];
 
 }
  
