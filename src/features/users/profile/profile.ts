@@ -118,6 +118,4 @@ export class Profile implements OnInit, OnDestroy {
       }
     ]);
   }
-
-
 }

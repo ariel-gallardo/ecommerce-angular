@@ -1,14 +1,14 @@
-<mat-card class="profile-card">
+<mat-card class="p-5">
   <div class="flex justify-between items-center">
-    <h2>Perfil de usuario</h2>
+    <h2 class="text-2xl">Perfil de usuario</h2>
     <button mat-button (click)="toggleEdit()">
       <mat-icon>{{ isEditing ? 'close' : 'edit' }}</mat-icon>
     </button>
   </div>
-  <mat-divider></mat-divider>
+  <mat-divider class="my-5!"></mat-divider>
   <form [formGroup]="form" (submit)="save()">
     <div>
-      <h3>Datos personales</h3>
+      <h3 class="text-xl my-2">Datos personales</h3>
       <div class="flex gap-1 justify-between">
         <mat-form-field class="w-full">
           <mat-label>Nombre</mat-label>
@@ -26,7 +26,7 @@
     </div>
 
     <div formGroupName="address">
-      <h3>Ubicación</h3>
+      <h3 class="text-xl my-2">Ubicación</h3>
       <div>
         <div class="flex justify-between gap-1">
           <mat-form-field class="w-full">
@@ -50,6 +50,7 @@
         </mat-form-field>
       </div>
       <div formGroupName="coordinates">
+        <h3 class="text-xl my-2">Coordenadas</h3>
         <div class="flex gap-1">
           <mat-form-field>
             <mat-label>Latitud</mat-label>
@@ -60,14 +61,14 @@
             <mat-label>Longitud</mat-label>
             <input matInput type="number" formControlName="longitude">
           </mat-form-field>
-          <button *ngIf="isEditing" matFab class="flex" (click)="openCoordinateSelector()">
+          <button *ngIf="isEditing" matFab class="flex" type="button" (click)="openCoordinateSelector()">
             <mat-icon>map_search</mat-icon>
           </button>
         </div>
       </div>
     </div>
 
-    <div class="actions" *ngIf="isEditing">
+    <div class="flex gap-1" *ngIf="isEditing">
       <button mat-flat-button color="primary" type="submit">Guardar</button>
       <button mat-stroked-button type="button" (click)="toggleEdit()">Cancelar</button>
     </div>

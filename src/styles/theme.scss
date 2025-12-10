@@ -19,4 +19,6 @@ $theme: mat.define-theme((
 
 :root{
     @include mat.all-component-themes($theme);
+    @include mat.all-component-bases($theme);
+    @include mat.all-component-colors($theme);
 }
