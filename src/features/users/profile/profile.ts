@@ -53,7 +53,7 @@ export class Profile implements OnInit, OnDestroy {
           longitude: this.authService.Longitude
         })
       })
-    }))
+    }));
   }
 
   public get isEditing() {
@@ -69,7 +69,7 @@ export class Profile implements OnInit, OnDestroy {
     }
     else
       this.form.enable();
-    
+      this.form.get('id')!.disable();
   }
 
   public save() {

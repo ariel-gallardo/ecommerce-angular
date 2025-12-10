@@ -40,15 +40,14 @@ a{
 .mat-mdc-form-field.mat-form-field-disabled {
 
   .mat-mdc-input-element {
-    color: var(--mat-sys-on-primary) !important;
-    -webkit-text-fill-color: var(--mat-sys-on-primary) !important;
+    color: var(--mat-sys-primary) !important;
+    -webkit-text-fill-color: var(--mat-sys-primary) !important;
     transition: 0.5s;
   }
 
   .mat-mdc-floating-label,
   .mdc-floating-label {
-    color: var(--mat-sys-on-primary) !important;
-    transition: 0.5s;
+    color: var(--mat-sys-primary) !important;
   }
 
 }
@@ -64,7 +63,6 @@ a{
   .mat-mdc-floating-label,
   .mdc-floating-label {
     color: var(--mat-sys-primary) !important;
-    transition: 0.5s;
   }
 
 }
