@@ -55,12 +55,11 @@ export class PermissionsList implements OnInit, OnDestroy {
       height: '75vh',
     })
   }
-
+ 
   editar(entityId: string) {
     this.dialog.open(PermissionsEdit, {
       width: '50vw',
       height: '75vh',
-      backdropClass: 'bg-red-500',
       data: {
         id: entityId
       }
