@@ -32,7 +32,6 @@ export class PermissionsList implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.permissionnFacade.FiltersGet$.subscribe(permissions => {
-      console.log(permissions)
       this.permissions = signal(permissions);
     });
     this.permissionnFacade.FiltersGet();

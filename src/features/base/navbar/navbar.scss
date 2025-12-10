@@ -1,0 +1,13 @@
+@use '@angular/material' as mat;
+
+.mat-toolbar {
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  border: 1px solid var(--mat-sys-outline-variant);
+  font: var(--mat-sys-body-large);
+  @include mat.strong-focus-indicators((border-color: var(--mat-sys-on-surface),
+    border-width: 1px,
+    border-radius: 1px,
+  ));
+}
+

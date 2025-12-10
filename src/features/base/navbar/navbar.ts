@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   standalone: false,
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
-})
+}) 
 export class Navbar implements OnInit, OnDestroy {
 
   private subs!: Subscription;
@@ -15,7 +15,7 @@ export class Navbar implements OnInit, OnDestroy {
 
   constructor(private readonly menuService: MenuService) {
   }
-
+ 
   public get HasMenu(){
     return this.hasMenu;
   }

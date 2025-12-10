@@ -1,24 +1,72 @@
 @use '@angular/material' as mat;
 
-$theme: mat.define-theme((
-  color: (
-    theme-type: dark,
-    primary: mat.$cyan-palette,
-    tertiary: mat.$orange-palette,
-  ),
-  typography: (
-    brand-family: 'Comic Sans',
-    bold-weight: 900
-  ),
-  density: (
-    scale: 0
-  ),
-));
-
-
-
-:root{
-    @include mat.all-component-themes($theme);
-    @include mat.all-component-bases($theme);
-    @include mat.all-component-colors($theme);
+html {
+  color-scheme: light dark;
+  @include mat.theme((color: (primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+        theme-type: dark,
+      ),
+      typography: Roboto,
+      density: 0));
+  @include mat.system-classes();
 }
+
+body {
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+
+@include mat.paginator-overrides((container-text-color: var(--mat-sys-on-primary-container),
+    container-background-color: var(--mat-sys-primary-container),
+  ));
+
+:root {
+  @include mat.sidenav-overrides((container-background-color: var(--mat-sys-surface-container-low)));
+}
+
+h1,
+h2,
+h3,
+p{
+  color: var(--mat-sys-primary) !important
+}
+
+a{
+  color: var(--mat-sys-primary);
+}
+
+
+.mat-mdc-form-field.mat-form-field-disabled {
+
+  .mat-mdc-input-element {
+    color: var(--mat-sys-on-primary) !important;
+    -webkit-text-fill-color: var(--mat-sys-on-primary) !important;
+    transition: 0.5s;
+  }
+
+  .mat-mdc-floating-label,
+  .mdc-floating-label {
+    color: var(--mat-sys-on-primary) !important;
+    transition: 0.5s;
+  }
+
+}
+
+.mat-mdc-form-field {
+
+  .mat-mdc-input-element {
+    color: var(--mat-sys-primary) !important;
+    -webkit-text-fill-color: var(--mat-sys-primary) !important;
+    transition: 0.5s;
+  }
+
+  .mat-mdc-floating-label,
+  .mdc-floating-label {
+    color: var(--mat-sys-primary) !important;
+    transition: 0.5s;
+  }
+
+}
+
+
