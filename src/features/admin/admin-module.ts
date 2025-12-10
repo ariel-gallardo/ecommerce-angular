@@ -21,6 +21,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CommonDirectivesModule } from '@directives/common-directives.module';
 import { SharedModule } from '@features/shared/shared.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { PermissionsAdd } from './permissions/permissions-add/permissions-add';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     LogList,
     LogDetail,
     PermissionsList,
-    PermissionsEdit
+    PermissionsEdit,
+    PermissionsAdd
   ],
   imports: [
     CommonModule,

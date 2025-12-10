@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams,
         }       from '@angular/common/http';
 import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
-
+import {cleanObject} from '@api/security/utils/clean-object';
 import {Response} from '@api/security/models/common/response.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 import { BaseResponse } from '@api/security/models/base-response.model';
@@ -199,7 +199,8 @@ export class PersonasService extends BaseService {
     public Delete(requestParameters?: DeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -251,7 +252,8 @@ export class PersonasService extends BaseService {
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Persona>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Persona>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const orderBy = requestParameters?.orderBy;
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -303,9 +305,12 @@ export class PersonasService extends BaseService {
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Persona>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Persona>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const orderBy = requestParameters?.orderBy;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -361,7 +366,8 @@ export class PersonasService extends BaseService {
     public Get(requestParameters?: GetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Persona>>>;
     public Get(requestParameters?: GetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Persona>>>;
     public Get(requestParameters?: GetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -413,9 +419,12 @@ export class PersonasService extends BaseService {
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Persona>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Persona>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityIds = requestParameters?.entityIds;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let entityIds = requestParameters?.entityIds;
+        entityIds = cleanObject(entityIds);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (entityIds) {
@@ -475,7 +484,8 @@ export class PersonasService extends BaseService {
     public Post(requestParameters: PostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Persona>>>;
     public Post(requestParameters: PostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Persona>>>;
     public Post(requestParameters: PostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const persona = requestParameters?.persona;
+        let persona = requestParameters?.persona;
+        persona = cleanObject(persona);
         if (persona === null || persona === undefined) {
             throw new Error('Required parameter persona was null or undefined when calling securityPersonasPost.');
         }
@@ -538,7 +548,8 @@ export class PersonasService extends BaseService {
     public Put(requestParameters: PutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Persona>>>;
     public Put(requestParameters: PutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Persona>>>;
     public Put(requestParameters: PutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const persona = requestParameters?.persona;
+        let persona = requestParameters?.persona;
+        persona = cleanObject(persona);
         if (persona === null || persona === undefined) {
             throw new Error('Required parameter persona was null or undefined when calling securityPersonasPut.');
         }
@@ -601,7 +612,8 @@ export class PersonasService extends BaseService {
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const requestBody = requestParameters?.requestBody;
+        let requestBody = requestParameters?.requestBody;
+        requestBody = cleanObject(requestBody);
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling securityPersonasRangeDelete.');
         }
@@ -664,7 +676,8 @@ export class PersonasService extends BaseService {
     public RangePost(requestParameters: RangePostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Persona>>>>;
     public RangePost(requestParameters: RangePostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Persona>>>>;
     public RangePost(requestParameters: RangePostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const persona = requestParameters?.persona;
+        let persona = requestParameters?.persona;
+        persona = cleanObject(persona);
         if (persona === null || persona === undefined) {
             throw new Error('Required parameter persona was null or undefined when calling securityPersonasRangePost.');
         }
@@ -727,7 +740,8 @@ export class PersonasService extends BaseService {
     public RangePut(requestParameters: RangePutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Persona>>>>;
     public RangePut(requestParameters: RangePutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Persona>>>>;
     public RangePut(requestParameters: RangePutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const persona = requestParameters?.persona;
+        let persona = requestParameters?.persona;
+        persona = cleanObject(persona);
         if (persona === null || persona === undefined) {
             throw new Error('Required parameter persona was null or undefined when calling securityPersonasRangePut.');
         }

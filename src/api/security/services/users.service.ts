@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams,
         }       from '@angular/common/http';
 import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
-
+import {cleanObject} from '@api/security/utils/clean-object';
 import {Response} from '@api/security/models/common/response.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 import { BaseResponse } from '@api/security/models/base-response.model';
@@ -255,7 +255,8 @@ export class UsersService extends BaseService {
     public Delete(requestParameters?: DeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -307,11 +308,16 @@ export class UsersService extends BaseService {
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<User>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<User>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const username = requestParameters?.username;
-        const email = requestParameters?.email;
-        const role = requestParameters?.role;
-        const personaId = requestParameters?.personaId;
-        const orderBy = requestParameters?.orderBy;
+        let username = requestParameters?.username;
+        username = cleanObject(username);
+        let email = requestParameters?.email;
+        email = cleanObject(email);
+        let role = requestParameters?.role;
+        role = cleanObject(role);
+        let personaId = requestParameters?.personaId;
+        personaId = cleanObject(personaId);
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -371,13 +377,20 @@ export class UsersService extends BaseService {
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<User>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<User>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const username = requestParameters?.username;
-        const email = requestParameters?.email;
-        const role = requestParameters?.role;
-        const personaId = requestParameters?.personaId;
-        const orderBy = requestParameters?.orderBy;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let username = requestParameters?.username;
+        username = cleanObject(username);
+        let email = requestParameters?.email;
+        email = cleanObject(email);
+        let role = requestParameters?.role;
+        role = cleanObject(role);
+        let personaId = requestParameters?.personaId;
+        personaId = cleanObject(personaId);
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -441,7 +454,8 @@ export class UsersService extends BaseService {
     public Get(requestParameters?: GetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<User>>>;
     public Get(requestParameters?: GetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<User>>>;
     public Get(requestParameters?: GetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -493,9 +507,12 @@ export class UsersService extends BaseService {
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<User>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<User>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityIds = requestParameters?.entityIds;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let entityIds = requestParameters?.entityIds;
+        entityIds = cleanObject(entityIds);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (entityIds) {
@@ -555,7 +572,8 @@ export class UsersService extends BaseService {
     public LoginPost(requestParameters: LoginPostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain' | 'text/json',}): Observable<HttpResponse<Response<string>>>;
     public LoginPost(requestParameters: LoginPostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json' | 'text/plain' | 'text/json',}): Observable<HttpEvent<Response<string>>>;
     public LoginPost(requestParameters: LoginPostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json' | 'text/plain' | 'text/json',}): Observable<any> {
-        const userLogin = requestParameters?.userLogin;
+        let userLogin = requestParameters?.userLogin;
+        userLogin = cleanObject(userLogin);
         if (userLogin === null || userLogin === undefined) {
             throw new Error('Required parameter userLogin was null or undefined when calling securityUsersLoginPost.');
         }
@@ -620,7 +638,8 @@ export class UsersService extends BaseService {
     public Post(requestParameters: PostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<User>>>;
     public Post(requestParameters: PostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<User>>>;
     public Post(requestParameters: PostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const userRegister = requestParameters?.userRegister;
+        let userRegister = requestParameters?.userRegister;
+        userRegister = cleanObject(userRegister);
         if (userRegister === null || userRegister === undefined) {
             throw new Error('Required parameter userRegister was null or undefined when calling securityUsersPost.');
         }
@@ -683,7 +702,8 @@ export class UsersService extends BaseService {
     public Put(requestParameters: PutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<User>>>;
     public Put(requestParameters: PutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<User>>>;
     public Put(requestParameters: PutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const userRegister = requestParameters?.userRegister;
+        let userRegister = requestParameters?.userRegister;
+        userRegister = cleanObject(userRegister);
         if (userRegister === null || userRegister === undefined) {
             throw new Error('Required parameter userRegister was null or undefined when calling securityUsersPut.');
         }
@@ -746,7 +766,8 @@ export class UsersService extends BaseService {
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const requestBody = requestParameters?.requestBody;
+        let requestBody = requestParameters?.requestBody;
+        requestBody = cleanObject(requestBody);
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling securityUsersRangeDelete.');
         }
@@ -809,7 +830,8 @@ export class UsersService extends BaseService {
     public RangePost(requestParameters: RangePostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<User>>>>;
     public RangePost(requestParameters: RangePostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<User>>>>;
     public RangePost(requestParameters: RangePostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const userRegister = requestParameters?.userRegister;
+        let userRegister = requestParameters?.userRegister;
+        userRegister = cleanObject(userRegister);
         if (userRegister === null || userRegister === undefined) {
             throw new Error('Required parameter userRegister was null or undefined when calling securityUsersRangePost.');
         }
@@ -872,7 +894,8 @@ export class UsersService extends BaseService {
     public RangePut(requestParameters: RangePutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<User>>>>;
     public RangePut(requestParameters: RangePutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<User>>>>;
     public RangePut(requestParameters: RangePutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const userRegister = requestParameters?.userRegister;
+        let userRegister = requestParameters?.userRegister;
+        userRegister = cleanObject(userRegister);
         if (userRegister === null || userRegister === undefined) {
             throw new Error('Required parameter userRegister was null or undefined when calling securityUsersRangePut.');
         }
@@ -935,7 +958,8 @@ export class UsersService extends BaseService {
     public RegisterPost(requestParameters: RegisterPostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<User>>>;
     public RegisterPost(requestParameters: RegisterPostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<User>>>;
     public RegisterPost(requestParameters: RegisterPostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const userRegister = requestParameters?.userRegister;
+        let userRegister = requestParameters?.userRegister;
+        userRegister = cleanObject(userRegister);
         if (userRegister === null || userRegister === undefined) {
             throw new Error('Required parameter userRegister was null or undefined when calling securityUsersRegisterPost.');
         }

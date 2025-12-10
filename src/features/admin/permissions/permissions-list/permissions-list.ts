@@ -6,6 +6,7 @@ import { PermissionFacade } from '@api/security/redux/permission/permission.faca
 import { Colors } from '@models/colors';
 import { PermissionsEdit } from '../permissions-edit/permissions-edit';
 import { PageEvent } from '@angular/material/paginator';
+import { PermissionsAdd } from '../permissions-add/permissions-add';
 
 @Component({
   selector: 'permissions-list',
@@ -14,11 +15,11 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrl: './permissions-list.scss',
 })
 export class PermissionsList implements OnInit, OnDestroy {
-  
+
   private permissions: WritableSignal<Pagination<Permission>>;
   public Colors = Colors;
-  constructor(private readonly permissionnFacade: PermissionFacade, 
-    private readonly dialog: MatDialog){
+  constructor(private readonly permissionnFacade: PermissionFacade,
+    private readonly dialog: MatDialog) {
     this.permissionnFacade.FiltersGetInit();
     this.permissionnFacade.DeleteInit();
     this.permissions = signal({
@@ -41,36 +42,43 @@ export class PermissionsList implements OnInit, OnDestroy {
     this.permissionnFacade.FiltersGetInit();
     this.permissionnFacade.DeleteInit();
   }
-  
+
   columns: string[] = [
     'access',
     'policy',
     'acciones'
   ];
 
-    editar(entityId: string){
-    this.dialog.open(PermissionsEdit,{
+  crear() {
+    this.dialog.open(PermissionsAdd, {
+      width: '50vw',
+      height: '75vh'
+    })
+  }
+
+  editar(entityId: string) {
+    this.dialog.open(PermissionsEdit, {
       width: '50vw',
       height: '75vh',
-      data:{
+      data: {
         id: entityId,
       }
     })
   }
 
-  eliminar(entityId: string){
-    this.permissionnFacade.DeleteRequestUpdate({entityId});
+  eliminar(entityId: string) {
+    this.permissionnFacade.DeleteRequestUpdate({ entityId });
   }
- 
-  public get Permissions(){
+
+  public get Permissions() {
     return this.permissions().items;
   }
-  public get Pagination(){
+  public get Pagination() {
     return {
-      page: this.permissions().page,  
-      pageSize: this.permissions().pageSize,  
-      totalCount: this.permissions().totalCount,  
-      totalPages: this.permissions().totalPages,  
+      page: this.permissions().page,
+      pageSize: this.permissions().pageSize,
+      totalCount: this.permissions().totalCount,
+      totalPages: this.permissions().totalPages,
     };
   }
   onPageChange(e: PageEvent) {
@@ -78,4 +86,3 @@ export class PermissionsList implements OnInit, OnDestroy {
   }
 
 }
- 

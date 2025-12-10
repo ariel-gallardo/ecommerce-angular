@@ -49,9 +49,6 @@ export class PermissionsEdit implements OnInit, OnDestroy {
     this.subs.add(this.form.valueChanges.subscribe(permission => this.permissionFacade.PutRequestUpdate({
         permission
     })));
-    this.subs.add(this.permissionFacade.PutIsLoaded$.subscribe(success => {
-      if(success) this.dialogRef?.close();
-    }));
   }
   
   ngOnDestroy(): void {

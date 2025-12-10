@@ -1,4 +1,4 @@
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, Optional } from "@angular/core";
 import { PermissionActions } from "@api/security";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map } from "rxjs";
@@ -20,5 +20,10 @@ export class PermissionEffects {
     $deleteEffect = createEffect(() => this.actions$.pipe(
         ofType(PermissionActions.DeleteRequestUpdateSuccess),
         map(() => PermissionActions.DeleteExecute())
+    ));
+
+    $postEffect = createEffect(() => this.actions$.pipe(
+        ofType(PermissionActions.PostSuccess),
+        map(() => PermissionActions.FiltersGetExecute())
     ));
 }
