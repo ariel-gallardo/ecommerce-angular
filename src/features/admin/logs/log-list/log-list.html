@@ -49,8 +49,8 @@
         <ng-container matColumnDef="acciones">
             <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <button matButton [style.color]="Colors.Search" (click)="observar(row.id)">
-                    <mat-icon>edit</mat-icon>
+                <button *ngIf="row.logErrorId" matButton [style.color]="Colors.Search" (click)="observar(row.id)">
+                    <mat-icon>search</mat-icon>
                     Observar
                 </button>
             </mat-cell>

@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Pagination } from '@api/logs/models/common/pagination.model';
 import { Log } from '@api/logs/models/log.model';
 import { LogFacade } from '@api/logs/redux/log/log.facade';
 import { Colors } from '@models/colors';
 import { Subscription } from 'rxjs';
+import { LogErrorComponent } from '../log-error/log-error';
 
 @Component({
   selector: 'log-list',
@@ -16,7 +18,7 @@ export class LogList implements OnInit, OnDestroy {
   private subs: Subscription;
   private logs: WritableSignal<Pagination<Log>>;
 
-  constructor(private readonly logsFacade: LogFacade) {
+  constructor(private readonly logsFacade: LogFacade, private readonly matDialog: MatDialog) {
     this.logsFacade.FiltersGetInit();
     this.logs = signal({
       page: 0,
@@ -54,7 +56,15 @@ export class LogList implements OnInit, OnDestroy {
   }
 
   public observar(entityId: number) {
-
+    this.matDialog.open(LogErrorComponent,{
+      width: '75vw',
+      height: '75vh',
+      maxHeight: '75vh',
+      maxWidth: '75vw',
+      data:{
+        entityId
+      }
+    })
   }
 
   public get Colors() {

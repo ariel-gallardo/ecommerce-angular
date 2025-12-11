@@ -81,6 +81,7 @@ export class PermissionsList implements OnInit, OnDestroy {
       totalPages: this.permissions().totalPages,
     };
   }
+  
   onPageChange(e: PageEvent) {
     this.permissionFacade.FiltersGetChangePage(e);
   }

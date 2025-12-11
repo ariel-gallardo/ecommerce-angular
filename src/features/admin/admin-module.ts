@@ -4,7 +4,7 @@ import { AdminShell } from './admin-shell/admin-shell';
 import { RouterModule } from '@angular/router';
 import routes from './routes';
 import { LogList } from './logs/log-list/log-list';
-import { LogDetail } from './logs/log-detail/log-detail';
+import { LogErrorComponent } from './logs/log-error/log-error';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,6 +30,9 @@ import {
   MatExpansionPanelTitle,
   MatExpansionPanelDescription
 } from '@angular/material/expansion';
+import { LogsEffects } from './logs/effects/logs.effects';
+import { StackTrace } from './logs/stack-trace/stack-trace';
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   providers:[
     LogFacade
@@ -37,10 +40,11 @@ import {
   declarations: [
     AdminShell,
     LogList,
-    LogDetail,
+    LogErrorComponent,
     PermissionsList,
     PermissionsEdit,
     PermissionsAdd,
+    StackTrace,
   ],
   imports: [
     CommonModule,
@@ -48,6 +52,7 @@ import {
     MatSidenavModule,
     MatPaginatorModule,
     MatButtonModule,
+    MatCardModule,
     MatDialogModule,
     MatIconModule,
     MatTableModule,
@@ -58,7 +63,7 @@ import {
     CommonDirectivesModule,
     SharedModule,
     RouterModule.forChild(routes),
-    EffectsModule.forFeature([PermissionEffects]),
+    EffectsModule.forFeature([PermissionEffects, LogsEffects]),
     MatAccordion,
     MatExpansionPanel,
     MatExpansionPanelHeader,
