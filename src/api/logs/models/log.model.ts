@@ -7,9 +7,9 @@ export class Log {
     logErrorId?:   number   | undefined | null;
     id?:   number   | undefined | null;
 constructor(init: Partial<Log> = {}){
-    this.serviceName = null;
-    this.message = null;
-    this.traceId = null;
+    this.serviceName = '';
+    this.message = '';
+    this.traceId = '';
     this.logErrorId = 0;
     this.id = 0;
     const keys = (Object.keys(init) as (keyof Log)[])

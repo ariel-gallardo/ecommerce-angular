@@ -1,1 +1,66 @@
-<p>log-list works!</p>
+<div class="flex flex-col justify-between h-full">
+    <table mat-table [dataSource]="Logs">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="flex items-center gap-2">
+                    {{row.id}}
+                </div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="serviceName">
+            <mat-header-cell *matHeaderCellDef> Servicio </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="flex items-center gap-2">
+                    {{row.serviceName}}
+                </div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="message">
+            <mat-header-cell *matHeaderCellDef> Mensaje </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Detalles
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <pre class="whitespace-pre-wrap text-sm">
+                            {{ row.message }}
+                        </pre>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="tipo">
+            <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <div class="flex items-center gap-2" [style.color]="(row | LogType).color">
+                    <mat-icon>
+                        {{ (row | LogType).icon }}
+                    </mat-icon>
+                    <span>
+                        {{ (row | LogType).label }}
+                    </span>
+                </div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="acciones">
+            <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button matButton [style.color]="Colors.Search" (click)="observar(row.id)">
+                    <mat-icon>edit</mat-icon>
+                    Observar
+                </button>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </table>
+    <div class="flex justify-center">
+        <mat-paginator [length]="Pagination.totalCount" [pageIndex]="Pagination.page - 1"
+            [pageSize]="Pagination.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="onPageChange($event)">
+        </mat-paginator>
+    </div>
+</div>

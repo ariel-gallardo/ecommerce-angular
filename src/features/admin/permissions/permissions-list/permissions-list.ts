@@ -18,10 +18,10 @@ export class PermissionsList implements OnInit, OnDestroy {
  
   private permissions: WritableSignal<Pagination<Permission>>;
   public Colors = Colors;
-  constructor(private readonly permissionnFacade: PermissionFacade,
+  constructor(private readonly permissionFacade: PermissionFacade,
     private readonly dialog: MatDialog) {
-    this.permissionnFacade.FiltersGetInit();
-    this.permissionnFacade.DeleteInit();
+    this.permissionFacade.FiltersGetInit();
+    this.permissionFacade.DeleteInit();
     this.permissions = signal({
       page: 0,
       items: [],
@@ -32,15 +32,15 @@ export class PermissionsList implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.permissionnFacade.FiltersGet$.subscribe(permissions => {
+    this.permissionFacade.FiltersGet$.subscribe(permissions => {
       this.permissions = signal(permissions);
     });
-    this.permissionnFacade.FiltersGet();
+    this.permissionFacade.FiltersGet();
   }
 
   ngOnDestroy(): void {
-    this.permissionnFacade.FiltersGetInit();
-    this.permissionnFacade.DeleteInit();
+    this.permissionFacade.FiltersGetInit();
+    this.permissionFacade.DeleteInit();
   }
 
   columns: string[] = [
@@ -67,7 +67,7 @@ export class PermissionsList implements OnInit, OnDestroy {
   }
 
   eliminar(entityId: string) {
-    this.permissionnFacade.DeleteRequestUpdate({ entityId });
+    this.permissionFacade.DeleteRequestUpdate({ entityId });
   }
 
   public get Permissions() {
@@ -82,7 +82,7 @@ export class PermissionsList implements OnInit, OnDestroy {
     };
   }
   onPageChange(e: PageEvent) {
-    this.permissionnFacade.FiltersGetChangePage(e);
+    this.permissionFacade.FiltersGetChangePage(e);
   }
 
 }

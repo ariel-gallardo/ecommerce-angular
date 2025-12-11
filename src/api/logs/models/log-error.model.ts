@@ -8,9 +8,9 @@ export class LogError {
     id?:   number   | undefined | null;
 constructor(init: Partial<LogError> = {}){
     this.logId = 0;
-    this.stackTrace = null;
-    this.exception = null;
-    this.exceptionType = null;
+    this.stackTrace = '';
+    this.exception = '';
+    this.exceptionType = '';
     this.id = 0;
     const keys = (Object.keys(init) as (keyof LogError)[])
     .filter(k => this[k] !== init[k]);

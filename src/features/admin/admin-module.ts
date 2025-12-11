@@ -22,15 +22,25 @@ import { CommonDirectivesModule } from '@directives/common-directives.module';
 import { SharedModule } from '@features/shared/shared.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PermissionsAdd } from './permissions/permissions-add/permissions-add';
-
+import { LogFacade } from '@api/logs/redux/log/log.facade';
+import {
+  MatAccordion,
+  MatExpansionPanel,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle,
+  MatExpansionPanelDescription
+} from '@angular/material/expansion';
 @NgModule({
+  providers:[
+    LogFacade
+  ],
   declarations: [
     AdminShell,
     LogList,
     LogDetail,
     PermissionsList,
     PermissionsEdit,
-    PermissionsAdd
+    PermissionsAdd,
   ],
   imports: [
     CommonModule,
@@ -48,7 +58,12 @@ import { PermissionsAdd } from './permissions/permissions-add/permissions-add';
     CommonDirectivesModule,
     SharedModule,
     RouterModule.forChild(routes),
-    EffectsModule.forFeature([PermissionEffects])
+    EffectsModule.forFeature([PermissionEffects]),
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
+    MatExpansionPanelDescription
   ]
 })
 export class AdminModule { }

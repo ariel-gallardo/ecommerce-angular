@@ -11,6 +11,7 @@ import { AuthInterceptor } from '@interceptors/auth-interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CartReduxModule } from '@api/cart';
 import { CartEffects } from '@effects/cart.effects';
+import { ReduxCoreModule as LogsCoreModule } from '@api/logs/redux/core.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CartEffects } from '@effects/cart.effects';
     ReactiveFormsModule,
     AppRoutingModule,
     SecurityReduxCoreModule,
+    LogsCoreModule,
     CartReduxModule,
   ],
   providers: [
