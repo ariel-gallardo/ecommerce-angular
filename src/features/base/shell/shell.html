@@ -2,7 +2,7 @@
   <app-navbar></app-navbar>
   <main class="overflow-y-auto overflow-x-hidden">
     <mat-drawer-container class="h-full">
-      <mat-drawer mode="side" #drawer>
+      <mat-drawer mode="side" #drawer class="mat-bg-surface-variant">
         <ng-container *ngFor="let item of Items(); let i = index">
           <mat-divider *ngIf="i === 1"></mat-divider>
           <button *ngIf="item.show" mat-button class="w-full" [routerLink]="item.route">

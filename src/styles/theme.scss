@@ -12,19 +12,10 @@ html {
   @include mat.system-classes();
 }
 
-body {
-  background: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  border: 1px solid var(--mat-sys-outline-variant);
-}
 
 @include mat.paginator-overrides((container-text-color: var(--mat-sys-on-primary-container),
-    container-background-color: var(--mat-sys-primary-container),
+    container-background-color: var(--mat-sys-surface-container-low),
   ));
-
-:root {
-  @include mat.sidenav-overrides((container-background-color: var(--mat-sys-surface-container-low)));
-}
 
 h1,
 h2,
@@ -70,4 +61,13 @@ a{
 
 .mat-mdc-dialog-surface{
   padding: 2vw;
+}
+
+.mat-mdc-row, mat-header-row{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+mat-header-row{
+    padding-top: 10px;
 }
