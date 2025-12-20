@@ -1,7 +1,4 @@
-import { BaseResponse } from '@api/product/models/base-response.model';
 import { Category } from '@api/product/models/category.model';
-import { ValidationError } from '@api/product/models/validation-error.model';
-import {Response} from '@api/product/models/common/response.model';
 import {StateDetail, StateDetailBase} from '@api/product/models/common/state-detail.model';
 import {Pagination} from '@api/product/models/common/pagination.model';
 

@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams,
         }       from '@angular/common/http';
 import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
-
+import {cleanObject} from '@api/product/utils/clean-object';
 import {Response} from '@api/product/models/common/response.model';
 import {Pagination} from '@api/product/models/common/pagination.model';
 import { BaseResponse } from '@api/product/models/base-response.model';
@@ -21,7 +21,7 @@ import { BaseService } from './api.base.service';
 export class DeleteRequest {
     entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = null;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -40,15 +40,15 @@ export class FiltersFirstGetRequest {
     categoryId?: string | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
-             this.name = null;
+             this.name = '';
             
-             this.description = null;
+             this.description = '';
             
-             this.category = null;
+             this.category = '';
             
-             this.categoryId = null;
+             this.categoryId = '';
             
-             this.orderBy = null;
+             this.orderBy = '';
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -69,19 +69,19 @@ export class FiltersGetRequest {
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<FiltersGetRequest> = {}){
-             this.name = null;
+             this.name = '';
             
-             this.description = null;
+             this.description = '';
             
-             this.category = null;
+             this.category = '';
             
-             this.categoryId = null;
+             this.categoryId = '';
             
-             this.orderBy = null;
+             this.orderBy = '';
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof FiltersGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -96,7 +96,7 @@ export class FiltersGetRequest {
 export class GetRequest {
     entityId?: string | undefined | null;
     constructor(init: Partial<GetRequest> = {}){
-             this.entityId = null;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof GetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -115,9 +115,9 @@ export class IdsGetRequest {
     constructor(init: Partial<IdsGetRequest> = {}){
              this.entityIds = [];
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof IdsGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -223,7 +223,8 @@ export class ProductService extends BaseService {
     public Delete(requestParameters?: DeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -275,11 +276,16 @@ export class ProductService extends BaseService {
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Product>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Product>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const name = requestParameters?.name;
-        const description = requestParameters?.description;
-        const category = requestParameters?.category;
-        const categoryId = requestParameters?.categoryId;
-        const orderBy = requestParameters?.orderBy;
+        let name = requestParameters?.name;
+        name = cleanObject(name);
+        let description = requestParameters?.description;
+        description = cleanObject(description);
+        let category = requestParameters?.category;
+        category = cleanObject(category);
+        let categoryId = requestParameters?.categoryId;
+        categoryId = cleanObject(categoryId);
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -339,13 +345,20 @@ export class ProductService extends BaseService {
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Product>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Product>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const name = requestParameters?.name;
-        const description = requestParameters?.description;
-        const category = requestParameters?.category;
-        const categoryId = requestParameters?.categoryId;
-        const orderBy = requestParameters?.orderBy;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let name = requestParameters?.name;
+        name = cleanObject(name);
+        let description = requestParameters?.description;
+        description = cleanObject(description);
+        let category = requestParameters?.category;
+        category = cleanObject(category);
+        let categoryId = requestParameters?.categoryId;
+        categoryId = cleanObject(categoryId);
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -409,7 +422,8 @@ export class ProductService extends BaseService {
     public Get(requestParameters?: GetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Product>>>;
     public Get(requestParameters?: GetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Product>>>;
     public Get(requestParameters?: GetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -461,9 +475,12 @@ export class ProductService extends BaseService {
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Product>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Product>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityIds = requestParameters?.entityIds;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let entityIds = requestParameters?.entityIds;
+        entityIds = cleanObject(entityIds);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (entityIds) {
@@ -523,7 +540,8 @@ export class ProductService extends BaseService {
     public Post(requestParameters: PostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Product>>>;
     public Post(requestParameters: PostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Product>>>;
     public Post(requestParameters: PostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const product = requestParameters?.product;
+        let product = requestParameters?.product;
+        product = cleanObject(product);
         if (product === null || product === undefined) {
             throw new Error('Required parameter product was null or undefined when calling productProductPost.');
         }
@@ -586,7 +604,8 @@ export class ProductService extends BaseService {
     public Put(requestParameters: PutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Product>>>;
     public Put(requestParameters: PutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Product>>>;
     public Put(requestParameters: PutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const product = requestParameters?.product;
+        let product = requestParameters?.product;
+        product = cleanObject(product);
         if (product === null || product === undefined) {
             throw new Error('Required parameter product was null or undefined when calling productProductPut.');
         }
@@ -649,7 +668,8 @@ export class ProductService extends BaseService {
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const requestBody = requestParameters?.requestBody;
+        let requestBody = requestParameters?.requestBody;
+        requestBody = cleanObject(requestBody);
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling productProductRangeDelete.');
         }
@@ -712,7 +732,8 @@ export class ProductService extends BaseService {
     public RangePost(requestParameters: RangePostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Product>>>>;
     public RangePost(requestParameters: RangePostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Product>>>>;
     public RangePost(requestParameters: RangePostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const product = requestParameters?.product;
+        let product = requestParameters?.product;
+        product = cleanObject(product);
         if (product === null || product === undefined) {
             throw new Error('Required parameter product was null or undefined when calling productProductRangePost.');
         }
@@ -775,7 +796,8 @@ export class ProductService extends BaseService {
     public RangePut(requestParameters: RangePutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Product>>>>;
     public RangePut(requestParameters: RangePutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Product>>>>;
     public RangePut(requestParameters: RangePutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const product = requestParameters?.product;
+        let product = requestParameters?.product;
+        product = cleanObject(product);
         if (product === null || product === undefined) {
             throw new Error('Required parameter product was null or undefined when calling productProductRangePut.');
         }

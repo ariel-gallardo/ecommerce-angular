@@ -12,6 +12,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { CartReduxModule } from '@api/cart';
 import { CartEffects } from '@effects/cart.effects';
 import { ReduxCoreModule as LogsCoreModule } from '@api/logs/redux/core.module';
+import { ReduxCoreModule as ProductsCoreModule } from '@api/product/redux/core.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { ReduxCoreModule as LogsCoreModule } from '@api/logs/redux/core.module';
     SecurityReduxCoreModule,
     LogsCoreModule,
     CartReduxModule,
+    ProductsCoreModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

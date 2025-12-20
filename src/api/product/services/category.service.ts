@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams,
         }       from '@angular/common/http';
 import { CustomHttpParameterCodec } from '../encoder';
 import { Observable } from 'rxjs';
-
+import {cleanObject} from '@api/product/utils/clean-object';
 import {Response} from '@api/product/models/common/response.model';
 import {Pagination} from '@api/product/models/common/pagination.model';
 import { BaseResponse } from '@api/product/models/base-response.model';
@@ -21,7 +21,7 @@ import { BaseService } from './api.base.service';
 export class DeleteRequest {
     entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = null;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -36,13 +36,19 @@ export class DeleteRequest {
 export class FiltersFirstGetRequest {
     name?: string | undefined | null;
     description?: string | undefined | null;
+    parentId?: string | undefined | null;
+    onlyParents?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
-             this.name = null;
+             this.name = '';
             
-             this.description = null;
+             this.description = '';
             
-             this.orderBy = null;
+             this.parentId = '';
+            
+             this.onlyParents = new Boolean();
+            
+             this.orderBy = '';
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -57,19 +63,25 @@ export class FiltersFirstGetRequest {
 export class FiltersGetRequest {
     name?: string | undefined | null;
     description?: string | undefined | null;
+    parentId?: string | undefined | null;
+    onlyParents?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<FiltersGetRequest> = {}){
-             this.name = null;
+             this.name = '';
             
-             this.description = null;
+             this.description = '';
             
-             this.orderBy = null;
+             this.parentId = '';
             
-             this.page = null;
+             this.onlyParents = new Boolean();
             
-             this.pageSize = null;
+             this.orderBy = '';
+            
+             this.page = 0;
+            
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof FiltersGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -84,7 +96,7 @@ export class FiltersGetRequest {
 export class GetRequest {
     entityId?: string | undefined | null;
     constructor(init: Partial<GetRequest> = {}){
-             this.entityId = null;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof GetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -103,9 +115,9 @@ export class IdsGetRequest {
     constructor(init: Partial<IdsGetRequest> = {}){
              this.entityIds = [];
             
-             this.page = null;
+             this.page = 0;
             
-             this.pageSize = null;
+             this.pageSize = 0;
             
         const keys = (Object.keys(init) as (keyof IdsGetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -211,7 +223,8 @@ export class CategoryService extends BaseService {
     public Delete(requestParameters?: DeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public Delete(requestParameters?: DeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -263,15 +276,26 @@ export class CategoryService extends BaseService {
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Category>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Category>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const name = requestParameters?.name;
-        const description = requestParameters?.description;
-        const orderBy = requestParameters?.orderBy;
+        let name = requestParameters?.name;
+        name = cleanObject(name);
+        let description = requestParameters?.description;
+        description = cleanObject(description);
+        let parentId = requestParameters?.parentId;
+        parentId = cleanObject(parentId);
+        let onlyParents = requestParameters?.onlyParents;
+        onlyParents = cleanObject(onlyParents);
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>name, 'Name');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>description, 'Description');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>parentId, 'ParentId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>onlyParents, 'OnlyParents');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
 
@@ -321,17 +345,30 @@ export class CategoryService extends BaseService {
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Category>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Category>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const name = requestParameters?.name;
-        const description = requestParameters?.description;
-        const orderBy = requestParameters?.orderBy;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let name = requestParameters?.name;
+        name = cleanObject(name);
+        let description = requestParameters?.description;
+        description = cleanObject(description);
+        let parentId = requestParameters?.parentId;
+        parentId = cleanObject(parentId);
+        let onlyParents = requestParameters?.onlyParents;
+        onlyParents = cleanObject(onlyParents);
+        let orderBy = requestParameters?.orderBy;
+        orderBy = cleanObject(orderBy);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>name, 'Name');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>description, 'Description');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>parentId, 'ParentId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>onlyParents, 'OnlyParents');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -385,7 +422,8 @@ export class CategoryService extends BaseService {
     public Get(requestParameters?: GetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Category>>>;
     public Get(requestParameters?: GetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Category>>>;
     public Get(requestParameters?: GetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityId = requestParameters?.entityId;
+        let entityId = requestParameters?.entityId;
+        entityId = cleanObject(entityId);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -437,9 +475,12 @@ export class CategoryService extends BaseService {
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Category>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Category>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const entityIds = requestParameters?.entityIds;
-        const page = requestParameters?.page;
-        const pageSize = requestParameters?.pageSize;
+        let entityIds = requestParameters?.entityIds;
+        entityIds = cleanObject(entityIds);
+        let page = requestParameters?.page;
+        page = cleanObject(page);
+        let pageSize = requestParameters?.pageSize;
+        pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         if (entityIds) {
@@ -499,7 +540,8 @@ export class CategoryService extends BaseService {
     public Post(requestParameters: PostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Category>>>;
     public Post(requestParameters: PostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Category>>>;
     public Post(requestParameters: PostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const category = requestParameters?.category;
+        let category = requestParameters?.category;
+        category = cleanObject(category);
         if (category === null || category === undefined) {
             throw new Error('Required parameter category was null or undefined when calling productCategoryPost.');
         }
@@ -562,7 +604,8 @@ export class CategoryService extends BaseService {
     public Put(requestParameters: PutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Category>>>;
     public Put(requestParameters: PutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Category>>>;
     public Put(requestParameters: PutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const category = requestParameters?.category;
+        let category = requestParameters?.category;
+        category = cleanObject(category);
         if (category === null || category === undefined) {
             throw new Error('Required parameter category was null or undefined when calling productCategoryPut.');
         }
@@ -625,7 +668,8 @@ export class CategoryService extends BaseService {
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<BaseResponse>>;
     public RangeDelete(requestParameters: RangeDeleteRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const requestBody = requestParameters?.requestBody;
+        let requestBody = requestParameters?.requestBody;
+        requestBody = cleanObject(requestBody);
         if (requestBody === null || requestBody === undefined) {
             throw new Error('Required parameter requestBody was null or undefined when calling productCategoryRangeDelete.');
         }
@@ -688,9 +732,10 @@ export class CategoryService extends BaseService {
     public RangePost(requestParameters: RangePostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Category>>>>;
     public RangePost(requestParameters: RangePostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Category>>>>;
     public RangePost(requestParameters: RangePostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const category = requestParameters?.category;
-        if (category === null || category === undefined) {
-            throw new Error('Required parameter category was null or undefined when calling productCategoryRangePost.');
+        let category2 = requestParameters?.category;
+        category2 = cleanObject(category2);
+        if (category2 === null || category2 === undefined) {
+            throw new Error('Required parameter category2 was null or undefined when calling productCategoryRangePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -731,7 +776,7 @@ export class CategoryService extends BaseService {
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Category[]>('POST', `${basePath}${localVarPath}`,
             {
-                body: category,
+                body: category2,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -751,9 +796,10 @@ export class CategoryService extends BaseService {
     public RangePut(requestParameters: RangePutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Category>>>>;
     public RangePut(requestParameters: RangePutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Category>>>>;
     public RangePut(requestParameters: RangePutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        const category = requestParameters?.category;
-        if (category === null || category === undefined) {
-            throw new Error('Required parameter category was null or undefined when calling productCategoryRangePut.');
+        let category2 = requestParameters?.category;
+        category2 = cleanObject(category2);
+        if (category2 === null || category2 === undefined) {
+            throw new Error('Required parameter category2 was null or undefined when calling productCategoryRangePut.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -794,7 +840,7 @@ export class CategoryService extends BaseService {
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<Category[]>('PUT', `${basePath}${localVarPath}`,
             {
-                body: category,
+                body: category2,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

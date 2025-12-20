@@ -1,9 +1,5 @@
 import {createAction, props} from '@ngrx/store';
 import {Pagination} from '../../models/common/pagination.model';
-import {Response} from '../../models/common/response.model'; 
-import {NullableFormControl} from '../../models/common/nullable-form-control.model';
-import { FormGroup } from '@angular/forms';
-import { BaseResponse } from '@api/product/models/base-response.model';
 import { Category } from '@api/product/models/category.model';
 import { ValidationError } from '@api/product/models/validation-error.model';
 import { DeleteRequest } from '@api/product/services/category.service'; 
@@ -17,7 +13,6 @@ import { RangeDeleteRequest } from '@api/product/services/category.service';
 import { RangePostRequest } from '@api/product/services/category.service'; 
 import { RangePutRequest } from '@api/product/services/category.service'; 
 import { PageEvent } from '@angular/material/paginator';
-import { HttpHeaders } from '@angular/common/http';
 
 export class CategoryActions {
 

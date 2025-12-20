@@ -5,11 +5,7 @@ import { Observable, filter } from 'rxjs';
 import { CategoryActions as Actions } from './category.actions';
 import {Pagination} from '../../models/common/pagination.model';
 import State from './category.state';
-import {NullableFormControl} from '../../models/common/nullable-form-control.model';
-import { FormGroup } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 
-import { BaseResponse } from '@api/product/models/base-response.model'; 
 import { Category } from '@api/product/models/category.model'; 
 import { ValidationError } from '@api/product/models/validation-error.model'; 
 import { DeleteRequest } from '@api/product/services/category.service'; 

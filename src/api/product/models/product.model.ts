@@ -6,10 +6,10 @@ export class Product {
     categoryId?:   string   | undefined | null;
     id?:   string   | undefined | null;
 constructor(init: Partial<Product> = {}){
-    this.name = null;
-    this.description = null;
-    this.categoryId = null;
-    this.id = null;
+    this.name = '';
+    this.description = '';
+    this.categoryId = '';
+    this.id = '';
     const keys = (Object.keys(init) as (keyof Product)[])
     .filter(k => this[k] !== init[k]);
     if(keys.length > 0){

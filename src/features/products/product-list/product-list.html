@@ -1,1 +1,22 @@
-<p>product-list works!</p>
+<mat-tree #tree [dataSource]="categoryTree" [childrenAccessor]="childrenAccessor" [trackBy]="trackById">
+
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (activation)="performAction($event)">
+    {{ node.name }}
+  </mat-tree-node>
+
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+    <div class="flex items-center gap-2 p-2" matTreeNodePadding>
+      <button mat-icon-button matTreeNodeToggle (click)="performAction(node)">
+        <mat-icon>
+          {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      {{ node.name }}
+    </div>
+
+    <div [class.hidden]="!tree.isExpanded(node)">
+      <ng-container matTreeNodeOutlet></ng-container>
+    </div>
+  </mat-nested-tree-node>
+
+</mat-tree>
