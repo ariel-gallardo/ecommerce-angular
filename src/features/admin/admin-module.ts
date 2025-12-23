@@ -33,6 +33,7 @@ import {
 import { LogsEffects } from './logs/effects/logs.effects';
 import { StackTrace } from './logs/stack-trace/stack-trace';
 import { MatCardModule } from '@angular/material/card';
+
 @NgModule({
   providers:[
     InfoFacade

@@ -8,6 +8,7 @@ import { PermissionsEdit } from '../permissions-edit/permissions-edit';
 import { PageEvent } from '@angular/material/paginator';
 import { PermissionsAdd } from '../permissions-add/permissions-add';
 
+
 @Component({
   selector: 'permissions-list',
   standalone: false,
