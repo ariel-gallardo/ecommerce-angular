@@ -1,9 +1,5 @@
 import {createAction, props} from '@ngrx/store';
 import {Pagination} from '../../models/common/pagination.model';
-import {Response} from '../../models/common/response.model'; 
-import {NullableFormControl} from '../../models/common/nullable-form-control.model';
-import { FormGroup } from '@angular/forms';
-import { BaseResponse } from '@api/security/models/base-response.model';
 import { Permission } from '@api/security/models/permission.model';
 import { ValidationError } from '@api/security/models/validation-error.model';
 import { CanAccessHeadRequest } from '@api/security/services/permission.service'; 

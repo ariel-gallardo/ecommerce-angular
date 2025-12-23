@@ -502,15 +502,8 @@ export class PermissionEffects {
                 map(response =>{
                     
                     return PermissionActions.FiltersGetSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -745,15 +738,8 @@ export class PermissionEffects {
                 map(response =>{
                     
                     return PermissionActions.IdsGetSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -1203,15 +1189,8 @@ export class PermissionEffects {
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
                     return PermissionActions.RangePostSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -1335,15 +1314,8 @@ export class PermissionEffects {
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
                     return PermissionActions.RangePutSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 

@@ -1,7 +1,4 @@
-import { BaseResponse } from '@api/security/models/base-response.model';
 import { Persona } from '@api/security/models/persona.model';
-import { ValidationError } from '@api/security/models/validation-error.model';
-import {Response} from '@api/security/models/common/response.model';
 import {StateDetail, StateDetailBase} from '@api/security/models/common/state-detail.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 
@@ -15,7 +12,6 @@ import { PutRequest } from '@api/security/services/personas.service';
 import { RangeDeleteRequest } from '@api/security/services/personas.service'; 
 import { RangePostRequest } from '@api/security/services/personas.service'; 
 import { RangePutRequest } from '@api/security/services/personas.service'; 
-import { HttpHeaders } from '@angular/common/http';
 
 export default interface State
 {

@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, Optional, signal, WritableSignal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LogError } from '@api/logs/models/log-error.model';
-import { LogErrorFacade } from '@api/logs/redux/log-error/log-error.facade';
+import { ErrorFacade } from '@api/logs/redux/error/error.facade';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,11 +16,11 @@ export class LogErrorComponent implements OnInit, OnDestroy {
   private subs!: Subscription;
 
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) private readonly data: { entityId: number },
+    @Optional() @Inject(MAT_DIALOG_DATA) private readonly data: { entityId: string },
     @Optional() private readonly dialogRef: MatDialogRef<LogErrorComponent>,
-    private readonly logErrorFacade: LogErrorFacade) {
+    private readonly errorFacade: ErrorFacade) {
     this.logError = signal(new LogError());
-    this.logErrorFacade.GetInit();
+    this.errorFacade.GetInit();
   }
 
 
@@ -39,12 +39,12 @@ export class LogErrorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
-    this.logErrorFacade.GetInit();
+    this.errorFacade.GetInit();
   }
 
   ngOnInit(): void {
-    this.subs = this.logErrorFacade.Get$.subscribe(logError => this.logError.set(logError));
+    this.subs = this.errorFacade.Get$.subscribe(logError => this.logError.set(logError));
     if (this.data?.entityId)
-      this.logErrorFacade.GetRequestUpdate({ entityId: this.data.entityId });
+      this.errorFacade.GetRequestUpdate({ entityId: this.data.entityId });
   }
 }

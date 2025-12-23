@@ -395,15 +395,8 @@ export class UsersEffects {
                 map(response =>{
                     
                     return UsersActions.FiltersGetSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -638,15 +631,8 @@ export class UsersEffects {
                 map(response =>{
                     
                     return UsersActions.IdsGetSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -1207,15 +1193,8 @@ export class UsersEffects {
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
                     return UsersActions.RangePostSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -1339,15 +1318,8 @@ export class UsersEffects {
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
                     return UsersActions.RangePutSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 

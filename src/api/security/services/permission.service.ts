@@ -1,20 +1,16 @@
 /* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec
-        }       from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
+import { HttpClient, HttpParams,
+         HttpResponse, HttpEvent        }       from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {cleanObject} from '@api/security/utils/clean-object';
 import {Response} from '@api/security/models/common/response.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 import { BaseResponse } from '@api/security/models/base-response.model';
 import { Permission } from '@api/security/models/permission.model';
-import { ValidationError } from '@api/security/models/validation-error.model';
-import { PermissionReduxModule } from '@api/security/redux/permission/permission.module';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { BASE_PATH } from '../variables';
 import { ServiceConfiguration } from '../configuration';
 import { BaseService } from './api.base.service';
 
@@ -52,6 +48,7 @@ export class FiltersFirstGetRequest {
     controller?: string | undefined | null;
     action?: string | undefined | null;
     url?: string | undefined | null;
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
              this.controller = '';
@@ -59,6 +56,8 @@ export class FiltersFirstGetRequest {
              this.action = '';
             
              this.url = '';
+            
+             this.takeAll = new Boolean();
             
              this.orderBy = '';
             
@@ -76,6 +75,7 @@ export class FiltersGetRequest {
     controller?: string | undefined | null;
     action?: string | undefined | null;
     url?: string | undefined | null;
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
@@ -85,6 +85,8 @@ export class FiltersGetRequest {
              this.action = '';
             
              this.url = '';
+            
+             this.takeAll = new Boolean();
             
              this.orderBy = '';
             
@@ -344,6 +346,8 @@ export class PermissionService extends BaseService {
         action = cleanObject(action);
         let url = requestParameters?.url;
         url = cleanObject(url);
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
 
@@ -354,6 +358,8 @@ export class PermissionService extends BaseService {
           <any>action, 'Action');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>url, 'Url');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
 
@@ -409,6 +415,8 @@ export class PermissionService extends BaseService {
         action = cleanObject(action);
         let url = requestParameters?.url;
         url = cleanObject(url);
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
         let page = requestParameters?.page;
@@ -423,6 +431,8 @@ export class PermissionService extends BaseService {
           <any>action, 'Action');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>url, 'Url');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -454,7 +464,7 @@ export class PermissionService extends BaseService {
 
         let localVarPath = `/security/Permission/filters`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Permission[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Permission>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -572,7 +582,7 @@ export class PermissionService extends BaseService {
 
         let localVarPath = `/security/Permission/ids`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Permission[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Permission>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -828,7 +838,7 @@ export class PermissionService extends BaseService {
 
         let localVarPath = `/security/Permission/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Permission[]>('POST', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Permission>>('POST', `${basePath}${localVarPath}`,
             {
                 body: permission,
                 responseType: <any>responseType_,
@@ -892,7 +902,7 @@ export class PermissionService extends BaseService {
 
         let localVarPath = `/security/Permission/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Permission[]>('PUT', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Permission>>('PUT', `${basePath}${localVarPath}`,
             {
                 body: permission,
                 responseType: <any>responseType_,

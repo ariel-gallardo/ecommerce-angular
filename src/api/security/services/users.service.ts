@@ -40,6 +40,7 @@ export class FiltersFirstGetRequest {
     email?: string | undefined | null;
     role?: string | undefined | null;
     personaId?: string | undefined | null;
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
              this.username = '';
@@ -49,6 +50,8 @@ export class FiltersFirstGetRequest {
              this.role = '';
             
              this.personaId = '';
+            
+             this.takeAll = new Boolean();
             
              this.orderBy = '';
             
@@ -67,6 +70,7 @@ export class FiltersGetRequest {
     email?: string | undefined | null;
     role?: string | undefined | null;
     personaId?: string | undefined | null;
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
@@ -78,6 +82,8 @@ export class FiltersGetRequest {
              this.role = '';
             
              this.personaId = '';
+            
+             this.takeAll = new Boolean();
             
              this.orderBy = '';
             
@@ -316,6 +322,8 @@ export class UsersService extends BaseService {
         role = cleanObject(role);
         let personaId = requestParameters?.personaId;
         personaId = cleanObject(personaId);
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
 
@@ -328,6 +336,8 @@ export class UsersService extends BaseService {
           <any>role, 'Role');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>personaId, 'PersonaId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
 
@@ -385,6 +395,8 @@ export class UsersService extends BaseService {
         role = cleanObject(role);
         let personaId = requestParameters?.personaId;
         personaId = cleanObject(personaId);
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
         let page = requestParameters?.page;
@@ -401,6 +413,8 @@ export class UsersService extends BaseService {
           <any>role, 'Role');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>personaId, 'PersonaId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -432,7 +446,7 @@ export class UsersService extends BaseService {
 
         let localVarPath = `/security/Users/filters`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<User[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<User>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -550,7 +564,7 @@ export class UsersService extends BaseService {
 
         let localVarPath = `/security/Users/ids`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<User[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<User>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -872,7 +886,7 @@ export class UsersService extends BaseService {
 
         let localVarPath = `/security/Users/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<User[]>('POST', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<User>>('POST', `${basePath}${localVarPath}`,
             {
                 body: userRegister,
                 responseType: <any>responseType_,
@@ -936,7 +950,7 @@ export class UsersService extends BaseService {
 
         let localVarPath = `/security/Users/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<User[]>('PUT', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<User>>('PUT', `${basePath}${localVarPath}`,
             {
                 body: userRegister,
                 responseType: <any>responseType_,

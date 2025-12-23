@@ -1,27 +1,23 @@
 /* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec
-        }       from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
+import { HttpClient, HttpParams,
+         HttpResponse, HttpEvent        }       from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {cleanObject} from '@api/logs/utils/clean-object';
 import {Response} from '@api/logs/models/common/response.model';
 import {Pagination} from '@api/logs/models/common/pagination.model';
 import { BaseResponse } from '@api/logs/models/base-response.model';
-import { Log } from '@api/logs/models/log.model';
-import { ValidationError } from '@api/logs/models/validation-error.model';
-import { LogReduxModule } from '@api/logs/redux/log/log.module';
+import { LogError } from '@api/logs/models/log-error.model';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { BASE_PATH } from '../variables';
 import { ServiceConfiguration } from '../configuration';
 import { BaseService } from './api.base.service';
 
 export class DeleteRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<DeleteRequest> = {}){
-             this.entityId = 0;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof DeleteRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -34,22 +30,19 @@ export class DeleteRequest {
     }   
 }
 export class FiltersFirstGetRequest {
-    serviceName?: string | undefined | null;
-    traceId?: string | undefined | null;
-    logErrorId?: number | undefined | null;
     exceptionType?: string | undefined | null;
-    id?: number | undefined | null;
+    logId?: string | undefined | null;
+    id?: string | undefined | null;
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
-             this.serviceName = '';
-            
-             this.traceId = '';
-            
-             this.logErrorId = 0;
-            
              this.exceptionType = '';
             
-             this.id = 0;
+             this.logId = '';
+            
+             this.id = '';
+            
+             this.takeAll = new Boolean();
             
              this.orderBy = '';
             
@@ -64,24 +57,21 @@ export class FiltersFirstGetRequest {
     }   
 }
 export class FiltersGetRequest {
-    serviceName?: string | undefined | null;
-    traceId?: string | undefined | null;
-    logErrorId?: number | undefined | null;
     exceptionType?: string | undefined | null;
-    id?: number | undefined | null;
+    logId?: string | undefined | null;
+    id?: string | undefined | null;
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<FiltersGetRequest> = {}){
-             this.serviceName = '';
-            
-             this.traceId = '';
-            
-             this.logErrorId = 0;
-            
              this.exceptionType = '';
             
-             this.id = 0;
+             this.logId = '';
+            
+             this.id = '';
+            
+             this.takeAll = new Boolean();
             
              this.orderBy = '';
             
@@ -100,9 +90,9 @@ export class FiltersGetRequest {
     }   
 }
 export class GetRequest {
-    entityId?: number | undefined | null;
+    entityId?: string | undefined | null;
     constructor(init: Partial<GetRequest> = {}){
-             this.entityId = 0;
+             this.entityId = '';
             
         const keys = (Object.keys(init) as (keyof GetRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -115,7 +105,7 @@ export class GetRequest {
     }   
 }
 export class IdsGetRequest {
-    entityIds?: number[] | undefined | null;
+    entityIds?: string[] | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<IdsGetRequest> = {}){
@@ -136,10 +126,10 @@ export class IdsGetRequest {
     }   
 }
 export class PostRequest {
-    log?: Log | undefined | null;
+    logError?: LogError | undefined | null;
     constructor(init: Partial<PostRequest> = {}){
             
-             this.log = new Log(); 
+             this.logError = new LogError(); 
         const keys = (Object.keys(init) as (keyof PostRequest)[])
         .filter(k => this[k] !== init[k]);
         if(keys.length > 0){
@@ -151,10 +141,10 @@ export class PostRequest {
     }   
 }
 export class PutRequest {
-    log?: Log | undefined | null;
+    logError?: LogError | undefined | null;
     constructor(init: Partial<PutRequest> = {}){
             
-             this.log = new Log(); 
+             this.logError = new LogError(); 
         const keys = (Object.keys(init) as (keyof PutRequest)[])
         .filter(k => this[k] !== init[k]);
         if(keys.length > 0){
@@ -166,7 +156,7 @@ export class PutRequest {
     }   
 }
 export class RangeDeleteRequest {
-    requestBody?: number[] | undefined | null;
+    requestBody?: string[] | undefined | null;
     constructor(init: Partial<RangeDeleteRequest> = {}){
              this.requestBody = [];
             
@@ -181,9 +171,9 @@ export class RangeDeleteRequest {
     }   
 }
 export class RangePostRequest {
-    log?: Log[] | undefined | null;
+    logError?: LogError[] | undefined | null;
     constructor(init: Partial<RangePostRequest> = {}){
-             this.log = [];
+             this.logError = [];
             
         const keys = (Object.keys(init) as (keyof RangePostRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -196,9 +186,9 @@ export class RangePostRequest {
     }   
 }
 export class RangePutRequest {
-    log?: Log[] | undefined | null;
+    logError?: LogError[] | undefined | null;
     constructor(init: Partial<RangePutRequest> = {}){
-             this.log = [];
+             this.logError = [];
             
         const keys = (Object.keys(init) as (keyof RangePutRequest)[])
         .filter(k => this[k] !== init[k]);
@@ -213,7 +203,7 @@ export class RangePutRequest {
 
 
 @Injectable()
-export class LogService extends BaseService {
+export class ErrorService extends BaseService {
 
     constructor(protected httpClient: HttpClient, @Optional() @Inject(BASE_PATH) basePath: string|string[], @Optional() configuration?: ServiceConfiguration) {
         super(basePath, configuration);
@@ -258,7 +248,7 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log`;
+        let localVarPath = `/logs/Error`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<BaseResponse>('DELETE', `${basePath}${localVarPath}`,
             {
@@ -278,34 +268,30 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Log>>;
-    public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Log>>>;
-    public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Log>>>;
+    public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<LogError>>;
+    public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<LogError>>>;
+    public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<LogError>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        let serviceName = requestParameters?.serviceName;
-        serviceName = cleanObject(serviceName);
-        let traceId = requestParameters?.traceId;
-        traceId = cleanObject(traceId);
-        let logErrorId = requestParameters?.logErrorId;
-        logErrorId = cleanObject(logErrorId);
         let exceptionType = requestParameters?.exceptionType;
         exceptionType = cleanObject(exceptionType);
+        let logId = requestParameters?.logId;
+        logId = cleanObject(logId);
         let id = requestParameters?.id;
         id = cleanObject(id);
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>serviceName, 'ServiceName');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>traceId, 'TraceId');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>logErrorId, 'LogErrorId');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>exceptionType, 'ExceptionType');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>logId, 'LogId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>id, 'Id');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
 
@@ -331,9 +317,9 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log/filters-first`;
+        let localVarPath = `/logs/Error/filters-first`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<LogError>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -351,20 +337,18 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<Log>>>;
-    public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Log>>>>;
-    public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Log>>>>;
+    public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<LogError>>>;
+    public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<LogError>>>>;
+    public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<LogError>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        let serviceName = requestParameters?.serviceName;
-        serviceName = cleanObject(serviceName);
-        let traceId = requestParameters?.traceId;
-        traceId = cleanObject(traceId);
-        let logErrorId = requestParameters?.logErrorId;
-        logErrorId = cleanObject(logErrorId);
         let exceptionType = requestParameters?.exceptionType;
         exceptionType = cleanObject(exceptionType);
+        let logId = requestParameters?.logId;
+        logId = cleanObject(logId);
         let id = requestParameters?.id;
         id = cleanObject(id);
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
         let page = requestParameters?.page;
@@ -374,15 +358,13 @@ export class LogService extends BaseService {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>serviceName, 'ServiceName');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>traceId, 'TraceId');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-          <any>logErrorId, 'LogErrorId');
-        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>exceptionType, 'ExceptionType');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>logId, 'LogId');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>id, 'Id');
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -412,9 +394,9 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log/filters`;
+        let localVarPath = `/logs/Error/filters`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<LogError>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -432,9 +414,9 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public Get(requestParameters?: GetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Log>>;
-    public Get(requestParameters?: GetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Log>>>;
-    public Get(requestParameters?: GetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Log>>>;
+    public Get(requestParameters?: GetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<LogError>>;
+    public Get(requestParameters?: GetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<LogError>>>;
+    public Get(requestParameters?: GetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<LogError>>>;
     public Get(requestParameters?: GetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
         let entityId = requestParameters?.entityId;
         entityId = cleanObject(entityId);
@@ -465,9 +447,9 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log`;
+        let localVarPath = `/logs/Error`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<LogError>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -485,9 +467,9 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public IdsGet(requestParameters?: IdsGetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<Log>>>;
-    public IdsGet(requestParameters?: IdsGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Log>>>>;
-    public IdsGet(requestParameters?: IdsGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Log>>>>;
+    public IdsGet(requestParameters?: IdsGetRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<LogError>>>;
+    public IdsGet(requestParameters?: IdsGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<LogError>>>>;
+    public IdsGet(requestParameters?: IdsGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<LogError>>>>;
     public IdsGet(requestParameters?: IdsGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
         let entityIds = requestParameters?.entityIds;
         entityIds = cleanObject(entityIds);
@@ -530,9 +512,9 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log/ids`;
+        let localVarPath = `/logs/Error/ids`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<LogError>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -550,14 +532,14 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public Post(requestParameters: PostRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Log>>;
-    public Post(requestParameters: PostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Log>>>;
-    public Post(requestParameters: PostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Log>>>;
+    public Post(requestParameters: PostRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<LogError>>;
+    public Post(requestParameters: PostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<LogError>>>;
+    public Post(requestParameters: PostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<LogError>>>;
     public Post(requestParameters: PostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        let log = requestParameters?.log;
-        log = cleanObject(log);
-        if (log === null || log === undefined) {
-            throw new Error('Required parameter log was null or undefined when calling logsLogPost.');
+        let logError = requestParameters?.logError;
+        logError = cleanObject(logError);
+        if (logError === null || logError === undefined) {
+            throw new Error('Required parameter logError was null or undefined when calling logsErrorPost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -594,11 +576,11 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log`;
+        let localVarPath = `/logs/Error`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log>('POST', `${basePath}${localVarPath}`,
+        return this.httpClient.request<LogError>('POST', `${basePath}${localVarPath}`,
             {
-                body: log,
+                body: logError,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -614,14 +596,14 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public Put(requestParameters: PutRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Log>>;
-    public Put(requestParameters: PutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Log>>>;
-    public Put(requestParameters: PutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Log>>>;
+    public Put(requestParameters: PutRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<LogError>>;
+    public Put(requestParameters: PutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<LogError>>>;
+    public Put(requestParameters: PutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<LogError>>>;
     public Put(requestParameters: PutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        let log = requestParameters?.log;
-        log = cleanObject(log);
-        if (log === null || log === undefined) {
-            throw new Error('Required parameter log was null or undefined when calling logsLogPut.');
+        let logError = requestParameters?.logError;
+        logError = cleanObject(logError);
+        if (logError === null || logError === undefined) {
+            throw new Error('Required parameter logError was null or undefined when calling logsErrorPut.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -658,11 +640,11 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log`;
+        let localVarPath = `/logs/Error`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log>('PUT', `${basePath}${localVarPath}`,
+        return this.httpClient.request<LogError>('PUT', `${basePath}${localVarPath}`,
             {
-                body: log,
+                body: logError,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -685,7 +667,7 @@ export class LogService extends BaseService {
         let requestBody = requestParameters?.requestBody;
         requestBody = cleanObject(requestBody);
         if (requestBody === null || requestBody === undefined) {
-            throw new Error('Required parameter requestBody was null or undefined when calling logsLogRangeDelete.');
+            throw new Error('Required parameter requestBody was null or undefined when calling logsErrorRangeDelete.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -722,7 +704,7 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log/range`;
+        let localVarPath = `/logs/Error/range`;
         const { basePath, withCredentials } = this.configuration;
         return this.httpClient.request<BaseResponse>('DELETE', `${basePath}${localVarPath}`,
             {
@@ -742,14 +724,14 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public RangePost(requestParameters: RangePostRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<Log>>>;
-    public RangePost(requestParameters: RangePostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Log>>>>;
-    public RangePost(requestParameters: RangePostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Log>>>>;
+    public RangePost(requestParameters: RangePostRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<LogError>>>;
+    public RangePost(requestParameters: RangePostRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<LogError>>>>;
+    public RangePost(requestParameters: RangePostRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<LogError>>>>;
     public RangePost(requestParameters: RangePostRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        let log = requestParameters?.log;
-        log = cleanObject(log);
-        if (log === null || log === undefined) {
-            throw new Error('Required parameter log was null or undefined when calling logsLogRangePost.');
+        let logError = requestParameters?.logError;
+        logError = cleanObject(logError);
+        if (logError === null || logError === undefined) {
+            throw new Error('Required parameter logError was null or undefined when calling logsErrorRangePost.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -786,11 +768,11 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log/range`;
+        let localVarPath = `/logs/Error/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log[]>('POST', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<LogError>>('POST', `${basePath}${localVarPath}`,
             {
-                body: log,
+                body: logError,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,
@@ -806,14 +788,14 @@ export class LogService extends BaseService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public RangePut(requestParameters: RangePutRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<Log>>>;
-    public RangePut(requestParameters: RangePutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Log>>>>;
-    public RangePut(requestParameters: RangePutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Log>>>>;
+    public RangePut(requestParameters: RangePutRequest, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<Response<Pagination<LogError>>>;
+    public RangePut(requestParameters: RangePutRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<LogError>>>>;
+    public RangePut(requestParameters: RangePutRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<LogError>>>>;
     public RangePut(requestParameters: RangePutRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
-        let log = requestParameters?.log;
-        log = cleanObject(log);
-        if (log === null || log === undefined) {
-            throw new Error('Required parameter log was null or undefined when calling logsLogRangePut.');
+        let logError = requestParameters?.logError;
+        logError = cleanObject(logError);
+        if (logError === null || logError === undefined) {
+            throw new Error('Required parameter logError was null or undefined when calling logsErrorRangePut.');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -850,11 +832,11 @@ export class LogService extends BaseService {
             }
         }
 
-        let localVarPath = `/logs/Log/range`;
+        let localVarPath = `/logs/Error/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Log[]>('PUT', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<LogError>>('PUT', `${basePath}${localVarPath}`,
             {
-                body: log,
+                body: logError,
                 responseType: <any>responseType_,
                 ...(withCredentials ? { withCredentials } : {}),
                 headers: localVarHeaders,

@@ -1,21 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { LogActions as Actions } from './log.actions';
-import State from './log.state';
-import {Pagination} from '@api/logs/models/common/pagination.model';
-import { BaseResponse } from '@api/logs/models/base-response.model';
-import { Log } from '@api/logs/models/log.model';
-import { ValidationError } from '@api/logs/models/validation-error.model';
-import { DeleteRequest } from '@api/logs/services/log.service'; 
-import { FiltersFirstGetRequest } from '@api/logs/services/log.service'; 
-import { FiltersGetRequest } from '@api/logs/services/log.service'; 
-import { GetRequest } from '@api/logs/services/log.service'; 
-import { IdsGetRequest } from '@api/logs/services/log.service'; 
-import { PostRequest } from '@api/logs/services/log.service'; 
-import { PutRequest } from '@api/logs/services/log.service'; 
-import { RangeDeleteRequest } from '@api/logs/services/log.service'; 
-import { RangePostRequest } from '@api/logs/services/log.service'; 
-import { RangePutRequest } from '@api/logs/services/log.service'; 
-import { HttpHeaders } from '@angular/common/http';
+import { ErrorActions as Actions } from './error.actions';
+import State from './error.state';
 
 const initialState = {
     Delete: {
@@ -39,7 +24,7 @@ const initialState = {
         hasError: null,
         isLoaded: null,
         errors: [],
-        data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []},
+        data: null,
         request: null,
     },
     Get: {
@@ -55,7 +40,7 @@ const initialState = {
         hasError: null,
         isLoaded: null,
         errors: [],
-        data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []},
+        data: null,
         request: null,
     },
     Post: {
@@ -87,7 +72,7 @@ const initialState = {
         hasError: null,
         isLoaded: null,
         errors: [],
-        data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []},
+        data: null,
         request: null,
     },
     RangePut: {
@@ -95,7 +80,7 @@ const initialState = {
         hasError: null,
         isLoaded: null,
         errors: [],
-        data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []},
+        data: null,
         request: null,
     },
 } as State;
@@ -116,8 +101,8 @@ const reducer = createReducer<State>(
     on(Actions.FiltersFirstGetSuccess, (state) => ({ ...state, FiltersFirstGet: {...state.FiltersFirstGet, isLoaded: true, hasError: false, errors: [] }})),
     on(Actions.FiltersFirstGetRequestUpdateOneSuccess, (state, {key, value}) => ({ ...state, FiltersFirstGet: {...state.FiltersFirstGet, request: {...state.FiltersFirstGet.request, [key]: value } }})),
     on(Actions.FiltersFirstGetRequestUpdateSuccess, (state, {request}) => ({ ...state, FiltersFirstGet: {...state.FiltersFirstGet, request: request }})),
-    on(Actions.FiltersGetInit, state => ({...state, FiltersGet:{ ...state.FiltersGet, firstInit: false, hasError: null, errors: [], isLoaded: null, data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}   , request: null} })),
-    on(Actions.FiltersGetDataInit, state => ({...state, FiltersGet:{ ...state.FiltersGet , data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}  } })),
+    on(Actions.FiltersGetInit, state => ({...state, FiltersGet:{ ...state.FiltersGet, firstInit: false, hasError: null, errors: [], isLoaded: null, data: null   , request: null} })),
+    on(Actions.FiltersGetDataInit, state => ({...state, FiltersGet:{ ...state.FiltersGet , data: null  } })),
     on(Actions.FiltersGetSetData, (state, {data}) => ({ ...state, FiltersGet: {...state.FiltersGet, data: data, isLoaded: null, hasError: false, errors: [] }})),
     on(Actions.FiltersGetSetError, (state,{errors}) => ({ ...state, FiltersGet: {...state.FiltersGet, isLoaded: false, hasError: true,errors: errors  }})),
     on(Actions.FiltersGetSuccess, (state) => ({ ...state, FiltersGet: {...state.FiltersGet, isLoaded: true, hasError: false, errors: [] }})),
@@ -130,8 +115,8 @@ const reducer = createReducer<State>(
     on(Actions.GetSuccess, (state) => ({ ...state, Get: {...state.Get, isLoaded: true, hasError: false, errors: [] }})),
     on(Actions.GetRequestUpdateOneSuccess, (state, {key, value}) => ({ ...state, Get: {...state.Get, request: {...state.Get.request, [key]: value } }})),
     on(Actions.GetRequestUpdateSuccess, (state, {request}) => ({ ...state, Get: {...state.Get, request: request }})),
-    on(Actions.IdsGetInit, state => ({...state, IdsGet:{ ...state.IdsGet, firstInit: false, hasError: null, errors: [], isLoaded: null, data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}   , request: null} })),
-    on(Actions.IdsGetDataInit, state => ({...state, IdsGet:{ ...state.IdsGet , data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}  } })),
+    on(Actions.IdsGetInit, state => ({...state, IdsGet:{ ...state.IdsGet, firstInit: false, hasError: null, errors: [], isLoaded: null, data: null   , request: null} })),
+    on(Actions.IdsGetDataInit, state => ({...state, IdsGet:{ ...state.IdsGet , data: null  } })),
     on(Actions.IdsGetSetData, (state, {data}) => ({ ...state, IdsGet: {...state.IdsGet, data: data, isLoaded: null, hasError: false, errors: [] }})),
     on(Actions.IdsGetSetError, (state,{errors}) => ({ ...state, IdsGet: {...state.IdsGet, isLoaded: false, hasError: true,errors: errors  }})),
     on(Actions.IdsGetSuccess, (state) => ({ ...state, IdsGet: {...state.IdsGet, isLoaded: true, hasError: false, errors: [] }})),
@@ -158,15 +143,15 @@ const reducer = createReducer<State>(
     on(Actions.RangeDeleteSuccess, (state) => ({ ...state, RangeDelete: {...state.RangeDelete, isLoaded: true, hasError: false, errors: [] }})),
     on(Actions.RangeDeleteRequestUpdateOneSuccess, (state, {key, value}) => ({ ...state, RangeDelete: {...state.RangeDelete, request: {...state.RangeDelete.request, [key]: value } }})),
     on(Actions.RangeDeleteRequestUpdateSuccess, (state, {request}) => ({ ...state, RangeDelete: {...state.RangeDelete, request: request }})),
-    on(Actions.RangePostInit, state => ({...state, RangePost:{ ...state.RangePost, firstInit: false, hasError: null, errors: [], isLoaded: null, data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}   , request: null} })),
-    on(Actions.RangePostDataInit, state => ({...state, RangePost:{ ...state.RangePost , data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}  } })),
+    on(Actions.RangePostInit, state => ({...state, RangePost:{ ...state.RangePost, firstInit: false, hasError: null, errors: [], isLoaded: null, data: null   , request: null} })),
+    on(Actions.RangePostDataInit, state => ({...state, RangePost:{ ...state.RangePost , data: null  } })),
     on(Actions.RangePostSetData, (state, {data}) => ({ ...state, RangePost: {...state.RangePost, data: data, isLoaded: null, hasError: false, errors: [] }})),
     on(Actions.RangePostSetError, (state,{errors}) => ({ ...state, RangePost: {...state.RangePost, isLoaded: false, hasError: true,errors: errors  }})),
     on(Actions.RangePostSuccess, (state) => ({ ...state, RangePost: {...state.RangePost, isLoaded: true, hasError: false, errors: [] }})),
     on(Actions.RangePostRequestUpdateOneSuccess, (state, {key, value}) => ({ ...state, RangePost: {...state.RangePost, request: {...state.RangePost.request, [key]: value } }})),
     on(Actions.RangePostRequestUpdateSuccess, (state, {request}) => ({ ...state, RangePost: {...state.RangePost, request: request }})),
-    on(Actions.RangePutInit, state => ({...state, RangePut:{ ...state.RangePut, firstInit: false, hasError: null, errors: [], isLoaded: null, data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}   , request: null} })),
-    on(Actions.RangePutDataInit, state => ({...state, RangePut:{ ...state.RangePut , data: {page: 0,totalPages: 0,pageSize: 0,totalCount: 0, items: []}  } })),
+    on(Actions.RangePutInit, state => ({...state, RangePut:{ ...state.RangePut, firstInit: false, hasError: null, errors: [], isLoaded: null, data: null   , request: null} })),
+    on(Actions.RangePutDataInit, state => ({...state, RangePut:{ ...state.RangePut , data: null  } })),
     on(Actions.RangePutSetData, (state, {data}) => ({ ...state, RangePut: {...state.RangePut, data: data, isLoaded: null, hasError: false, errors: [] }})),
     on(Actions.RangePutSetError, (state,{errors}) => ({ ...state, RangePut: {...state.RangePut, isLoaded: false, hasError: true,errors: errors  }})),
     on(Actions.RangePutSuccess, (state) => ({ ...state, RangePut: {...state.RangePut, isLoaded: true, hasError: false, errors: [] }})),

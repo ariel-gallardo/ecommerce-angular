@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { Pagination } from '@api/logs/models/common/pagination.model';
 import { Log } from '@api/logs/models/log.model';
-import { LogFacade } from '@api/logs/redux/log/log.facade';
+import { InfoFacade } from '@api/logs/redux/info/info.facade';
 import { Colors } from '@models/colors';
 import { Subscription } from 'rxjs';
 import { LogErrorComponent } from '../log-error/log-error';
@@ -18,8 +18,8 @@ export class LogList implements OnInit, OnDestroy {
   private subs: Subscription;
   private logs: WritableSignal<Pagination<Log>>;
 
-  constructor(private readonly logsFacade: LogFacade, private readonly matDialog: MatDialog) {
-    this.logsFacade.FiltersGetInit();
+  constructor(private readonly infoFacade: InfoFacade, private readonly matDialog: MatDialog) {
+    this.infoFacade.FiltersGetInit();
     this.logs = signal({
       page: 0,
       items: [],
@@ -27,16 +27,16 @@ export class LogList implements OnInit, OnDestroy {
       totalCount: 0,
       totalPages: 0
     });
-    this.subs = this.logsFacade.FiltersGet$.subscribe(logs => this.logs.set(logs));
+    this.subs = this.infoFacade.FiltersGet$.subscribe(logs => this.logs.set(logs));
   }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
-    this.logsFacade.FiltersGetInit();
+    this.infoFacade.FiltersGetInit();
   }
 
   ngOnInit(): void {
-    this.logsFacade.FiltersGet();
+    this.infoFacade.FiltersGet();
   }
 
   public get Logs() {
@@ -52,7 +52,7 @@ export class LogList implements OnInit, OnDestroy {
     };
   }
   onPageChange(e: PageEvent) {
-    this.logsFacade.FiltersGetChangePage(e);
+    this.infoFacade.FiltersGetChangePage(e);
   }
 
   public observar(entityId: number) {

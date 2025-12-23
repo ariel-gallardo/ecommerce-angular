@@ -9,7 +9,7 @@ import { Colors } from '@models/colors';
 export class LogTypePipe implements PipeTransform {
 
   transform(log: Log){
-    if(log.logErrorId) return {label: 'Error', icon: 'error',color: Colors.Delete}
+    if(log.errorId) return {label: 'Error', icon: 'error',color: Colors.Delete}
     return {label: 'Info', icon: 'info',color: Colors.Update}
   }
 

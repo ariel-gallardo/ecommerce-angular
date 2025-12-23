@@ -1,9 +1,4 @@
-import { BaseResponse } from '@api/security/models/base-response.model';
 import { User } from '@api/security/models/user.model';
-import { UserLogin } from '@api/security/models/user-login.model';
-import { UserRegister } from '@api/security/models/user-register.model';
-import { ValidationError } from '@api/security/models/validation-error.model';
-import {Response} from '@api/security/models/common/response.model';
 import {StateDetail, StateDetailBase} from '@api/security/models/common/state-detail.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 
@@ -19,7 +14,6 @@ import { RangeDeleteRequest } from '@api/security/services/users.service';
 import { RangePostRequest } from '@api/security/services/users.service'; 
 import { RangePutRequest } from '@api/security/services/users.service'; 
 import { RegisterPostRequest } from '@api/security/services/users.service'; 
-import { HttpHeaders } from '@angular/common/http';
 
 export default interface State
 {

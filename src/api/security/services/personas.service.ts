@@ -1,20 +1,16 @@
 /* tslint:disable:no-unused-variable member-ordering */
 
 import { Inject, Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams,
-         HttpResponse, HttpEvent, HttpParameterCodec
-        }       from '@angular/common/http';
-import { CustomHttpParameterCodec } from '../encoder';
+import { HttpClient, HttpParams,
+         HttpResponse, HttpEvent        }       from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {cleanObject} from '@api/security/utils/clean-object';
 import {Response} from '@api/security/models/common/response.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 import { BaseResponse } from '@api/security/models/base-response.model';
 import { Persona } from '@api/security/models/persona.model';
-import { ValidationError } from '@api/security/models/validation-error.model';
-import { PersonasReduxModule } from '@api/security/redux/personas/personas.module';
 // @ts-ignore
-import { BASE_PATH, COLLECTION_FORMATS } from '../variables';
+import { BASE_PATH } from '../variables';
 import { ServiceConfiguration } from '../configuration';
 import { BaseService } from './api.base.service';
 
@@ -34,8 +30,11 @@ export class DeleteRequest {
     }   
 }
 export class FiltersFirstGetRequest {
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     constructor(init: Partial<FiltersFirstGetRequest> = {}){
+             this.takeAll = new Boolean();
+            
              this.orderBy = '';
             
         const keys = (Object.keys(init) as (keyof FiltersFirstGetRequest)[])
@@ -49,10 +48,13 @@ export class FiltersFirstGetRequest {
     }   
 }
 export class FiltersGetRequest {
+    takeAll?: Boolean | undefined | null;
     orderBy?: string | undefined | null;
     page?: number | undefined | null;
     pageSize?: number | undefined | null;
     constructor(init: Partial<FiltersGetRequest> = {}){
+             this.takeAll = new Boolean();
+            
              this.orderBy = '';
             
              this.page = 0;
@@ -252,10 +254,14 @@ export class PersonasService extends BaseService {
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Persona>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Persona>>>;
     public FiltersFirstGet(requestParameters?: FiltersFirstGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
 
@@ -305,6 +311,8 @@ export class PersonasService extends BaseService {
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpResponse<Response<Pagination<Persona>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json',}): Observable<HttpEvent<Response<Pagination<Persona>>>>;
     public FiltersGet(requestParameters?: FiltersGetRequest, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json',}): Observable<any> {
+        let takeAll = requestParameters?.takeAll;
+        takeAll = cleanObject(takeAll);
         let orderBy = requestParameters?.orderBy;
         orderBy = cleanObject(orderBy);
         let page = requestParameters?.page;
@@ -313,6 +321,8 @@ export class PersonasService extends BaseService {
         pageSize = cleanObject(pageSize);
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+          <any>takeAll, 'TakeAll');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
           <any>orderBy, 'OrderBy');
         localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
@@ -344,7 +354,7 @@ export class PersonasService extends BaseService {
 
         let localVarPath = `/security/Personas/filters`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Persona[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Persona>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -462,7 +472,7 @@ export class PersonasService extends BaseService {
 
         let localVarPath = `/security/Personas/ids`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Persona[]>('GET', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Persona>>('GET', `${basePath}${localVarPath}`,
             {
                 params: localVarQueryParameters,
                 responseType: <any>responseType_,
@@ -718,7 +728,7 @@ export class PersonasService extends BaseService {
 
         let localVarPath = `/security/Personas/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Persona[]>('POST', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Persona>>('POST', `${basePath}${localVarPath}`,
             {
                 body: persona,
                 responseType: <any>responseType_,
@@ -782,7 +792,7 @@ export class PersonasService extends BaseService {
 
         let localVarPath = `/security/Personas/range`;
         const { basePath, withCredentials } = this.configuration;
-        return this.httpClient.request<Persona[]>('PUT', `${basePath}${localVarPath}`,
+        return this.httpClient.request<Pagination<Persona>>('PUT', `${basePath}${localVarPath}`,
             {
                 body: persona,
                 responseType: <any>responseType_,

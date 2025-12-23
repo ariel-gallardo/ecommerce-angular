@@ -5,11 +5,7 @@ import { Observable, filter } from 'rxjs';
 import { PersonasActions as Actions } from './personas.actions';
 import {Pagination} from '../../models/common/pagination.model';
 import State from './personas.state';
-import {NullableFormControl} from '../../models/common/nullable-form-control.model';
-import { FormGroup } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 
-import { BaseResponse } from '@api/security/models/base-response.model'; 
 import { Persona } from '@api/security/models/persona.model'; 
 import { ValidationError } from '@api/security/models/validation-error.model'; 
 import { DeleteRequest } from '@api/security/services/personas.service'; 

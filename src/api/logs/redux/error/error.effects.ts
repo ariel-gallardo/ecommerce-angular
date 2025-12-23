@@ -1,40 +1,39 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, EMPTY, map, mergeMap, of, switchMap, withLatestFrom, pairwise, filter, debounceTime } from 'rxjs';
-import { LogErrorService } from '@api/logs/services/log-error.service';
-import { LogErrorActions } from './log-error.actions';
-import { selectDeleteRequest } from './log-error.selector';
-import { selectDeleteFirstInit } from './log-error.selector';
-import { selectFiltersFirstGetRequest } from './log-error.selector';
-import { selectFiltersFirstGetFirstInit } from './log-error.selector';
-import { selectFiltersGetRequest } from './log-error.selector';
-import { selectFiltersGetFirstInit } from './log-error.selector';
-import { selectGetRequest } from './log-error.selector';
-import { selectGetFirstInit } from './log-error.selector';
-import { selectIdsGetRequest } from './log-error.selector';
-import { selectIdsGetFirstInit } from './log-error.selector';
-import { selectPostRequest } from './log-error.selector';
-import { selectPostFirstInit } from './log-error.selector';
-import { selectPutRequest } from './log-error.selector';
-import { selectPutFirstInit } from './log-error.selector';
-import { selectRangeDeleteRequest } from './log-error.selector';
-import { selectRangeDeleteFirstInit } from './log-error.selector';
-import { selectRangePostRequest } from './log-error.selector';
-import { selectRangePostFirstInit } from './log-error.selector';
-import { selectRangePutRequest } from './log-error.selector';
-import { selectRangePutFirstInit } from './log-error.selector';
-import { DeleteRequest } from '@api/logs/services/log-error.service'; 
-import { FiltersFirstGetRequest } from '@api/logs/services/log-error.service'; 
-import { FiltersGetRequest } from '@api/logs/services/log-error.service'; 
-import { GetRequest } from '@api/logs/services/log-error.service'; 
-import { IdsGetRequest } from '@api/logs/services/log-error.service'; 
-import { PostRequest } from '@api/logs/services/log-error.service'; 
-import { PutRequest } from '@api/logs/services/log-error.service'; 
-import { RangeDeleteRequest } from '@api/logs/services/log-error.service'; 
-import { RangePostRequest } from '@api/logs/services/log-error.service'; 
-import { RangePutRequest } from '@api/logs/services/log-error.service'; 
+import { catchError, EMPTY, map, mergeMap, of, switchMap, withLatestFrom, filter, debounceTime } from 'rxjs';
+import { ErrorService } from '@api/logs/services/error.service';
+import { ErrorActions } from './error.actions';
+import { selectDeleteRequest } from './error.selector';
+import { selectDeleteFirstInit } from './error.selector';
+import { selectFiltersFirstGetRequest } from './error.selector';
+import { selectFiltersFirstGetFirstInit } from './error.selector';
+import { selectFiltersGetRequest } from './error.selector';
+import { selectFiltersGetFirstInit } from './error.selector';
+import { selectGetRequest } from './error.selector';
+import { selectGetFirstInit } from './error.selector';
+import { selectIdsGetRequest } from './error.selector';
+import { selectIdsGetFirstInit } from './error.selector';
+import { selectPostRequest } from './error.selector';
+import { selectPostFirstInit } from './error.selector';
+import { selectPutRequest } from './error.selector';
+import { selectPutFirstInit } from './error.selector';
+import { selectRangeDeleteRequest } from './error.selector';
+import { selectRangeDeleteFirstInit } from './error.selector';
+import { selectRangePostRequest } from './error.selector';
+import { selectRangePostFirstInit } from './error.selector';
+import { selectRangePutRequest } from './error.selector';
+import { selectRangePutFirstInit } from './error.selector';
+import { DeleteRequest } from '@api/logs/services/error.service'; 
+import { FiltersFirstGetRequest } from '@api/logs/services/error.service'; 
+import { FiltersGetRequest } from '@api/logs/services/error.service'; 
+import { GetRequest } from '@api/logs/services/error.service'; 
+import { IdsGetRequest } from '@api/logs/services/error.service'; 
+import { PostRequest } from '@api/logs/services/error.service'; 
+import { PutRequest } from '@api/logs/services/error.service'; 
+import { RangeDeleteRequest } from '@api/logs/services/error.service'; 
+import { RangePostRequest } from '@api/logs/services/error.service'; 
+import { RangePutRequest } from '@api/logs/services/error.service'; 
 import { Store } from '@ngrx/store';
-import { ValidationErrors } from '@angular/forms';
 import { ValidationError } from '@api/logs/models/validation-error.model';
 import { HttpErrorResponse } from '@angular/common/http';
 import {SnackbarService} from '@features/snackbar/snackbar-service'; 
@@ -43,9 +42,9 @@ import { BaseResponse } from '@api/logs/models/base-response.model';
 import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
-export class LogErrorEffects {
+export class ErrorEffects {
     private actions$ = inject(Actions);
-    private api = inject(LogErrorService);
+    private api = inject(ErrorService);
     private store = inject(Store);
     private snackbarService = inject(SnackbarService);
     private router = inject(Router);
@@ -53,24 +52,24 @@ export class LogErrorEffects {
 
     Init$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.Init),
+        ofType(ErrorActions.Init),
         mergeMap(() => [
-                LogErrorActions.DeleteInit(),
-                LogErrorActions.FiltersFirstGetInit(),
-                LogErrorActions.FiltersGetInit(),
-                LogErrorActions.GetInit(),
-                LogErrorActions.IdsGetInit(),
-                LogErrorActions.PostInit(),
-                LogErrorActions.PutInit(),
-                LogErrorActions.RangeDeleteInit(),
-                LogErrorActions.RangePostInit(),
-                LogErrorActions.RangePutInit(),
+                ErrorActions.DeleteInit(),
+                ErrorActions.FiltersFirstGetInit(),
+                ErrorActions.FiltersGetInit(),
+                ErrorActions.GetInit(),
+                ErrorActions.IdsGetInit(),
+                ErrorActions.PostInit(),
+                ErrorActions.PutInit(),
+                ErrorActions.RangeDeleteInit(),
+                ErrorActions.RangePostInit(),
+                ErrorActions.RangePutInit(),
         ])
     ));
 
     DeleteUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.DeleteRequestUpdate),
+        ofType(ErrorActions.DeleteRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectDeleteFirstInit),
@@ -108,13 +107,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.DeleteRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.DeleteRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     DeleteUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.DeleteRequestUpdateOne),
+            ofType(ErrorActions.DeleteRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectDeleteFirstInit),
@@ -137,14 +136,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof DeleteRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.DeleteRequestUpdateOneSuccess({ key, value })
+                ErrorActions.DeleteRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         DeleteExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.DeleteExecute),
+            ofType(ErrorActions.DeleteExecute),
             withLatestFrom(
                 this.store.select(selectDeleteRequest),
                 this.store.select(selectDeleteFirstInit)
@@ -161,7 +160,7 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
-                    return of(LogErrorActions.DeleteSetError({ errors: newErrors }));
+                    return of(ErrorActions.DeleteSetError({ errors: newErrors }));
                 }
                 
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
@@ -174,7 +173,7 @@ export class LogErrorEffects {
 
     FiltersFirstGetUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.FiltersFirstGetRequestUpdate),
+        ofType(ErrorActions.FiltersFirstGetRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectFiltersFirstGetFirstInit),
@@ -212,13 +211,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.FiltersFirstGetRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.FiltersFirstGetRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     FiltersFirstGetUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.FiltersFirstGetRequestUpdateOne),
+            ofType(ErrorActions.FiltersFirstGetRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectFiltersFirstGetFirstInit),
@@ -241,14 +240,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof FiltersFirstGetRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.FiltersFirstGetRequestUpdateOneSuccess({ key, value })
+                ErrorActions.FiltersFirstGetRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         FiltersFirstGetExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.FiltersFirstGetExecute),
+            ofType(ErrorActions.FiltersFirstGetExecute),
             withLatestFrom(
                 this.store.select(selectFiltersFirstGetRequest),
                 this.store.select(selectFiltersFirstGetFirstInit)
@@ -261,7 +260,7 @@ export class LogErrorEffects {
             return this.api.FiltersFirstGet(request as FiltersFirstGetRequest, 'response').pipe(
                 map(response =>{
                     
-                    return LogErrorActions.FiltersFirstGetSetData({
+                    return ErrorActions.FiltersFirstGetSetData({
                         data:                         
                         response.body!.data
                     })
@@ -272,9 +271,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                     
-                    return of(LogErrorActions.FiltersFirstGetSetError({ errors: newErrors }));
+                    return of(ErrorActions.FiltersFirstGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.FiltersFirstGetDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.FiltersFirstGetDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -286,20 +285,20 @@ export class LogErrorEffects {
     
     FiltersGetChangePage$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.FiltersGetChangePage),
+            ofType(ErrorActions.FiltersGetChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
                 page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
-                LogErrorActions.FiltersGetRequestUpdate({ request })
+                ErrorActions.FiltersGetRequestUpdate({ request })
             )
         )
     );
     FiltersGetUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.FiltersGetRequestUpdate),
+        ofType(ErrorActions.FiltersGetRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectFiltersGetFirstInit),
@@ -337,13 +336,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.FiltersGetRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.FiltersGetRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     FiltersGetUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.FiltersGetRequestUpdateOne),
+            ofType(ErrorActions.FiltersGetRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectFiltersGetFirstInit),
@@ -366,14 +365,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof FiltersGetRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.FiltersGetRequestUpdateOneSuccess({ key, value })
+                ErrorActions.FiltersGetRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         FiltersGetExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.FiltersGetExecute),
+            ofType(ErrorActions.FiltersGetExecute),
             withLatestFrom(
                 this.store.select(selectFiltersGetRequest),
                 this.store.select(selectFiltersGetFirstInit)
@@ -386,16 +385,9 @@ export class LogErrorEffects {
             return this.api.FiltersGet(request as FiltersGetRequest, 'response').pipe(
                 map(response =>{
                     
-                    return LogErrorActions.FiltersGetSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                    return ErrorActions.FiltersGetSetData({
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -404,9 +396,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                     
-                    return of(LogErrorActions.FiltersGetSetError({ errors: newErrors }));
+                    return of(ErrorActions.FiltersGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.FiltersGetDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.FiltersGetDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -417,7 +409,7 @@ export class LogErrorEffects {
 
     GetUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.GetRequestUpdate),
+        ofType(ErrorActions.GetRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectGetFirstInit),
@@ -455,13 +447,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.GetRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.GetRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     GetUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.GetRequestUpdateOne),
+            ofType(ErrorActions.GetRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectGetFirstInit),
@@ -484,14 +476,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof GetRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.GetRequestUpdateOneSuccess({ key, value })
+                ErrorActions.GetRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         GetExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.GetExecute),
+            ofType(ErrorActions.GetExecute),
             withLatestFrom(
                 this.store.select(selectGetRequest),
                 this.store.select(selectGetFirstInit)
@@ -504,7 +496,7 @@ export class LogErrorEffects {
             return this.api.Get(request as GetRequest, 'response').pipe(
                 map(response =>{
                     
-                    return LogErrorActions.GetSetData({
+                    return ErrorActions.GetSetData({
                         data:                         
                         response.body!.data
                     })
@@ -515,9 +507,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                     
-                    return of(LogErrorActions.GetSetError({ errors: newErrors }));
+                    return of(ErrorActions.GetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.GetDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.GetDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -529,20 +521,20 @@ export class LogErrorEffects {
     
     IdsGetChangePage$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.IdsGetChangePage),
+            ofType(ErrorActions.IdsGetChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
                 page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
-                LogErrorActions.IdsGetRequestUpdate({ request })
+                ErrorActions.IdsGetRequestUpdate({ request })
             )
         )
     );
     IdsGetUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.IdsGetRequestUpdate),
+        ofType(ErrorActions.IdsGetRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectIdsGetFirstInit),
@@ -580,13 +572,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.IdsGetRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.IdsGetRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     IdsGetUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.IdsGetRequestUpdateOne),
+            ofType(ErrorActions.IdsGetRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectIdsGetFirstInit),
@@ -609,14 +601,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof IdsGetRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.IdsGetRequestUpdateOneSuccess({ key, value })
+                ErrorActions.IdsGetRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         IdsGetExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.IdsGetExecute),
+            ofType(ErrorActions.IdsGetExecute),
             withLatestFrom(
                 this.store.select(selectIdsGetRequest),
                 this.store.select(selectIdsGetFirstInit)
@@ -629,16 +621,9 @@ export class LogErrorEffects {
             return this.api.IdsGet(request as IdsGetRequest, 'response').pipe(
                 map(response =>{
                     
-                    return LogErrorActions.IdsGetSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                    return ErrorActions.IdsGetSetData({
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -647,9 +632,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                     
-                    return of(LogErrorActions.IdsGetSetError({ errors: newErrors }));
+                    return of(ErrorActions.IdsGetSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.IdsGetDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.IdsGetDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -660,7 +645,7 @@ export class LogErrorEffects {
 
     PostUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.PostRequestUpdate),
+        ofType(ErrorActions.PostRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectPostFirstInit),
@@ -698,13 +683,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.PostRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.PostRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     PostUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.PostRequestUpdateOne),
+            ofType(ErrorActions.PostRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectPostFirstInit),
@@ -727,14 +712,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof PostRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.PostRequestUpdateOneSuccess({ key, value })
+                ErrorActions.PostRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         PostExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.PostExecute),
+            ofType(ErrorActions.PostExecute),
             withLatestFrom(
                 this.store.select(selectPostRequest),
                 this.store.select(selectPostFirstInit)
@@ -747,7 +732,7 @@ export class LogErrorEffects {
             return this.api.Post(request as PostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
-                    return LogErrorActions.PostSetData({
+                    return ErrorActions.PostSetData({
                         data:                         
                         response.body!.data
                     })
@@ -758,9 +743,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
-                    return of(LogErrorActions.PostSetError({ errors: newErrors }));
+                    return of(ErrorActions.PostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.PostDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.PostDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -771,7 +756,7 @@ export class LogErrorEffects {
 
     PutUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.PutRequestUpdate),
+        ofType(ErrorActions.PutRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectPutFirstInit),
@@ -809,13 +794,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.PutRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.PutRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     PutUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.PutRequestUpdateOne),
+            ofType(ErrorActions.PutRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectPutFirstInit),
@@ -838,14 +823,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof PutRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.PutRequestUpdateOneSuccess({ key, value })
+                ErrorActions.PutRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         PutExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.PutExecute),
+            ofType(ErrorActions.PutExecute),
             withLatestFrom(
                 this.store.select(selectPutRequest),
                 this.store.select(selectPutFirstInit)
@@ -858,7 +843,7 @@ export class LogErrorEffects {
             return this.api.Put(request as PutRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
-                    return LogErrorActions.PutSetData({
+                    return ErrorActions.PutSetData({
                         data:                         
                         response.body!.data
                     })
@@ -869,9 +854,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
-                    return of(LogErrorActions.PutSetError({ errors: newErrors }));
+                    return of(ErrorActions.PutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.PutDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.PutDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -882,7 +867,7 @@ export class LogErrorEffects {
 
     RangeDeleteUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.RangeDeleteRequestUpdate),
+        ofType(ErrorActions.RangeDeleteRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectRangeDeleteFirstInit),
@@ -920,13 +905,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.RangeDeleteRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.RangeDeleteRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     RangeDeleteUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.RangeDeleteRequestUpdateOne),
+            ofType(ErrorActions.RangeDeleteRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectRangeDeleteFirstInit),
@@ -949,14 +934,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof RangeDeleteRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.RangeDeleteRequestUpdateOneSuccess({ key, value })
+                ErrorActions.RangeDeleteRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         RangeDeleteExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.RangeDeleteExecute),
+            ofType(ErrorActions.RangeDeleteExecute),
             withLatestFrom(
                 this.store.select(selectRangeDeleteRequest),
                 this.store.select(selectRangeDeleteFirstInit)
@@ -973,7 +958,7 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
-                    return of(LogErrorActions.RangeDeleteSetError({ errors: newErrors }));
+                    return of(ErrorActions.RangeDeleteSetError({ errors: newErrors }));
                 }
                 
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
@@ -987,20 +972,20 @@ export class LogErrorEffects {
     
     RangePostChangePage$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.RangePostChangePage),
+            ofType(ErrorActions.RangePostChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
                 page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
-                LogErrorActions.RangePostRequestUpdate({ request })
+                ErrorActions.RangePostRequestUpdate({ request })
             )
         )
     );
     RangePostUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.RangePostRequestUpdate),
+        ofType(ErrorActions.RangePostRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectRangePostFirstInit),
@@ -1038,13 +1023,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.RangePostRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.RangePostRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     RangePostUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.RangePostRequestUpdateOne),
+            ofType(ErrorActions.RangePostRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectRangePostFirstInit),
@@ -1067,14 +1052,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof RangePostRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.RangePostRequestUpdateOneSuccess({ key, value })
+                ErrorActions.RangePostRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         RangePostExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.RangePostExecute),
+            ofType(ErrorActions.RangePostExecute),
             withLatestFrom(
                 this.store.select(selectRangePostRequest),
                 this.store.select(selectRangePostFirstInit)
@@ -1087,16 +1072,9 @@ export class LogErrorEffects {
             return this.api.RangePost(request as RangePostRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
-                    return LogErrorActions.RangePostSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                    return ErrorActions.RangePostSetData({
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -1105,9 +1083,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
-                    return of(LogErrorActions.RangePostSetError({ errors: newErrors }));
+                    return of(ErrorActions.RangePostSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.RangePostDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.RangePostDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })
@@ -1119,20 +1097,20 @@ export class LogErrorEffects {
     
     RangePutChangePage$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.RangePutChangePage),
+            ofType(ErrorActions.RangePutChangePage),
             map(({ event }) => ({
                 pageSize: event.pageSize,
                 page: event.pageIndex + 1
             })),
             map(request =>
                 //@ts-ignore
-                LogErrorActions.RangePutRequestUpdate({ request })
+                ErrorActions.RangePutRequestUpdate({ request })
             )
         )
     );
     RangePutUpdateRequest$ = createEffect(() =>
     this.actions$.pipe(
-        ofType(LogErrorActions.RangePutRequestUpdate),
+        ofType(ErrorActions.RangePutRequestUpdate),
         debounceTime(300),
         withLatestFrom(
             this.store.select(selectRangePutFirstInit),
@@ -1170,13 +1148,13 @@ export class LogErrorEffects {
             // @ts-ignore
             Object.assign(nRequest,request);
             // @ts-ignore
-            return LogErrorActions.RangePutRequestUpdateSuccess({ request: nRequest });
+            return ErrorActions.RangePutRequestUpdateSuccess({ request: nRequest });
         })
     )
     );
     RangePutUpdateOneRequest$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(LogErrorActions.RangePutRequestUpdateOne),
+            ofType(ErrorActions.RangePutRequestUpdateOne),
             debounceTime(300),
             withLatestFrom(
                 this.store.select(selectRangePutFirstInit),
@@ -1199,14 +1177,14 @@ export class LogErrorEffects {
             }),
             filter((pair): pair is [keyof RangePutRequest, any] => pair[0] !== null),
             map(([key, value]) =>
-                LogErrorActions.RangePutRequestUpdateOneSuccess({ key, value })
+                ErrorActions.RangePutRequestUpdateOneSuccess({ key, value })
             )
         )
         );
         RangePutExecute$ = createEffect(() =>
         // @ts-ignore
         this.actions$.pipe(
-            ofType(LogErrorActions.RangePutExecute),
+            ofType(ErrorActions.RangePutExecute),
             withLatestFrom(
                 this.store.select(selectRangePutRequest),
                 this.store.select(selectRangePutFirstInit)
@@ -1219,16 +1197,9 @@ export class LogErrorEffects {
             return this.api.RangePut(request as RangePutRequest, 'response').pipe(
                 map(response =>{
                       this.snackbarService.show(response.body!.message, response.body!.statusCode);
-                    return LogErrorActions.RangePutSetData({
-                        data: 
-                        {
-                            //@ts-ignore
-                            items: response.body!.data,
-                            page: Number(response.headers.get('X-Current-Page')),
-                            totalPages: Number(response.headers.get('X-Total-Pages')),
-                            pageSize: Number(response.headers.get('X-Page-Size')),
-                            totalCount: Number(response.headers.get('X-Total-Count'))
-                        }
+                    return ErrorActions.RangePutSetData({
+                        data:                         
+                        response.body!.data
                     })
                 }),
                 
@@ -1237,9 +1208,9 @@ export class LogErrorEffects {
                 if (newErr.status === 400 && newErr.error) {
                     const newErrors = newErr.error!.data as ValidationError[][];
                       this.snackbarService.show(newErr.error!.message, newErr.error!.statusCode);
-                    return of(LogErrorActions.RangePutSetError({ errors: newErrors }));
+                    return of(ErrorActions.RangePutSetError({ errors: newErrors }));
                 }
-                else if (newErr.status === 404) {return of(LogErrorActions.RangePutDataInit());}
+                else if (newErr.status === 404) {return of(ErrorActions.RangePutDataInit());}
                 if(newErr.status === 401){cookieStore.delete('token');this.router.navigate(['/users/login']);this.dialog.closeAll();}else if(newErr.status === 403 && newErr.error){const res = newErr.error as BaseResponse;this.snackbarService.show(res.message, res.statusCode);}
                 return EMPTY;
                 })

@@ -22,7 +22,7 @@ import { CommonDirectivesModule } from '@directives/common-directives.module';
 import { SharedModule } from '@features/shared/shared.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { PermissionsAdd } from './permissions/permissions-add/permissions-add';
-import { LogFacade } from '@api/logs/redux/log/log.facade';
+import { InfoFacade } from '@api/logs/redux/info/info.facade';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -35,7 +35,7 @@ import { StackTrace } from './logs/stack-trace/stack-trace';
 import { MatCardModule } from '@angular/material/card';
 @NgModule({
   providers:[
-    LogFacade
+    InfoFacade
   ],
   declarations: [
     AdminShell,

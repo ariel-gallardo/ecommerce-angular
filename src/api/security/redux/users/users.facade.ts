@@ -5,14 +5,8 @@ import { Observable, filter } from 'rxjs';
 import { UsersActions as Actions } from './users.actions';
 import {Pagination} from '../../models/common/pagination.model';
 import State from './users.state';
-import {NullableFormControl} from '../../models/common/nullable-form-control.model';
-import { FormGroup } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 
-import { BaseResponse } from '@api/security/models/base-response.model'; 
 import { User } from '@api/security/models/user.model'; 
-import { UserLogin } from '@api/security/models/user-login.model'; 
-import { UserRegister } from '@api/security/models/user-register.model'; 
 import { ValidationError } from '@api/security/models/validation-error.model'; 
 import { DeleteRequest } from '@api/security/services/users.service'; 
 import { FiltersFirstGetRequest } from '@api/security/services/users.service'; 

@@ -1,3 +1,3 @@
 export {ReduxCoreModule as LogsReduxModule} from './redux/core.module';
-export { LogActions } from './redux/log/log.actions';
-export { LogErrorActions } from './redux/log-error/log-error.actions';
+export { ErrorActions } from './redux/error/error.actions';
+export { InfoActions } from './redux/info/info.actions';

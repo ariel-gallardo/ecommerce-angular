@@ -1,5 +1,5 @@
 import { inject, Injectable } from "@angular/core";
-import { LogErrorActions } from "@api/logs";
+import { ErrorActions } from "@api/logs";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map } from "rxjs";
 
@@ -9,8 +9,8 @@ export class LogsEffects {
 
     searchOneEffect = createEffect(() => 
         this.actions$.pipe(
-            ofType(LogErrorActions.GetRequestUpdateSuccess),
-            map(() => LogErrorActions.GetExecute())
+            ofType(ErrorActions.GetRequestUpdateSuccess),
+            map(() => ErrorActions.GetExecute())
         )
     ); 
 }

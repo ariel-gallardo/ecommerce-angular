@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import State from './log-error.state';
-export const selectState = createFeatureSelector<State>('LogError');
+import State from './error.state';
+export const selectState = createFeatureSelector<State>('Error');
 
 export const selectDeleteRequest = createSelector(selectState,s => s.Delete.request);
 export const selectDeleteLoaded = createSelector(selectState,s => s.Delete.isLoaded);

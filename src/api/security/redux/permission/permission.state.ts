@@ -1,7 +1,4 @@
-import { BaseResponse } from '@api/security/models/base-response.model';
 import { Permission } from '@api/security/models/permission.model';
-import { ValidationError } from '@api/security/models/validation-error.model';
-import {Response} from '@api/security/models/common/response.model';
 import {StateDetail, StateDetailBase} from '@api/security/models/common/state-detail.model';
 import {Pagination} from '@api/security/models/common/pagination.model';
 
