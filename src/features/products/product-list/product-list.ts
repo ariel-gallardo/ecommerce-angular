@@ -37,6 +37,9 @@ export class ProductList implements OnInit, OnDestroy {
     { field: 'description', label: 'Descripción', order: null },
   ];
 
+  // Animación de agregar al carrito
+  private animatingProducts = signal<Set<string>>(new Set());
+
   public childrenAccessor(category: Category) {
     return category!.children!;
   }
@@ -140,6 +143,33 @@ export class ProductList implements OnInit, OnDestroy {
       pageSize: event.pageSize
     });
     this.productFacade.FiltersGet();
+  }
+
+  public onAddToCart(product: Product): void {
+    // Agregar animación
+    const animatingSet = new Set(this.animatingProducts());
+    animatingSet.add(product.id || '');
+    this.animatingProducts.set(animatingSet);
+    
+    // Remover la animación después de 600ms
+    setTimeout(() => {
+      const updatedSet = new Set(this.animatingProducts());
+      updatedSet.delete(product.id || '');
+      this.animatingProducts.set(updatedSet);
+    }, 600);
+    
+    // TODO: Implementar la funcionalidad de agregar al carrito
+    console.log('Agregar al carrito:', product);
+  }
+
+  public onRemoveFromCart(product: Product): void {
+    // TODO: Implementar la funcionalidad de remover del carrito
+    console.log('Remover del carrito:', product);
+  }
+
+  public isAnimating(productId: string | undefined | null): boolean {
+    if (!productId) return false;
+    return this.animatingProducts().has(productId);
   }
 
   constructor(private readonly productFacade: ProductFacade, private readonly categoryFacade: CategoryFacade) {

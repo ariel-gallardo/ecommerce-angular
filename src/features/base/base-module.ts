@@ -11,6 +11,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
 import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatToolbarModule,
     MatSidenavModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatBadgeModule
   ],
   exports: [
     Footer,

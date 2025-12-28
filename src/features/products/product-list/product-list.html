@@ -70,8 +70,16 @@
             <mat-card-content>
               <p class="product-description">{{ product.description || 'Sin descripción' }}</p>
             </mat-card-content>
-            <mat-card-actions>
-              <button mat-button color="primary">Ver detalles</button>
+            <mat-card-actions class="product-actions">
+              <button mat-button color="primary" [routerLink]="['/products', product.id]">Ver detalles</button>
+              <div class="cart-buttons">
+                <button mat-icon-button color="primary" (click)="onAddToCart(product)" class="add-to-cart-btn" [class.animate]="isAnimating(product.id)" matTooltip="Agregar al carrito">
+                  <mat-icon>add_shopping_cart</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" (click)="onRemoveFromCart(product)" class="remove-from-cart-btn" matTooltip="Quitar del carrito">
+                  <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+              </div>
             </mat-card-actions>
           </mat-card>
         }
