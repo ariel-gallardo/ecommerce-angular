@@ -1,5 +1,6 @@
-.mat-toolbar{
-  background: var(--mat-sys-container);
-  color: var(--mat-sys-on-primary-container);
+.mat-toolbar {
+  // El efecto glass ya está aplicado en theme.scss
+  // Aquí solo personalizamos el footer
+  color: var(--mat-sys-primary);
   font: var(--mat-sys-body-large);
 }

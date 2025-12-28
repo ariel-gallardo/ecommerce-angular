@@ -1,4 +1,49 @@
-.mat-drawer-container{
-    background: var(--mat-sys-surface-container-low);
+.mat-drawer-container {
+  // El efecto glass ya está aplicado en theme.scss
+  background: transparent;
+}
+
+// Personalización adicional para botones del drawer
+.mat-drawer {
+  button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 8px;
+    margin: 4px 8px;
+    
+    // Degradado sutil usando variables de Material
+    background: linear-gradient(135deg, 
+      color-mix(in srgb, var(--mat-sys-primary-container) 0.05, transparent) 0%, 
+      color-mix(in srgb, var(--mat-sys-tertiary-container) 0.05, transparent) 100%) !important;
+    
+    &:hover {
+      background: linear-gradient(135deg, 
+        color-mix(in srgb, var(--mat-sys-primary-container) 0.2, transparent) 0%, 
+        color-mix(in srgb, var(--mat-sys-tertiary-container) 0.2, transparent) 100%) !important;
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px color-mix(in srgb, var(--mat-sys-shadow) 0.1, transparent);
+    }
+    
+    &:active {
+      transform: translateX(2px);
+    }
+    
+    mat-icon {
+      color: var(--mat-sys-primary);
+      transition: color 0.3s ease;
+    }
+    
+    &:hover mat-icon {
+      color: var(--mat-sys-tertiary);
+    }
+    
+    h3 {
+      color: var(--mat-sys-on-surface);
+      transition: color 0.3s ease;
+    }
+    
+    &:hover h3 {
+      color: var(--mat-sys-primary);
+    }
+  }
 }
 

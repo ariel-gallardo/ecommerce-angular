@@ -1,12 +1,48 @@
 @use '@angular/material' as mat;
 
 .mat-toolbar {
-  background: var(--mat-sys-container);
-  color: var(--mat-sys-on-primary-container);
+  // El efecto glass ya está aplicado en theme.scss
+  // Aquí solo personalizamos colores y efectos adicionales
+  color: var(--mat-sys-primary);
   font: var(--mat-sys-body-large);
-  @include mat.strong-focus-indicators((border-color: var(--mat-sys-on-surface),
-    border-width: 1px,
-    border-radius: 1px,
+  font-weight: 600;
+  
+  h1 {
+    color: var(--mat-sys-primary);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      color: var(--mat-sys-tertiary);
+      transform: scale(1.05);
+    }
+  }
+  
+  button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    
+    &:hover {
+      background: color-mix(in srgb, var(--mat-sys-primary-container) 0.2, transparent) !important;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transform: scale(1.1);
+    }
+    
+    mat-icon {
+      color: var(--mat-sys-primary);
+      transition: color 0.3s ease;
+    }
+    
+    &:hover mat-icon {
+      color: var(--mat-sys-tertiary);
+    }
+  }
+  
+  @include mat.strong-focus-indicators((border-color: var(--mat-sys-primary),
+    border-width: 2px,
+    border-radius: 8px,
   ));
 }
 
