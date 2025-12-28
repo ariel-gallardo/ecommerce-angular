@@ -1,22 +1,103 @@
-<mat-tree #tree [dataSource]="categoryTree" [childrenAccessor]="childrenAccessor" [trackBy]="trackById">
+<div class="product-list-container">
+  <!-- Panel izquierdo: Categorías y Ordenamiento -->
+  <aside class="categories-panel">
+    <h2 class="categories-title">Categorías</h2>
+    <mat-tree #tree [dataSource]="categoryTree" [childrenAccessor]="childrenAccessor" [trackBy]="trackById">
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (activation)="performAction($event)" (click)="onCategoryClick(node)">
+        {{ node.name }}
+      </mat-tree-node>
 
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (activation)="performAction($event)">
-    {{ node.name }}
-  </mat-tree-node>
+      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+        <div class="flex items-center gap-2 p-2 category-node" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle (click)="performAction(node)">
+            <mat-icon>
+              {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+            </mat-icon>
+          </button>
+          <span (click)="onCategoryClick(node)" class="category-name">{{ node.name }}</span>
+        </div>
 
-  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-    <div class="flex items-center gap-2 p-2" matTreeNodePadding>
-      <button mat-icon-button matTreeNodeToggle (click)="performAction(node)">
-        <mat-icon>
-          {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
-        </mat-icon>
+        <div [class.hidden]="!tree.isExpanded(node)">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </div>
+      </mat-nested-tree-node>
+    </mat-tree>
+
+    <!-- Sección de Ordenamiento -->
+    <div class="sort-section">
+      <h3 class="sort-title">Ordenar por</h3>
+      <div class="sort-fields">
+        @for (field of sortFields; track field.field) {
+          <div class="sort-field-item">
+            <span class="sort-field-label">{{ field.label }}</span>
+            <button 
+              mat-icon-button 
+              [class.active]="field.order !== null"
+              [class.asc]="field.order === 'asc'"
+              [class.desc]="field.order === 'desc'"
+              (click)="toggleSort(field)"
+              [matTooltip]="field.order === 'asc' ? 'Orden descendente' : field.order === 'desc' ? 'Quitar orden' : 'Orden ascendente'">
+              <mat-icon>{{ getSortIcon(field) }}</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+      <button mat-stroked-button color="warn" (click)="clearFilters()" class="clear-filters-button">
+        <mat-icon>clear</mat-icon>
+        Limpiar filtros
       </button>
-      {{ node.name }}
+    </div>
+  </aside>
+
+  <!-- Panel derecho: Productos -->
+  <main class="products-panel">
+    <!-- Filtros de búsqueda -->
+    <div class="filters-section">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar producto</mat-label>
+        <input matInput 
+               [value]="searchName()" 
+               (input)="onSearchChange($any($event.target).value)"
+               placeholder="Nombre del producto">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
     </div>
 
-    <div [class.hidden]="!tree.isExpanded(node)">
-      <ng-container matTreeNodeOutlet></ng-container>
+    <!-- Lista de productos -->
+    <div class="products-grid">
+      @if (products().items.length > 0) {
+        @for (product of products().items; track trackProductById($index, product)) {
+          <mat-card class="product-card">
+            <img mat-card-image [src]="getProductImage(product)" [alt]="product.name || 'Producto'" class="product-image">
+            <mat-card-header>
+              <mat-card-title>{{ product.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <p class="product-description">{{ product.description || 'Sin descripción' }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button color="primary">Ver detalles</button>
+            </mat-card-actions>
+          </mat-card>
+        }
+      } @else {
+        <div class="no-products">
+          <mat-icon class="no-products-icon">inventory_2</mat-icon>
+          <p>No se encontraron productos</p>
+        </div>
+      }
     </div>
-  </mat-nested-tree-node>
 
-</mat-tree>
+    <!-- Paginación -->
+    @if (products().totalPages > 1) {
+      <mat-paginator
+        [length]="products().totalCount"
+        [pageSize]="products().pageSize"
+        [pageIndex]="products().page - 1"
+        [pageSizeOptions]="[12, 24, 48]"
+        (page)="onPageChange($event)"
+        class="pagination">
+      </mat-paginator>
+    }
+  </main>
+</div>
