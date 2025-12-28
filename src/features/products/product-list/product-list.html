@@ -52,16 +52,11 @@
   <!-- Panel derecho: Productos -->
   <main class="products-panel">
     <!-- Filtros de búsqueda -->
-    <div class="filters-section">
-      <mat-form-field appearance="outline" class="search-field">
-        <mat-label>Buscar producto</mat-label>
-        <input matInput 
-               [value]="searchName()" 
-               (input)="onSearchChange($any($event.target).value)"
-               placeholder="Nombre del producto">
-        <mat-icon matPrefix>search</mat-icon>
-      </mat-form-field>
-    </div>
+    <mat-form-field class="example-full-width">
+      <mat-label>Nombre</mat-label>
+      <mat-icon matSuffix>search</mat-icon>
+      <input type="tel" matInput placeholder="Iphone XS Pro Max...">
+    </mat-form-field>
 
     <!-- Lista de productos -->
     <div class="products-grid">
