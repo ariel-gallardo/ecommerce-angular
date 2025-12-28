@@ -1,37 +1,72 @@
-<form class="h-full" [formGroup]="form">
-<mat-grid-list cols="2" rowHeight="fit" class="h-full">
-  <mat-grid-tile>
-    <div class="flex justify-center w-full">
-      <mat-list class="w-[75%]" formArrayName="items">
-        <cart-detail *ngFor="let item of form.value.items" [cartItem]="item"></cart-detail>
-      </mat-list>
-    </div>
-  </mat-grid-tile>
+<div class="cart-container">
+  @if (hasItems()) {
+    <div class="cart-content">
+      <!-- Lista de productos -->
+      <section class="cart-items-section">
+        <div class="section-header">
+          <h2 class="section-title">Mi Carrito</h2>
+          <span class="items-count">{{ itemCount() }} {{ itemCount() === 1 ? 'producto' : 'productos' }}</span>
+        </div>
+        
+        <div class="cart-items-list">
+          @for (item of cartItems(); track trackByItemId($index, item)) {
+            <cart-detail [cartItem]="item"></cart-detail>
+          }
+        </div>
+      </section>
 
-  <mat-grid-tile>
-    <div class="flex flex-col justify-center items-center w-full h-full">
-      <mat-card class="w-3/4">
-        <mat-card-header>
-          <mat-card-title class="text-2xl uppercase">
-            Resumen de pedido
-          </mat-card-title>
-        </mat-card-header>
+      <!-- Resumen del pedido -->
+      <aside class="cart-summary-section">
+        <mat-card class="summary-card">
+          <mat-card-header>
+            <mat-card-title class="summary-title">
+              <mat-icon>receipt</mat-icon>
+              Resumen del Pedido
+            </mat-card-title>
+          </mat-card-header>
 
-        <mat-card-content>
-          <div class="flex flex-col gap-4">
-            <h3 class="text-xl">Envío: 0$</h3>
-            <h3 class="text-xl">Total productos: 0$</h3>
-            <div class="flex justify-between items-center mt-4">
-              <h3 class="text-2xl font-bold">Total: 0$</h3>
-              <button mat-fab extended>
+          <mat-card-content>
+            <div class="summary-content">
+              <div class="summary-row">
+                <span class="summary-label">Subtotal:</span>
+                <span class="summary-value">${{ subtotal() }}</span>
+              </div>
+              
+              <div class="summary-row">
+                <span class="summary-label">Envío:</span>
+                <span class="summary-value shipping">${{ shipping() }}</span>
+              </div>
+              
+              <mat-divider class="summary-divider"></mat-divider>
+              
+              <div class="summary-row total-row">
+                <span class="summary-label total-label">Total:</span>
+                <span class="summary-value total-value">${{ total() }}</span>
+              </div>
+              
+              <button mat-raised-button color="primary" class="checkout-button" (click)="checkout()">
                 <mat-icon>shopping_cart_checkout</mat-icon>
-                Comprar
+                Proceder al Pago
+              </button>
+              
+              <button mat-stroked-button class="continue-shopping-button" routerLink="/products">
+                <mat-icon>arrow_back</mat-icon>
+                Seguir Comprando
               </button>
             </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
+          </mat-card-content>
+        </mat-card>
+      </aside>
     </div>
-  </mat-grid-tile>
-</mat-grid-list>
-</form>
+  } @else {
+    <div class="empty-cart">
+      <mat-icon class="empty-cart-icon">shopping_cart</mat-icon>
+      <h2 class="empty-cart-title">Tu carrito está vacío</h2>
+      <p class="empty-cart-message">Agrega productos a tu carrito para comenzar a comprar</p>
+      <button mat-raised-button color="primary" routerLink="/products" class="start-shopping-button">
+        <mat-icon>store</mat-icon>
+        Explorar Productos
+      </button>
+    </div>
+  }
+</div>

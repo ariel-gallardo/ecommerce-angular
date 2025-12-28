@@ -1,0 +1,147 @@
+.cart-item-card {
+  margin-bottom: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+.cart-item-content {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+}
+
+.cart-item-image {
+  flex-shrink: 0;
+  
+  .product-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--mat-sys-outline) 0.2, transparent);
+  }
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  
+  .product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+  }
+  
+  .product-id {
+    font-size: 0.85rem;
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 0.6, transparent);
+    margin: 0;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    
+    .quantity-btn {
+      width: 36px;
+      height: 36px;
+      transition: all 0.2s;
+      
+      &:hover:not(:disabled) {
+        background-color: var(--mat-sys-primary-container);
+        transform: scale(1.1);
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+    
+    .quantity-value {
+      min-width: 40px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--mat-sys-primary);
+      padding: 4px 12px;
+      background-color: var(--mat-sys-surface-container);
+      border-radius: 8px;
+    }
+  }
+}
+
+.cart-item-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  min-width: 150px;
+  
+  .item-price,
+  .item-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    
+    .price-label,
+    .total-label {
+      font-size: 0.85rem;
+      color: color-mix(in srgb, var(--mat-sys-on-surface) 0.6, transparent);
+    }
+    
+    .price-value {
+      font-size: 1rem;
+      color: var(--mat-sys-on-surface);
+    }
+    
+    .total-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--mat-sys-primary);
+    }
+  }
+  
+  .remove-btn {
+    transition: all 0.2s;
+    
+    &:hover {
+      transform: scale(1.1);
+      background-color: color-mix(in srgb, var(--mat-sys-error) 0.1, transparent);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .cart-item-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .cart-item-image {
+    width: 100%;
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+    }
+  }
+  
+  .cart-item-actions {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

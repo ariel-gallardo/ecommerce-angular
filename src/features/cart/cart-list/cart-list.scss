@@ -1,0 +1,226 @@
+.cart-container {
+  min-height: calc(100vh - 200px);
+  padding: 24px;
+}
+
+.cart-content {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.cart-items-section {
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid color-mix(in srgb, var(--mat-sys-outline) 0.2, transparent);
+    
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--mat-sys-on-surface);
+    }
+    
+    .items-count {
+      font-size: 1rem;
+      color: color-mix(in srgb, var(--mat-sys-on-surface) 0.7, transparent);
+      background-color: var(--mat-sys-surface-container);
+      padding: 6px 12px;
+      border-radius: 16px;
+    }
+  }
+  
+  .cart-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.cart-summary-section {
+  position: sticky;
+  top: 24px;
+  height: fit-content;
+  
+  .summary-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--mat-sys-on-surface);
+    
+    mat-icon {
+      color: var(--mat-sys-primary);
+    }
+  }
+  
+  .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0;
+  }
+  
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .summary-label {
+      font-size: 1rem;
+      color: color-mix(in srgb, var(--mat-sys-on-surface) 0.7, transparent);
+    }
+    
+    .summary-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--mat-sys-on-surface);
+      
+      &.shipping {
+        color: var(--mat-sys-tertiary);
+      }
+    }
+    
+    &.total-row {
+      margin-top: 8px;
+      padding-top: 16px;
+      border-top: 2px solid color-mix(in srgb, var(--mat-sys-outline) 0.2, transparent);
+      
+      .total-label {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--mat-sys-on-surface);
+      }
+      
+      .total-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--mat-sys-primary);
+      }
+    }
+  }
+  
+  .summary-divider {
+    margin: 8px 0;
+  }
+  
+  .checkout-button {
+    width: 100%;
+    height: 48px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+  
+  .continue-shopping-button {
+    width: 100%;
+    margin-top: 8px;
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  padding: 48px 24px;
+  
+  .empty-cart-icon {
+    font-size: 120px;
+    width: 120px;
+    height: 120px;
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 0.3, transparent);
+    margin-bottom: 24px;
+  }
+  
+  .empty-cart-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--mat-sys-on-surface);
+    margin: 0 0 16px 0;
+  }
+  
+  .empty-cart-message {
+    font-size: 1.1rem;
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 0.7, transparent);
+    margin: 0 0 32px 0;
+    max-width: 500px;
+  }
+  
+  .start-shopping-button {
+    font-size: 1.1rem;
+    padding: 12px 32px;
+    height: 48px;
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 1024px) {
+  .cart-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .cart-summary-section {
+    position: relative;
+    top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-container {
+    padding: 16px;
+  }
+  
+  .cart-items-section {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+  
+  .empty-cart {
+    padding: 32px 16px;
+    
+    .empty-cart-icon {
+      font-size: 80px;
+      width: 80px;
+      height: 80px;
+    }
+    
+    .empty-cart-title {
+      font-size: 1.5rem;
+    }
+  }
+}

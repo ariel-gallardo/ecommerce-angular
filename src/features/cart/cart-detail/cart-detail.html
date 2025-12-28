@@ -1,2 +1,33 @@
-  <mat-list-item>Item 1</mat-list-item>
-  <mat-divider></mat-divider>
+<mat-card class="cart-item-card">
+  <div class="cart-item-content">
+    <div class="cart-item-image">
+      <img [src]="productImageUrl" [alt]="productName()" class="product-image">
+    </div>
+    <div class="cart-item-info">
+      <h3 class="product-name">{{ productName() }}</h3>
+      <p class="product-id">ID: {{ cartItem.productId || 'N/A' }}</p>
+      <div class="quantity-controls">
+        <button mat-icon-button (click)="decreaseQuantity()" [disabled]="isDecreaseDisabled()" class="quantity-btn">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <span class="quantity-value">{{ cartItem.quantity?.value || 0 }}</span>
+        <button mat-icon-button (click)="increaseQuantity()" class="quantity-btn">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="cart-item-actions">
+      <div class="item-price">
+        <span class="price-label">Precio unitario:</span>
+        <span class="price-value">${{ unitPrice() }}</span>
+      </div>
+      <div class="item-total">
+        <span class="total-label">Subtotal:</span>
+        <span class="total-value">${{ itemTotal() }}</span>
+      </div>
+      <button mat-icon-button color="warn" (click)="removeItem()" class="remove-btn" matTooltip="Eliminar del carrito">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>
