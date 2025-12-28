@@ -9,12 +9,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatDividerModule} from '@angular/material/divider';
+import { ThemeToggleComponent } from './theme-toggle/theme-toggle.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
     Footer,
     Navbar,
     Shell,
+    ThemeToggleComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTooltipModule
   ],
   exports: [
     Footer,

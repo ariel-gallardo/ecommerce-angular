@@ -13,6 +13,10 @@ import { CartReduxModule } from '@api/cart';
 import { CartEffects } from '@effects/cart.effects';
 import { ReduxCoreModule as LogsCoreModule } from '@api/logs/redux/core.module';
 import { ReduxCoreModule as ProductsCoreModule } from '@api/product/redux/core.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ThemeReduxModule } from '@features/base/theme-toggle/theme/theme.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import { ReduxCoreModule as ProductsCoreModule } from '@api/product/redux/core.m
     SecurityReduxCoreModule,
     LogsCoreModule,
     CartReduxModule,
-    ProductsCoreModule
+    ProductsCoreModule,
+    ThemeReduxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

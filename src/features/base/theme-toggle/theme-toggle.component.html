@@ -1,0 +1,10 @@
+<button 
+  mat-fab 
+  color="primary" 
+  class="theme-toggle-button"
+  (click)="toggleTheme()"
+  [matTooltip]="currentTheme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+  aria-label="Cambiar tema">
+  <mat-icon>{{ getThemeIcon() }}</mat-icon>
+</button>
+
