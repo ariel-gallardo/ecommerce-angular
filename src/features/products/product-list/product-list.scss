@@ -8,10 +8,10 @@
 .categories-panel {
   width: 320px;
   min-width: 320px;
-  background: white;
+  background: var(--mat-sys-surface-container);
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px color-mix(in srgb, var(--mat-sys-shadow) 0.15, transparent);
   height: fit-content;
   position: sticky;
   top: 24px;
@@ -24,7 +24,8 @@
     font-weight: 500;
     margin-bottom: 16px;
     padding-bottom: 12px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid color-mix(in srgb, var(--mat-sys-outline) 0.2, transparent);
+    color: var(--mat-sys-on-surface);
   }
 
   .category-node {
@@ -34,9 +35,10 @@
       padding: 4px 8px;
       border-radius: 4px;
       transition: background-color 0.2s;
+      color: var(--mat-sys-on-surface);
 
       &:hover {
-        background-color: #f5f5f5;
+        background-color: var(--mat-sys-surface-container-low);
       }
     }
   }
@@ -44,13 +46,13 @@
 
 .sort-section {
   padding-top: 16px;
-  border-top: 2px solid #e0e0e0;
+  border-top: 2px solid color-mix(in srgb, var(--mat-sys-outline) 0.2, transparent);
 
   .sort-title {
     font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 12px;
-    color: #333;
+    color: var(--mat-sys-on-surface);
   }
 
   .sort-fields {
@@ -66,29 +68,29 @@
     justify-content: space-between;
     padding: 8px 12px;
     border-radius: 4px;
-    background-color: #f9f9f9;
+    background-color: var(--mat-sys-surface-container-low);
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: var(--mat-sys-surface-container-high);
     }
 
     .sort-field-label {
       font-size: 0.9rem;
-      color: #666;
+      color: color-mix(in srgb, var(--mat-sys-on-surface) 0.7, transparent);
       font-weight: 500;
     }
 
     button {
       &.active {
-        color: #1976d2;
+        color: var(--mat-sys-primary);
 
         &.asc {
-          color: #2e7d32;
+          color: var(--mat-sys-tertiary);
         }
 
         &.desc {
-          color: #d32f2f;
+          color: var(--mat-sys-error);
         }
       }
     }
