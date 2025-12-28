@@ -1,0 +1,269 @@
+.home-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+// Hero Section
+.hero-section {
+  width: 100%;
+  padding: 32px 16px;
+}
+
+.hero-card {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  
+  ::ng-deep .mat-mdc-card-content {
+    padding: 0;
+  }
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 32px;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
+.hero-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--mat-sys-on-surface);
+
+  @media (min-width: 768px) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 3.75rem;
+  }
+}
+
+.hero-subtitle {
+  font-size: 1.125rem;
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 0.7, transparent);
+
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hero-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-image {
+  flex: 1;
+  width: 100%;
+
+  @media (min-width: 1024px) {
+    width: auto;
+  }
+}
+
+.hero-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  max-height: 500px;
+}
+
+// Features Section
+.features-section {
+  width: 100%;
+  padding: 48px 16px;
+  background: var(--mat-sys-surface-container-low);
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 48px;
+  color: var(--mat-sys-on-surface);
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.feature-card {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.feature-icon {
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+  
+  mat-icon {
+    font-size: 24px;
+  }
+}
+
+.feature-image {
+  height: 192px;
+  object-fit: cover;
+}
+
+::ng-deep .feature-card {
+  .mat-mdc-card-header {
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mat-mdc-card-content {
+    padding-top: 16px;
+    
+    p {
+      color: color-mix(in srgb, var(--mat-sys-on-surface) 0.7, transparent);
+    }
+  }
+  
+  .mat-mdc-card-title {
+    text-align: center;
+  }
+}
+
+// CTA Section
+.cta-section {
+  width: 100%;
+  padding: 48px 16px;
+}
+
+.cta-card {
+  width: 100%;
+  max-width: 896px;
+  margin: 0 auto;
+  background-color: var(--mat-sys-primary) !important;
+  
+  ::ng-deep .mat-mdc-card {
+    background-color: var(--mat-sys-primary) !important;
+  }
+  
+  ::ng-deep .mat-mdc-card-content {
+    background-color: var(--mat-sys-primary) !important;
+    color: var(--mat-sys-on-primary) !important;
+  }
+}
+
+.cta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px;
+  text-align: center;
+  background-color: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary) !important;
+}
+
+.cta-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--mat-sys-on-primary) !important;
+
+  @media (min-width: 768px) {
+    font-size: 2.25rem;
+  }
+}
+
+.cta-text {
+  font-size: 1.125rem;
+  color: var(--mat-sys-on-primary) !important;
+  opacity: 0.9;
+
+  @media (min-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.cta-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--mat-sys-on-primary) !important;
+  color: var(--mat-sys-primary) !important;
+  
+  mat-icon {
+    color: var(--mat-sys-primary) !important;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .hero-content {
+    padding: 16px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-content {
+    padding: 24px;
+  }
+  
+  .cta-title {
+    font-size: 1.5rem;
+  }
+}

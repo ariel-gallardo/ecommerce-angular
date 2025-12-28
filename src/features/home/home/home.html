@@ -1,0 +1,85 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <mat-card class="hero-card">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 class="hero-title">Bienvenido a nuestro Ecommerce</h1>
+          <p class="hero-subtitle">
+            Descubre los mejores productos con calidad excepcional y entrega rápida
+          </p>
+        </div>
+        <div class="hero-image">
+          <img [src]="getHeroImage()" alt="Hero image" class="hero-img" />
+        </div>
+      </div>
+    </mat-card>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="section-title">¿Por qué elegirnos?</h2>
+    <div class="features-grid">
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <div class="feature-icon">
+            <mat-icon>local_shipping</mat-icon>
+          </div>
+          <mat-card-title>Envío Rápido</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="getFeatureImage(0)" alt="Envío rápido" class="feature-image" />
+        <mat-card-content>
+          <p>
+            Entregas rápidas y seguras a todo el país. Recibe tus pedidos en tiempo récord.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <div class="feature-icon">
+            <mat-icon>verified</mat-icon>
+          </div>
+          <mat-card-title>Calidad Garantizada</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="getFeatureImage(1)" alt="Calidad garantizada" class="feature-image" />
+        <mat-card-content>
+          <p>
+            Productos seleccionados con los más altos estándares de calidad. Garantía total.
+          </p>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <div class="feature-icon">
+            <mat-icon>support_agent</mat-icon>
+          </div>
+          <mat-card-title>Soporte 24/7</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="getFeatureImage(2)" alt="Soporte 24/7" class="feature-image" />
+        <mat-card-content>
+          <p>
+            Atención al cliente disponible las 24 horas del día, los 7 días de la semana.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <mat-card class="cta-card">
+      <mat-card-content class="cta-content">
+        <h2 class="cta-title">¿Listo para empezar a comprar?</h2>
+        <p class="cta-text">
+          Explora nuestra amplia gama de productos y encuentra lo que estás buscando
+        </p>
+        <button mat-raised-button color="primary" (click)="navigateToProducts()" class="cta-button">
+          <mat-icon>store</mat-icon>
+          <span>Ir a Tienda</span>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</div>

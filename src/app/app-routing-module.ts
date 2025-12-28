@@ -7,6 +7,7 @@ const routes: Routes = [
     path: '',
     component: Shell,
     children: [
+      {path: '', loadChildren: () => import('@features/home/home.module').then(m => m.HomeModule)},
       {path: 'users', loadChildren: () => import('@features/users/users.module').then(m => m.UsersModule)},
       {path: 'cart', loadChildren: () => import('@features/cart/cart.module').then(m => m.CartModule)},
       {path: 'products', loadChildren: () => import('@features/products/products.module').then(m => m.ProductsModule)}
